@@ -14,23 +14,26 @@ public class Deplacement{
 		int arrL = arrivee.getLigne();
 		int arrC = arrivee.getColonne();
 		
-		if(p.deplacementValid(arrL,arrC)==true && plateau[arrL][arrC]==null){
+		Case c = plateau[arrL][arrC];
+		Piece p1 = c.getPiece();
+		
+		if(p.deplacementValid(arrL,arrC)==true && p1==null){
 			
 			v=true;
-			plateau[arrL[arrC]=p;
+			c.setPiece(p);
 			return v;
 		
 		}
 		
-		else if(p.deplacementValid(arrL,arrC)==true && (plateau[arrL][arrC]!=null  && plateau[arrL][arrC].getCouleur()!=p.getCouleur())){
+		else if(p.deplacementValid(arrL,arrC)==true && (p1!=null  && p1.getCouleur()!=p.getCouleur())){
 			
 			v=true;
-			plateau[arrL[arrC]=p;
+			c.setPiece(p);
 			return v;
 		}
 		
 		
-		else if(p.deplacementValid(arrL,arrC)==true && (plateau[arrL][arrC]!=null  && plateau[arrL][arrC].getCouleur()==p.getCouleur())){
+		else if(p.deplacementValid(arrL,arrC)==true && (p1!=null  && p1.getCouleur()==p.getCouleur())){
 			
 			v=false;
 			System.out.println("Déplacement impossible ! Choisis une autre case");
