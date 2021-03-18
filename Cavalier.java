@@ -22,7 +22,7 @@ public class Cavalier extends Piece implements interfaceValidite {
 	public boolean deplacementValid(){		
 		boolean valid = false;
 		Position p = new Position(int l, int c); // l (ligne) et c (colonne) designe la case ciblee par le joueur
-		if (abs(l-p.getLigne())==2 && abs(c-getColonne())==1){
+		if ((abs(l-p.getLigne())==2 && abs(c-getColonne())==1) || (abs(l-p.getLigne())==1 && abs(c-getColonne())==2)){
 			valid = true;
 		}
 		return valid;
