@@ -19,8 +19,22 @@ public class Pion extends Piece implements interfaceValidite {
 		this.couleur = c;
 	}
 	
-	public boolean deplacementValid(){		 //cette methode pourra bien etre transformee en interface
-		Deplacement val = new Deplacement(); //Deplacement est une classe (voir la diagramme de cahier des charges qu'on a fait)
-		return val.getValidite();			 //getValidite() est la methode de la classe Deplacement qui retourne un boolean vrai en cas d'un deplacement valide d'une piece
+	public boolean deplacementValid(int l, int c){		
+		boolean valid = false;
+		Echequier occupe = new Echequier (couleur);
+		Position p = new Position(l, c);
+		
+		if (occupe.estOccupe(l, c) && !couleur.equals(occupe.getPieceCouleur())){			//methode de la classe Echequier qui envoie un boolean et l'autre qui renvoie un String couleur
+			if (abs(l-p.getLigne())==1 && abs(c-p.getColonne())==1){
+				valid = true;
+			}
+		}
+		else {
+			if (abs(l-p.getLigne()==1) && abs(c-p.getColonne())==0){
+				valid = true;
+			}
+		}
+		return valid;
 	}
+}
 }
