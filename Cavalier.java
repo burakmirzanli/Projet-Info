@@ -19,9 +19,9 @@ public class Cavalier extends Piece implements interfaceValidite {
 		this.couleur = c;
 	}
 	
-	public boolean deplacementValid(){		
+	public boolean deplacementValid(int l, int c){		
 		boolean valid = false;
-		Position p = new Position(int l, int c); // l (ligne) et c (colonne) designe la case ciblee par le joueur
+		Position p = new Position(l, c); // l (ligne) et c (colonne) designe la case ciblee par le joueur
 		if ((abs(l-p.getLigne())==2 && abs(c-getColonne())==1) || (abs(l-p.getLigne())==1 && abs(c-getColonne())==2)){
 			valid = true;
 		}
