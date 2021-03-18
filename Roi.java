@@ -19,9 +19,9 @@ public class Roi extends Piece implements interfaceValidite {
 		this.couleur = c;
 	}
 	
-	public boolean deplacementValid(){		
+	public boolean deplacementValid(int l, int c){		
 		boolean valid = false;
-		Position p = new Position(int l, int c);
+		Position p = new Position(l, c);
 		if (abs(l-p.getLine())==1 && abs(c-p.getColonne())==1){
 			valid = true;
 		}
