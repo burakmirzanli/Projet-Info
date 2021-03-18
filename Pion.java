@@ -24,7 +24,7 @@ public class Pion extends Piece implements interfaceValidite {
 		Echequier occupe = new Echequier (couleur);
 		Position p = new Position(l, c);
 		
-		if (occupe.estOccupe(l, c) && !couleur.equals(occupe.getPieceCouleur())){			//methode de la classe Echequier qui envoie un boolean et l'autre qui renvoie un String couleur
+		if (occupe.estOccupe(l, c) && !couleur.equals(occupe.getPieceCouleur())){ //methode de la classe Echequier qui envoie un boolean et l'autre qui renvoie un String couleur
 			if (abs(l-p.getLigne())==1 && abs(c-p.getColonne())==1){
 				valid = true;
 			}
