@@ -19,9 +19,9 @@ public class Tour extends Piece implements interfaceValidite {
 		this.couleur = c;
 	}
 	
-	public boolean deplacementValid(){		
+	public boolean deplacementValid(int l, int c){		
 		boolean valid = false;
-		Position p = new Position(int l, int c);
+		Position p = new Position(l, c);
 		if ((abs(l-p.getLigne())>=0 && abs(c-getColonne())==0) || (abs(l-p.getLigne())==0 && abs(c-getColonne())>=0)){
 			valid = true;
 		}
