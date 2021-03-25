@@ -17,7 +17,17 @@ public class EcouteurBouton implements ActionListener{
     public void actionPerformed(ActionEvent e){
 		int x = b.getL();
 		int y = b.getC();
-		System.out.println("Case ligne : " + x + " colonne : " + y);
+		Piece p = b.getPiece();
+		if(p!=null){
+			System.out.println("Case ligne : " + x + " colonne : " + y );
+			System.out.println("Cette pièce est " + p.toString());
+			System.out.println(".......");
+			
+		}else{
+			System.out.println("Case ligne : " + x + " colonne : " + y );
+			System.out.println("Il n'y a pas de pièce");
+			System.out.println(".......");
+		}
 	 
 	}
 }
