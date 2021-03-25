@@ -35,7 +35,9 @@ public class Echiquier {
         Insets buttonMargin = new Insets(0,0,0,0);
         for (int ii = 0; ii < plateauBouton.length; ii++) {
             for (int jj = 0; jj < plateauBouton[ii].length; jj++) {
-                MonBouton b = new MonBouton(ii,jj);
+				Piece p = null;
+                MonBouton b = new MonBouton(ii,jj,p);
+                b.addActionListener(new EcouteurBouton(this,b)) ;
                 b.setMargin(buttonMargin);
                 // our chess pieces are 64x64 px in size, so we'll
                 // 'fill this in' using a transparent icon..

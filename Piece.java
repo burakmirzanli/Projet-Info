@@ -5,7 +5,7 @@ public class Piece {
 	private int ligne;
 	private int colonne;
 	
-	public Piece (String type, String couleur, ligne, colonne){
+	public Piece (String type, String couleur, int ligne, int colonne){
 		this.type = type;
 		this.couleur = couleur;
 		this.ligne = ligne;
@@ -42,4 +42,4 @@ public class Piece {
 	}
 	
 }
-}
+

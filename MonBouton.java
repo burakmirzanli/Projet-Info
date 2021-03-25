@@ -7,11 +7,29 @@ import java.awt.event.*;
 public class MonBouton extends JButton /* implements ActionListener */ {
   
       int ligne, colonne;
+      private Piece p;
   
-     public MonBouton(int ligne, int colonne) {
+     public MonBouton(int ligne, int colonne,Piece p) {
         this.ligne = ligne;
         this.colonne = colonne;
+		this.p=p;
         // addActionListener(this);
+	}
+	
+	public int getL(){
+		return this.ligne;
+	}
+	
+	public int getC(){
+		return this.colonne;
+	}
+	
+	public Piece getPiece(){
+		return this.p;
+	}
+	
+	public void setPiece (Piece p1){
+		this.p=p1;
 	}
 
     /* public void ActionPerform(ActionEvent e) {
