@@ -10,7 +10,10 @@ public class Tour extends Piece implements interfaceValidite {
 		this.ligne = ligne;
 		this.colonne = colonne;
 	}
-
+	public Tour (String couleur){
+		super ("Tour", couleur);
+		this.couleur = couleur;
+	}
 	public String getCouleur(){
 		return this.couleur;
 	}
