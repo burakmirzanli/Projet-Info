@@ -24,15 +24,15 @@ public class Roi extends Piece implements interfaceValidite {
 	public void setCouleur (String c){
 		this.couleur = c;
 	}
-	public int getligne(){
+	public int getLigne(){
 		return this.ligne;
 	}
 	
-	public int getcolonne(){
+	public int getColonne(){
 		return this.colonne;
 	}
 	
-	public void setligne(int l){
+	public void setLigne(int l){
 		this.ligne=l;
 	}
 	
@@ -47,7 +47,7 @@ public class Roi extends Piece implements interfaceValidite {
 	public boolean deplacementValid(int l, int c){		
 		boolean valid = false;
 		Position p = new Position(l, c);
-		if (Math.abs(l-p.getligne())==1 && Math.abs(c-p.getcolonne())==1){
+		if (Math.abs(l-p.getLigne())==1 && Math.abs(c-p.getColonne())==1){
 			valid = true;
 		}
 		return valid;
