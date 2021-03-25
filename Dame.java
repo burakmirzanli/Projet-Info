@@ -30,7 +30,7 @@ public class Dame extends Piece implements interfaceValidite {
 		return this.ligne;
 	}
 	
-	public int getcolonne(){
+	public int getColonne(){
 		return this.colonne;
 	}
 	
