@@ -6,11 +6,17 @@ import javax.swing.border.*;
 
 public class Echiquier {
 	
+	// Attributs //
+	
 	private final JPanel interfaceJeu = new JPanel(new BorderLayout(3, 3));
 
-	public JButton[][] plateauBouton = new JButton [8][8];
+	public MonBouton[][] plateauBouton = new MonBouton [8][8];
 	public JPanel plateauPanel = new JPanel();
-	private static final String COLS = "ABCDEFGH"; 
+	private static final String COLS = "ABCDEFGH";
+	
+
+	
+	public Piece piece;
 	
 	Echiquier() {
         initialisation();
@@ -29,7 +35,7 @@ public class Echiquier {
         Insets buttonMargin = new Insets(0,0,0,0);
         for (int ii = 0; ii < plateauBouton.length; ii++) {
             for (int jj = 0; jj < plateauBouton[ii].length; jj++) {
-                JButton b = new JButton();
+                MonBouton b = new MonBouton(ii,jj);
                 b.setMargin(buttonMargin);
                 // our chess pieces are 64x64 px in size, so we'll
                 // 'fill this in' using a transparent icon..
