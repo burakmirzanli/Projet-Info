@@ -11,10 +11,6 @@ public class Cavalier extends Piece implements interfaceValidite {
 		this.ccolonne = colonne;
 	}
 	
-	public String toString (){
-		return super.toString();
-	}
-	
 	public String getCouleur(){
 		return this.couleur;
 	}
