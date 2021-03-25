@@ -10,7 +10,10 @@ public class Fou extends Piece implements interfaceValidite {
 		this.ligne = ligne;
 		this.colonne = colonne;
 	}
-	
+	public Fou (String couleur){
+		super ("Fou", couleur);
+		this.couleur = couleur;
+	}
 	public String getCouleur(){
 		return this.couleur;
 	}
