@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 import javax.swing.border.*;
+import java.lang.*;
 
 
 public class Echiquier {
@@ -42,8 +43,7 @@ public class Echiquier {
                 b.setMargin(buttonMargin);
                 // Les pièces de notre échequier feront 64*64 pixel donc on rempli
                 // les cases (boutons) de notre plateau par des images vides
-                ImageIcon icon = new ImageIcon(
-                        new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
+                ImageIcon icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
                 b.setIcon(icon);
                 if ((jj % 2 == 1 && ii % 2 == 1)
                         //) {
@@ -56,9 +56,13 @@ public class Echiquier {
             }
        }
        
+       
+      
        // - INITIALISATION PLATEAU AVEC PIECES - //
        
        plateauBouton[0][0].setPiece(new Tour("Noir",0,0));
+	   
+       
        plateauBouton[1][0].setPiece(new Cavalier("Noir",0,1));
        plateauBouton[2][0].setPiece(new Fou("Noir",0,2));
        plateauBouton[3][0].setPiece(new Dame("Noir",0,3));
@@ -67,7 +71,7 @@ public class Echiquier {
        plateauBouton[6][0].setPiece(new Cavalier("Noir",0,6));
        plateauBouton[7][0].setPiece(new Tour("Noir",0,7));
        
-       for(int i =0; i<7;i++){
+       for(int i =0; i<8;i++){
 		plateauBouton[i][1].setPiece(new Pion("Noir",0,i));
        }
        
@@ -80,7 +84,7 @@ public class Echiquier {
        plateauBouton[6][7].setPiece(new Cavalier("Blanc",7,6));
        plateauBouton[7][7].setPiece(new Tour("Blanc",7,7));
        
-       for(int i =0; i<7;i++){
+       for(int i =0; i<8;i++){
 		plateauBouton[i][6].setPiece(new Pion("Blanc",6,i));
        }
        

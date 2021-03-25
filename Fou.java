@@ -1,21 +1,48 @@
 import java.lang.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import javax.swing.*;
+import javax.swing.border.*;
+
 
 public class Fou extends Piece {
 	
 	private String couleur;
 	private int colonne;
 	private int ligne;
+	private ImageIcon icon;
 	
 	public Fou (String couleur, int ligne, int colonne){
 		super ("Fou", couleur, ligne, colonne);
 		this.couleur = couleur;
 		this.ligne = ligne;
 		this.colonne = colonne;
+		// - CREATION IMAGE DES PIECES - //
+        if(this.couleur == "Noir"){
+			ImageIcon icon = new ImageIcon(Echiquier.class.getResource("image/FN.png"));
+			this.icon = icon;
+		} else if (this.couleur == "Blanc"){
+			ImageIcon icon = new ImageIcon(Echiquier.class.getResource("image/FB.png"));
+			this.icon = icon;
+		}
 	}
 	public Fou (String couleur){
 		super ("Fou", couleur);
 		this.couleur = couleur;
+		// - CREATION IMAGE DES PIECES - //
+        if(this.couleur == "Noir"){
+			ImageIcon icon = new ImageIcon(Echiquier.class.getResource("image/FN.png"));
+			this.icon = icon;
+		} else if (this.couleur == "Blanc"){
+			ImageIcon icon = new ImageIcon(Echiquier.class.getResource("image/FB.png"));
+			this.icon = icon;
+		}
 	}
+	
+	public ImageIcon getIcon(){
+		return this.icon;
+	}
+	
 	public String getCouleur(){
 		return this.couleur;
 	}
