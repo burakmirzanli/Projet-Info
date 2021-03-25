@@ -10,6 +10,10 @@ public class Cavalier extends Piece implements interfaceValidite {
 		this.ligne = ligne;
 		this.ccolonne = colonne;
 	}
+	public Cavalier (String couleur){
+		super ("Cavalier", couleur);
+		this.couleur = couleur;
+	}
 	
 	public String getCouleur(){
 		return this.couleur;
