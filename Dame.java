@@ -10,7 +10,10 @@ public class Dame extends Piece implements interfaceValidite {
 		this.ligne = ligne;
 		this.colonne = colonne;
 	}
-	
+	public Dame (String couleur){
+		super ("Dame", couleur);
+		this.couleur = couleur;
+	}
 	public String toString (){
 		return super.toString();
 	}
