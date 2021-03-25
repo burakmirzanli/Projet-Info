@@ -1,4 +1,4 @@
-import java.util.*;
+import java.lang.*;
 public class Tour extends Piece implements interfaceValidite {
 	
 	private String couleur;
