@@ -10,6 +10,11 @@ public class Roi extends Piece implements interfaceValidite {
 		this.ligne = ligne;
 		this.colonne = colonne;
 	}
+	public Roi (String couleur){
+		super ("Roi", couleur);
+		this.couleur = couleur;
+	}
+
 	
 	public String getCouleur(){
 		return this.couleur;
