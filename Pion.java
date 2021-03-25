@@ -10,6 +10,10 @@ public class Pion extends Piece implements interfaceValidite {
 		this.ligne = ligne;
 		this.colonne = colonne;
 	}
+	public Pion (String couleur){
+		super ("Pion", couleur);
+		this.couleur = couleur;
+	}
 	
 	public String getCouleur(){
 		return this.couleur;
