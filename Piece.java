@@ -2,15 +2,14 @@ public class Piece {
 	
 	private String type;
 	private String couleur;
+	private int ligne;
+	private int colonne;
 	
-	public Piece (String type, String couleur){
+	public Piece (String type, String couleur, ligne, colonne){
 		this.type = type;
 		this.couleur = couleur;
-	}
-	
-	public String toString (){ //On utilise plutot les donnees "privates" plutot que les redemander ici pour appeler la methode depuis "main"
-		String s = "La piece "+this.type+" de couleur "+this.couleur+" ..."; //a completer
-		return s;
+		this.ligne = ligne;
+		this.colonne = colonne;
 	}
 	
 	public String getCouleur(){
@@ -20,4 +19,27 @@ public class Piece {
 	public void setCouleur (String c){
 		this.couleur = c;
 	}
+	
+	public int getligne(){
+		return this.ligne;
+	}
+	
+	public int getcolonne(){
+		return this.colonne;
+	}
+	
+	public void setligne(int l){
+		this.ligne=l;
+	}
+	
+	public void setColonne(int c){
+		this.colonne=c;
+	}
+	
+	public String toString (){
+		String s = type+" "+couleur+" en "+ligne+";"+colonne; //a completer
+		return s;
+	}
+	
+}
 }
