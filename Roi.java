@@ -1,3 +1,4 @@
+import java.lang.*;
 public class Roi extends Piece implements interfaceValidite {
 	
 	private String couleur;
@@ -46,7 +47,7 @@ public class Roi extends Piece implements interfaceValidite {
 	public boolean deplacementValid(int l, int c){		
 		boolean valid = false;
 		Position p = new Position(l, c);
-		if (abs(l-p.getLine())==1 && abs(c-p.getColonne())==1){
+		if (Math.abs(l-p.getLine())==1 && Math.abs(c-p.getColonne())==1){
 			valid = true;
 		}
 		return valid;
