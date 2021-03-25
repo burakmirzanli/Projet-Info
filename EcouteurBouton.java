@@ -20,7 +20,7 @@ public class EcouteurBouton implements ActionListener{
 		Piece p = b.getPiece();
 		if(p!=null){
 			System.out.println("Case ligne : " + x + " colonne : " + y );
-			System.out.println("Cette pièce est " + p.toString());
+			System.out.println("Cette piece est " + p.toString());
 			System.out.println(".......");
 			
 		}else{

@@ -31,6 +31,7 @@ public class Echiquier {
 		plateauPanel.setBorder(new LineBorder(Color.BLACK));
         interfaceJeu.add(plateauPanel);
         
+        // - INITIALISATION DES BOUTONS - //
         
         Insets buttonMargin = new Insets(0,0,0,0);
         for (int ii = 0; ii < plateauBouton.length; ii++) {
@@ -39,8 +40,8 @@ public class Echiquier {
                 MonBouton b = new MonBouton(ii,jj,p);
                 b.addActionListener(new EcouteurBouton(this,b)) ;
                 b.setMargin(buttonMargin);
-                // our chess pieces are 64x64 px in size, so we'll
-                // 'fill this in' using a transparent icon..
+                // Les pièces de notre échequier feront 64*64 pixel donc on rempli
+                // les cases (boutons) de notre plateau par des images vides
                 ImageIcon icon = new ImageIcon(
                         new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
                 b.setIcon(icon);
@@ -55,14 +56,42 @@ public class Echiquier {
             }
        }
        
-       //fill the chess board
+       // - INITIALISATION PLATEAU AVEC PIECES - //
+       
+       plateauBouton[0][0].setPiece(new Tour("Noir",0,0));
+       plateauBouton[1][0].setPiece(new Cavalier("Noir",0,1));
+       plateauBouton[2][0].setPiece(new Fou("Noir",0,2));
+       plateauBouton[3][0].setPiece(new Dame("Noir",0,3));
+       plateauBouton[4][0].setPiece(new Roi("Noir",0,4));
+       plateauBouton[5][0].setPiece(new Fou("Noir",0,5));
+       plateauBouton[6][0].setPiece(new Cavalier("Noir",0,6));
+       plateauBouton[7][0].setPiece(new Tour("Noir",0,7));
+       
+       for(int i =0; i<7;i++){
+		plateauBouton[i][1].setPiece(new Pion("Noir",0,i));
+       }
+       
+       plateauBouton[0][7].setPiece(new Tour("Blanc",7,0));
+       plateauBouton[1][7].setPiece(new Cavalier("Blanc",7,1));
+       plateauBouton[2][7].setPiece(new Fou("Blanc",7,2));
+       plateauBouton[3][7].setPiece(new Dame("Blanc",7,3));
+       plateauBouton[4][7].setPiece(new Roi("Blanc",7,4));
+       plateauBouton[5][7].setPiece(new Fou("Blanc",7,5));
+       plateauBouton[6][7].setPiece(new Cavalier("Blanc",7,6));
+       plateauBouton[7][7].setPiece(new Tour("Blanc",7,7));
+       
+       for(int i =0; i<7;i++){
+		plateauBouton[i][6].setPiece(new Pion("Blanc",6,i));
+       }
+       
+       // On rempli le plateau
 		plateauPanel.add(new JLabel(""));
-        // fill the top row
+        // On commence par la ligne du haut
         for (int ii = 0; ii < 8; ii++) {
             plateauPanel.add(
                     new JLabel(COLS.substring(ii, ii + 1),SwingConstants.CENTER));
         }
-        // fill the black non-pawn piece row
+        // Et maitenant l'autre ligne
         for (int ii = 0; ii < 8; ii++) {
             for (int jj = 0; jj < 8; jj++) {
                 switch (jj) {

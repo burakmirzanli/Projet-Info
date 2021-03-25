@@ -1,5 +1,6 @@
 import java.lang.*;
-public class Roi extends Piece implements interfaceValidite {
+
+public class Roi extends Piece {
 	
 	private String couleur;
 	private int ligne;
@@ -32,7 +33,7 @@ public class Roi extends Piece implements interfaceValidite {
 		return this.colonne;
 	}
 	
-	public void setLigne(int l){
+	public void setligne(int l){
 		this.ligne=l;
 	}
 	

@@ -1,5 +1,6 @@
-import java.lang.*
-public class Fou extends Piece implements interfaceValidite {
+import java.lang.*;
+
+public class Fou extends Piece {
 	
 	private String couleur;
 	private int colonne;
@@ -26,11 +27,11 @@ public class Fou extends Piece implements interfaceValidite {
 		return this.ligne;
 	}
 	
-	public int getcolonne(){
+	public int getColonne(){
 		return this.colonne;
 	}
 	
-	public void setligne(int l){
+	public void setLigne(int l){
 		this.ligne=l;
 	}
 	
@@ -45,7 +46,7 @@ public class Fou extends Piece implements interfaceValidite {
 	public boolean deplacementValid(int l, int c){		
 		boolean valid = false;
 		Position p = new Position(l, c);
-		if (Math.abs(l-p.getLine())>=0 && Math.abs(c-p.getColonne())>=0){
+		if (Math.abs(l-p.getLigne())>=0 && Math.abs(c-p.getColonne())>=0){
 			valid = true;
 		}
 		return valid;

@@ -1,5 +1,5 @@
 import java.lang.*;
-public class Cavalier extends Piece implements interfaceValidite {
+public class Cavalier extends Piece{
 	
 	private String couleur;
 	private int ligne;
