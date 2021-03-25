@@ -11,7 +11,10 @@ public class Piece {
 		this.ligne = ligne;
 		this.colonne = colonne;
 	}
-	
+	public Piece (String type, String couleur){
+		this.type = type;
+		this.couleur = couleur;
+	}	
 	public String getCouleur(){
 		return this.couleur;
 	}
