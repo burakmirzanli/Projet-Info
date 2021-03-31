@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.*;
 import javax.swing.border.*;
 
-public class Cavalier extends Piece{
+public class Cavalier extends Piece implements interfaceValidite{
 	
 	private String couleur;
 	private int ligne;

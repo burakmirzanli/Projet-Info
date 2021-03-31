@@ -15,6 +15,8 @@ public class MonBouton extends JButton /* implements ActionListener */ {
       int ligne, colonne;
       private Piece p;
       private ImageIcon icon;
+      
+      
   
      public MonBouton(int ligne, int colonne,Piece p) {
         this.ligne = ligne;
@@ -42,9 +44,13 @@ public class MonBouton extends JButton /* implements ActionListener */ {
 		this.p=p1;
 		if (this.p != null){
 			this.setIcon(p.getIcon());
+		} else {
+			ImageIcon icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
+			this.setIcon(icon);
 		}
 	}
 
+	
     /* public void ActionPerform(ActionEvent e) {
 		
     } */

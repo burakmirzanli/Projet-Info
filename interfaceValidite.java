@@ -1,5 +1,5 @@
 public interface interfaceValidite {
 	
-	public boolean deplacementValid();
+	public boolean deplacementValid(int x, int y);
 	
 }

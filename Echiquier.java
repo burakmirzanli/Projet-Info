@@ -11,10 +11,19 @@ public class Echiquier {
 	
 	private final JPanel interfaceJeu = new JPanel(new BorderLayout(3, 3));
 
-	public MonBouton[][] plateauBouton = new MonBouton [8][8];
+	public static MonBouton[][] plateauBouton = new MonBouton [8][8];
 	public JPanel plateauPanel = new JPanel();
 	private static final String COLS = "ABCDEFGH";
 	
+	private int departL;
+	private int departC;
+    private int arriveeL;
+	private int arriveeC;
+	
+	public Piece pieceDepart;
+	public Piece pieceArrivee;
+	
+	public int compteurBouton;
 
 	
 	public Piece piece;
@@ -50,7 +59,7 @@ public class Echiquier {
                         || (jj % 2 == 0 && ii % 2 == 0)) {
                     b.setBackground(Color.WHITE);
                 } else {
-                    b.setBackground(Color.BLACK);
+                    b.setBackground(Color.GRAY);
                 }
                 plateauBouton[jj][ii] = b;
             }
@@ -61,9 +70,7 @@ public class Echiquier {
        // - INITIALISATION PLATEAU AVEC PIECES - //
        
        plateauBouton[0][0].setPiece(new Tour("Noir",0,0));
-	   
-       
-       plateauBouton[1][0].setPiece(new Cavalier("Noir",0,1));
+	   plateauBouton[1][0].setPiece(new Cavalier("Noir",0,1));
        plateauBouton[2][0].setPiece(new Fou("Noir",0,2));
        plateauBouton[3][0].setPiece(new Dame("Noir",0,3));
        plateauBouton[4][0].setPiece(new Roi("Noir",0,4));
@@ -139,8 +146,58 @@ public class Echiquier {
 		};
 		SwingUtilities.invokeLater(r);
 		
+	}
+	
+		
+	public void memoirePositionDepart(int x, int y){
+			departL = x;
+			departC = y;
+	}
+	
+	public void memoirePositionArrivee(int x, int y){
+			arriveeL = x;
+			arriveeC = y;
+	}
+	
+	public void memoirePieceDepart(Piece P){
+			this.pieceDepart = P;
+	}
+	
+	public void memoirePieceArrivee(Piece P){
+			this.pieceArrivee = P;
+	}
+	
+	public int getDepartC(){
+		return this.departC;
 	}		
 		
+	public int getDepartL(){
+		return this.departL;
+	}
+	
+	public int getArriveeC(){
+		return this.arriveeC;
+	}	
+	
+	public int getArriveeL(){
+		return this.arriveeL;
+	}			
+	
+	public MonBouton[][] getPlateau(){
+		return this.plateauBouton;
+	}
+	
+	public void deplacementPiece(int x, int y){
+		
+		/* if(((interfaceValidite) pieceDepart).deplacementValid(boutonArrivee.ligne, boutonArrivee.colonne)){
+			boutonArrivee.setPiece(pieceDepart);
+			boutonDepart.setPiece(null);
+		} */
+		
+		this.plateauBouton[departC][departL].setPiece(null);
+		this.plateauBouton[y][x].setPiece(pieceDepart);
+		
+	} 
 				
    
 

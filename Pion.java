@@ -5,7 +5,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 
-public class Pion extends Piece {
+public class Pion extends Piece implements interfaceValidite{
 	
 	private String couleur;
 	private int ligne;

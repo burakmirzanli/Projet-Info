@@ -5,7 +5,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 
-public class Fou extends Piece {
+public class Fou extends Piece implements interfaceValidite {
 	
 	private String couleur;
 	private int colonne;

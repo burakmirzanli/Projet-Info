@@ -6,7 +6,7 @@ import javax.swing.border.*;
 
 
 
-public class Tour extends Piece{
+public class Tour extends Piece implements interfaceValidite{
 	
 	private String couleur;
 	private int colonne;

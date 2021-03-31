@@ -57,5 +57,5 @@ public class Piece {
 		String s = type+" "+couleur+" en "+ligne+";"+colonne; //a completer
 		return s;
 	}
-	
+
 }
