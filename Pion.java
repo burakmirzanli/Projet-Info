@@ -71,18 +71,20 @@ public class Pion extends Piece implements interfaceValidite{
 		String s = super.toString();
 		return s;
 	}
-	public boolean deplacementValid(int l, int c){		
+	public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){		
+		
 		boolean valid = false;
 		
-		Position p = new Position(l, c);
+		MonBouton boutonD = Echiquier.plateauBouton[departC][departL];
+		MonBouton boutonA = Echiquier.plateauBouton[arriveeC][arriveeL];
 		
-      // if (occupe.estOccupe(l, c) && !couleur.equals(occupe.getPieceCouleur())){ //methode de la classe Echequier qui envoie un boolean et l'autre qui renvoie un String couleur
-			if (Math.abs(l-p.getLigne())==1 && Math.abs(c-p.getColonne())==1){
+		if ((boutonA.getPiece()) != null && !couleur.equals((boutonA.getPiece()).getCouleur())){ //methode de la classe Echequier qui envoie un boolean et l'autre qui renvoie un String couleur
+			if (Math.abs(departL-arriveeL)==1 && Math.abs(departC-arriveeC)==1){
 				valid = true;
 			}
-		// }
+		}
 		else {
-			if (Math.abs(l-p.getLigne())==1 && Math.abs(c-p.getColonne())==0){
+			if (Math.abs(departL-arriveeL)==1 && Math.abs(departC-arriveeC)==0){
 				valid = true;
 			}
 		} 

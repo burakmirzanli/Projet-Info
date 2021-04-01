@@ -64,10 +64,9 @@ public class Tour extends Piece implements interfaceValidite{
 		return s;
 	}
 	
-	public boolean deplacementValid(int l, int c){		
+	public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){		
 		boolean valid = false;
-		Position p = new Position(l, c);
-		if ((Math.abs(l-p.getLigne())>=0 && Math.abs(c-getColonne())==0) || (Math.abs(l-p.getLigne())==0 && Math.abs(c-getColonne())>=0)){
+		if ((Math.abs(departL-arriveeL)>=0 && Math.abs(departC-arriveeC)==0) || (Math.abs(departL-departC)==0 && Math.abs(departC-arriveeC)>=0)){
 			valid = true;
 		}
 		return valid;

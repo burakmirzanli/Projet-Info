@@ -71,12 +71,14 @@ public class Roi extends Piece implements interfaceValidite{
 		String s = super.toString();
 		return s;
 	}
-	public boolean deplacementValid(int l, int c){		
+	public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){		
+		
 		boolean valid = false;
-		Position p = new Position(l, c);
-		if (Math.abs(l-p.getLigne())==1 && Math.abs(c-p.getColonne())==1){
+		
+		if (Math.abs(departL-arriveeL)==1 && Math.abs(departC-arriveeC)==1){
 			valid = true;
 		}
+		
 		return valid;
 	}
 }
