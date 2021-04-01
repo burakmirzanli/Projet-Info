@@ -29,12 +29,13 @@ public class EcouteurBouton implements ActionListener{
 			
 		}else{
 			System.out.println("Case ligne : " + x + " colonne : " + y );
-			System.out.println("Il n'y a pas de pièce");
+			System.out.println("Il n'y a pas de piece");
 			System.out.println(".......");
 		}
 		
 		// MISE EN MEMOIRE POSITION DEPART //
 		if(e1.compteurBouton % 2 == 0){
+			if(p !=null){
 			e1.memoirePositionDepart(x,y);
 			
 			e1.memoirePieceDepart(p);
@@ -42,7 +43,7 @@ public class EcouteurBouton implements ActionListener{
 			System.out.println("Position Depart = "+e1.getDepartL()+" ; "+e1.getDepartC()); 
 			
 			e1.compteurBouton++;
-			
+			}
 		}else if(e1.compteurBouton % 2 == 1){
 			e1.memoirePositionArrivee(x,y);
 			

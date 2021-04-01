@@ -200,19 +200,6 @@ public class Echiquier {
 	// DEPLACEMENT DE LA PIECE A PARTIR DU BOUTON DE DEPART VERS CELUI DONT ON A CLIQUER UNE SECONDE FOIS // 
 	// ATTENTION PLATEAU BOUTON [COLONNE][LIGNE] ET NON PAS [LIGNE][COLONNE] //
 	
-	/* public void deplacementPiece(int x, int y){
-        
-        
-    if(pieceDepart instanceof interfaceValidite){
-        
-        if(((interfaceValidite) pieceDepart).deplacementValid(x, y)){
-            this.plateauBouton[departC][departL].setPiece(null);
-            this.plateauBouton[y][x].setPiece(pieceDepart);
-        } 
-    }    
-    
-        
-    } */
 				
    	public void deplacementPiece(int departL, int departC, int arriveeL, int arriveeC){
 				
@@ -236,9 +223,7 @@ public class Echiquier {
 				System.out.println("Déplacement impossible ! Choisis une autre case");
 			} 
 			
-			else if(pieceDepart == null){
-				System.out.println("Aucune piece ici");
-			}
+			
 	}
 
    
