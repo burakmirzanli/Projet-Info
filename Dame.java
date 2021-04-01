@@ -55,7 +55,7 @@ public class Dame extends Piece implements interfaceValidite {
 	public void setCouleur (String c){
 		this.couleur = c;
 	}
-	public int getligne(){
+	public int getLigne(){
 		return this.ligne;
 	}
 	
@@ -63,7 +63,7 @@ public class Dame extends Piece implements interfaceValidite {
 		return this.colonne;
 	}
 	
-	public void setligne(int l){
+	public void setLigne(int l){
 		this.ligne=l;
 	}
 	

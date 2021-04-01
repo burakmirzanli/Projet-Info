@@ -80,7 +80,7 @@ public class Echiquier {
        
        for(int i =0; i<8;i++){
 		plateauBouton[i][1].setPiece(new Pion("Noir",0,i));
-       }
+       } 
        
        plateauBouton[0][7].setPiece(new Tour("Blanc",7,0));
        plateauBouton[1][7].setPiece(new Cavalier("Blanc",7,1));
@@ -202,12 +202,15 @@ public class Echiquier {
 	
 	public void deplacementPiece(int x, int y){
 		
-		if(((interfaceValidite) pieceDepart).deplacementValid(boutonArrivee.ligne, boutonArrivee.colonne)){
+		
+	if(pieceDepart instanceof interfaceValidite){
+		
+		if(((interfaceValidite) pieceDepart).deplacementValid(x, y)){
 			this.plateauBouton[departC][departL].setPiece(null);
 			this.plateauBouton[y][x].setPiece(pieceDepart);
 		} 
-		
-		
+	}	
+	
 		
 	} 
 				
