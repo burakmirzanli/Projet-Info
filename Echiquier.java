@@ -121,11 +121,12 @@ public class Echiquier {
 	}
 	
 	
+	
 	public final JComponent getInterfaceJeu() {
         return interfaceJeu;
     }
 	
-	
+	// LANCEMENT DE L'INTERFACE ET DU JEU //
 	
 	public static void main(String[] args) {
         Runnable r = new Runnable() {
@@ -148,24 +149,33 @@ public class Echiquier {
 		
 	}
 	
+	// MISE EN MEMOIRE PREMIER CLIC SUR BOUTON //
 		
 	public void memoirePositionDepart(int x, int y){
 			departL = x;
 			departC = y;
 	}
 	
+	// MISE EN MEMOIRE DEUXIEME CLIC SUR BOUTON //
+	
 	public void memoirePositionArrivee(int x, int y){
 			arriveeL = x;
 			arriveeC = y;
 	}
 	
+	// MISE EN MEMOIRE PIECE PREMIER BOUTON //
+	
 	public void memoirePieceDepart(Piece P){
 			this.pieceDepart = P;
 	}
 	
+	// MISE EN MEMOIRE PIECE SECOND BOUTON //
+	
 	public void memoirePieceArrivee(Piece P){
 			this.pieceArrivee = P;
 	}
+	
+	// GETTER DEPART / ARRIVEE //
 	
 	public int getDepartC(){
 		return this.departC;
@@ -187,15 +197,17 @@ public class Echiquier {
 		return this.plateauBouton;
 	}
 	
+	// DEPLACEMENT DE LA PIECE A PARTIR DU BOUTON DE DEPART VERS CELUI DONT ON A CLIQUER UNE SECONDE FOIS // 
+	// ATTENTION PLATEAU BOUTON [COLONNE][LIGNE] ET NON PAS [LIGNE][COLONNE] //
+	
 	public void deplacementPiece(int x, int y){
 		
-		/* if(((interfaceValidite) pieceDepart).deplacementValid(boutonArrivee.ligne, boutonArrivee.colonne)){
-			boutonArrivee.setPiece(pieceDepart);
-			boutonDepart.setPiece(null);
-		} */
+		if(((interfaceValidite) pieceDepart).deplacementValid(boutonArrivee.ligne, boutonArrivee.colonne)){
+			this.plateauBouton[departC][departL].setPiece(null);
+			this.plateauBouton[y][x].setPiece(pieceDepart);
+		} 
 		
-		this.plateauBouton[departC][departL].setPiece(null);
-		this.plateauBouton[y][x].setPiece(pieceDepart);
+		
 		
 	} 
 				
