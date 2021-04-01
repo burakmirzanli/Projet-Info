@@ -12,44 +12,36 @@ public class Deplacement{
 		this.arriveeC = arriveeC;
 	}
 	
-	public boolean getValidite(Piece p){
+	public void deplacementFinal(Piece p){
 		
-		boolean v = false;
-		
+		Piece p1 = (Echiquier.plateauBouton[arriveeC][arriveeL]).getPiece();
 
 	
-			if(((interfaceValidite) p).deplacementValid(arriveeL,arriveeC)==true && p==null){
-				
-				v=true;
-				return v;
+			if(((interfaceValidite) p).deplacementValid(arriveeL,arriveeC)==true && p1==null){
+				(Echiquier.plateauBouton[arriveeC][arriveeL]).setPiece(p);
+				(Echiquier.plateauBouton[departC][departL]).setPiece(null);
 			
-			} else { 
-				
-				return v;
-				
-				}
+			
+			}
 		
-			/* else if((interfaceValidite) p).deplacementValid(arriveeL,arriveeC)==true && p!=null  && p.getCouleur()!=p.getCouleur())){
+			else if(((interfaceValidite) p).deplacementValid(arriveeL,arriveeC)==true && p1!=null  && p.getCouleur()!=p1.getCouleur()){
+				(Echiquier.plateauBouton[arriveeC][arriveeL]).setPiece(p);
+				(Echiquier.plateauBouton[departC][departL]).setPiece(null);
 				
-				v=true;
-				return v;
+				
 			}
 			
 			
-			else if((interfaceValidite) p).deplacementValid(arriveeL,arriveeC)==true && ((interfaceValidite) p)!=null  && (interfaceValidite) p).getCouleur()==(interfaceValidite) p).getCouleur())){
-				
-				v=false;
+			else if(((interfaceValidite) p).deplacementValid(arriveeL,arriveeC)==true && p1!=null  && p.getCouleur()==p1.getCouleur()){
 				System.out.println("Déplacement impossible ! Choisis une autre case");
-				return v;
+				
 			}
 			
 			
-			else if((interfaceValidite) p).deplacementValid(arriveeL,arriveeC)==false){
-				
-				v=false;
+			else if(((interfaceValidite) p).deplacementValid(arriveeL,arriveeC)==false){
 				System.out.println("Déplacement impossible ! Choisis une autre case");
-				return v;
-			} */
+				
+			} 
 	}
 }
 	
