@@ -15,10 +15,10 @@ public class Echiquier {
 	public JPanel plateauPanel = new JPanel();
 	private static final String COLS = "ABCDEFGH";
 	
-	private int departL;
-	private int departC;
-    private int arriveeL;
-	private int arriveeC;
+	public static int departL;
+	public static int departC;
+    public static int arriveeL;
+	public static int arriveeC;
 	
 	public Piece pieceDepart;
 	public Piece pieceArrivee;
@@ -200,21 +200,46 @@ public class Echiquier {
 	// DEPLACEMENT DE LA PIECE A PARTIR DU BOUTON DE DEPART VERS CELUI DONT ON A CLIQUER UNE SECONDE FOIS // 
 	// ATTENTION PLATEAU BOUTON [COLONNE][LIGNE] ET NON PAS [LIGNE][COLONNE] //
 	
-	public void deplacementPiece(int x, int y){
-		
-		
-	if(pieceDepart instanceof interfaceValidite){
-		
-		if(((interfaceValidite) pieceDepart).deplacementValid(x, y)){
-			this.plateauBouton[departC][departL].setPiece(null);
-			this.plateauBouton[y][x].setPiece(pieceDepart);
-		} 
-	}	
-	
-		
-	} 
+	/* public void deplacementPiece(int x, int y){
+        
+        
+    if(pieceDepart instanceof interfaceValidite){
+        
+        if(((interfaceValidite) pieceDepart).deplacementValid(x, y)){
+            this.plateauBouton[departC][departL].setPiece(null);
+            this.plateauBouton[y][x].setPiece(pieceDepart);
+        } 
+    }    
+    
+        
+    } */
 				
-   
+   	public void deplacementPiece(int departL, int departC, int arriveeL, int arriveeC){
+				
+			if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceArrivee==null){
+				(Echiquier.plateauBouton[arriveeC][arriveeL]).setPiece(pieceDepart);
+				(Echiquier.plateauBouton[departC][departL]).setPiece(null);
+			}
+		
+			else if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceArrivee!=null  && pieceDepart.getCouleur()!=pieceArrivee.getCouleur()){
+				(Echiquier.plateauBouton[arriveeC][arriveeL]).setPiece(pieceDepart);
+				(Echiquier.plateauBouton[departC][departL]).setPiece(null);
+			}
+			
+			
+			else if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceArrivee!=null  && pieceDepart.getCouleur()==pieceArrivee.getCouleur()){
+				System.out.println("Déplacement impossible ! Choisis une autre case");
+			}
+			
+			
+			else if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==false){
+				System.out.println("Déplacement impossible ! Choisis une autre case");
+			} 
+			
+			else if(pieceDepart == null){
+				System.out.println("Aucune piece ici");
+			}
+	}
 
    
    

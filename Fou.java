@@ -70,14 +70,31 @@ public class Fou extends Piece implements interfaceValidite {
 		String s = super.toString();
 		return s;
 	}
-	public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){		
-		
-		boolean valid = false;
-		
-		if (Math.abs(departL-arriveeL)>=0 && Math.abs(departC-arriveeC)>=0){
-			valid = true;
-		}
-		
-		return valid;
-}
+	public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){        
+        
+        boolean valid = false;
+        //Test de déplacement possible sur la diagonale
+        if (Math.abs(departL-arriveeL)>=0 && Math.abs(departC-arriveeC)>=0){
+            //Test de présence d'une pièce sur la diagonale
+            for(int i = departL+1;i<arriveeL;i++){
+                
+                for(int j = departC+1;j<arriveeC;j++){
+                    
+                    Piece pt =(Echiquier.plateauBouton[j][i]).getPiece();
+                    
+                    if(pt!=null){
+                        
+                        valid=false;
+                    }
+                    
+                    else{
+                        
+                        valid = true;
+                    }
+                }
+            }
+        }
+        
+        return valid;
+    }
 }

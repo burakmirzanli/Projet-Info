@@ -36,14 +36,22 @@ public class EcouteurBouton implements ActionListener{
 		// MISE EN MEMOIRE POSITION DEPART //
 		if(e1.compteurBouton % 2 == 0){
 			e1.memoirePositionDepart(x,y);
+			
 			e1.memoirePieceDepart(p);
+			
 			System.out.println("Position Depart = "+e1.getDepartL()+" ; "+e1.getDepartC()); 
+			
 			e1.compteurBouton++;
+			
 		}else if(e1.compteurBouton % 2 == 1){
 			e1.memoirePositionArrivee(x,y);
+			
 			e1.memoirePieceArrivee(p);
+			
 			System.out.println("Position Arrivee = "+e1.getArriveeL()+" ; "+e1.getArriveeC());
-			e1.deplacementPiece(x,y);
+			
+			e1.deplacementPiece(Echiquier.departL, Echiquier.departC, x, y);
+			
 			e1.compteurBouton++;
 		}
 		System.out.println("Compteur :"+e1.compteurBouton);
