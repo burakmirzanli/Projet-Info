@@ -18,7 +18,7 @@ public class MonBouton extends JButton /* implements ActionListener */ {
       
       
   
-     public MonBouton(int ligne, int colonne,Piece p) {
+    public MonBouton(int ligne, int colonne,Piece p) {
         this.ligne = ligne;
         this.colonne = colonne;
 		this.p=p;

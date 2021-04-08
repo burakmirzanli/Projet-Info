@@ -102,8 +102,13 @@ public class Pion extends Piece implements interfaceValidite{
 					valid = true;
 				}
 			}
-		} 
+		}
+		
 		return valid; 
-	}
+		}
+	
+	
+	
+	
+	
 }
-

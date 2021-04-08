@@ -6,7 +6,7 @@ import javax.swing.border.*;
 
 public class Piece {
 	
-	private String type;
+	public String type;
 	private String couleur;
 	private int ligne;
 	private int colonne;
@@ -37,15 +37,15 @@ public class Piece {
 		this.couleur = c;
 	}
 	
-	public int getligne(){
+	public int getLigne(){
 		return this.ligne;
 	}
 	
-	public int getcolonne(){
+	public int getColonne(){
 		return this.colonne;
 	}
 	
-	public void setligne(int l){
+	public void setLigne(int l){
 		this.ligne=l;
 	}
 	
