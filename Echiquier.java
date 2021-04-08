@@ -15,10 +15,10 @@ public class Echiquier {
 	public JPanel plateauPanel = new JPanel();
 	private static final String COLS = "ABCDEFGH";
 	
-	public static int departL;
-	public static int departC;
-    public static int arriveeL;
-	public static int arriveeC;
+	private int departL;
+	private int departC;
+    private int arriveeL;
+	private int arriveeC;
 	
 	public Piece pieceDepart;
 	public Piece pieceArrivee;
@@ -200,7 +200,6 @@ public class Echiquier {
 	// DEPLACEMENT DE LA PIECE A PARTIR DU BOUTON DE DEPART VERS CELUI DONT ON A CLIQUER UNE SECONDE FOIS // 
 	// ATTENTION PLATEAU BOUTON [COLONNE][LIGNE] ET NON PAS [LIGNE][COLONNE] //
 	
-				
    	public void deplacementPiece(int departL, int departC, int arriveeL, int arriveeC){
 				
 			if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceArrivee==null){
@@ -223,10 +222,47 @@ public class Echiquier {
 				System.out.println("Déplacement impossible ! Choisis une autre case");
 			} 
 			
+			boolean noir = false;
+			boolean blanc = false;
+	
+			int colonneRoi = 0;
+			int ligneRoi = 0;
+			int testEchec = 0; //  0 - > pas d'echec    1 - > echec noir    2 - > echec bl
 			
-	}
-
-   
-   
+			
+			if (pieceDepart.getCouleur().equals("Blanc")){
+				noir = true;
+				for (int i = 0; i < 8; i++){
+					for (int j = 0; j < 8; j++){
+						if (plateauBouton[i][j].getPiece() instanceof Roi && plateauBouton[i][j].getPiece().getCouleur().equals("Noir")){
+							colonneRoi = j;
+							ligneRoi = i;
+							System.out.println(i+"  "+j);
+						}
+					}
+				}
+			}
+			else if (pieceDepart.getCouleur().equals("Noir")){
+				blanc = true;
+				for (int i = 0; i < 8; i++){
+					for (int j = 0; j < 8; j++){
+						if (plateauBouton[i][j].getPiece() instanceof Roi && plateauBouton[i][j].getPiece().getCouleur().equals("Blanc")){
+							colonneRoi = j;
+							ligneRoi = i;
+							System.out.println(i+"  "+j);
+						}
+					}
+				}
+			}
+			
+			if(((interfaceValidite)pieceDepart).deplacementValid(departL, departC, ligneRoi, colonneRoi)){
+					if (noir){
+						testEchec = 1;
+					}
+					if (blanc){
+						testEchec = 2;
+					}
+			} 	
+	} 
 }
 
