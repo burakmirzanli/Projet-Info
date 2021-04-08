@@ -136,10 +136,29 @@ public class Echiquier {
 					Echiquier e = new Echiquier();
 
 					JFrame f = new JFrame("Jeu d'echecs");
-					f.add(e.getInterfaceJeu());
+					f.setLayout(new BorderLayout());
+					f.add(e.getInterfaceJeu(),BorderLayout.CENTER);
+					
+					JLabel labelHaut = new JLabel("Bonjour tu joues aux echecs");
+					JPanel bandeauHaut = new JPanel();
+					JButton boutonReset = new JButton("Renitialisation");
+					boutonReset.setBackground(Color.ORANGE);
+					
+					
+					bandeauHaut.setLayout(new BorderLayout());
+					bandeauHaut.setBorder(new EmptyBorder(20, 20, 20, 20));
+					bandeauHaut.add(labelHaut, BorderLayout.CENTER);
+					bandeauHaut.add(boutonReset, BorderLayout.WEST);
+					
+					f.add(bandeauHaut, BorderLayout.NORTH);
+					
+					
+					
+					
+					
 					f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					f.setLocationByPlatform(true);
-					f.setSize(750,750);
+					f.setSize(1000,1000);
 					
 					f.setMinimumSize(f.getSize());
 					f.setVisible(true);
