@@ -78,14 +78,29 @@ public class Pion extends Piece implements interfaceValidite{
 		MonBouton boutonD = Echiquier.plateauBouton[departC][departL];
 		MonBouton boutonA = Echiquier.plateauBouton[arriveeC][arriveeL];
 		
-		if ((boutonA.getPiece()) != null && !couleur.equals((boutonA.getPiece()).getCouleur())){ //methode de la classe Echequier qui envoie un boolean et l'autre qui renvoie un String couleur
-			if (Math.abs(departL-arriveeL)==1 && Math.abs(departC-arriveeC)==1){
-				valid = true;
+		if(departL-arriveeL<0 && this.couleur=="Noir"){
+			if ((boutonA.getPiece()) != null && !couleur.equals((boutonA.getPiece()).getCouleur())){ //methode de la classe Echequier qui envoie un boolean et l'autre qui renvoie un String couleur
+				if (Math.abs(departL-arriveeL)==1 && Math.abs(departC-arriveeC)==1){
+					valid = true;
+				}
 			}
+			else {
+				if (Math.abs(departL-arriveeL)==1 && Math.abs(departC-arriveeC)==0){
+					valid = true;
+				}
+			} 
 		}
-		else {
-			if (Math.abs(departL-arriveeL)==1 && Math.abs(departC-arriveeC)==0){
-				valid = true;
+			
+		if(departL-arriveeL>0 && this.couleur=="Blanc"){
+			if ((boutonA.getPiece()) != null && !couleur.equals((boutonA.getPiece()).getCouleur())){ //methode de la classe Echequier qui envoie un boolean et l'autre qui renvoie un String couleur
+				if (Math.abs(departL-arriveeL)==1 && Math.abs(departC-arriveeC)==1){
+					valid = true;
+				}
+			}
+			else {
+				if (Math.abs(departL-arriveeL)==1 && Math.abs(departC-arriveeC)==0){
+					valid = true;
+				}
 			}
 		} 
 		return valid; 
