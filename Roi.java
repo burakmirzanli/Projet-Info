@@ -74,9 +74,111 @@ public class Roi extends Piece implements interfaceValidite{
 	public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){		
 		
 		boolean valid = false;
+		boolean c=true;
 		
-		if (Math.abs(departL-arriveeL)==1 || Math.abs(departC-arriveeC)==1){
+		if (Math.abs(departL-arriveeL)>=0 && Math.abs(departC-arriveeC)==0&&(arriveeL==departL+1||arriveeL==departL-1)){ // DEPLACEMENT VERTICAL //
 			valid = true;
+			
+			if (departL < arriveeL) { // DEPLACEMENT VERS LE BAS //	
+				Piece p1= (Echiquier.plateauBouton[departC][departL+1]).getPiece();
+				if (p1 != null && p1.getCouleur()==this.couleur){
+					valid = false;
+				}
+			
+			} else { // DEPLACEMENT VERS LE HAUT //	
+				Piece p1= (Echiquier.plateauBouton[departC][departL-1]).getPiece();
+				if (p1 != null&&p1.getCouleur()==this.couleur){
+						valid = false;
+				}
+			}
+		}
+		
+		if((Math.abs(departL-arriveeL)==0) && Math.abs(departC-arriveeC)>=0&& (arriveeC==departC+1||arriveeC==departC-1)){ // DEPLACEMENT HORIZONTAL//
+			valid = true;
+			
+			if(departC < arriveeC ){ // DEPLACEMENT SUR LA DROITE //
+				Piece p2= (Echiquier.plateauBouton[departC+1][departL]).getPiece();
+				
+				if( p2 != null&&p2.getCouleur()==this.couleur){
+						valid = false;
+					}
+				
+			
+			} else { // DEPLACEMENT SUR LA GAUCHE //
+				Piece p2= (Echiquier.plateauBouton[departC-1][departL]).getPiece();
+				
+				if(p2 != null&&p2.getCouleur()==this.couleur){
+						valid = false;
+				}
+				
+			}
+		
+		}
+		 
+        //TEST DE DEPLACEMENT SUR LA DIAGONALE
+        
+        if(Math.abs(departC-arriveeC)==Math.abs(departL-arriveeL)){
+         
+			if (departL-arriveeL<0 && departC-arriveeC<0 && arriveeL==departL+1&& arriveeC==departC+1){
+				Piece p = (Echiquier.plateauBouton[departC+1][departL+1]).getPiece();
+				if(p!=null&&p.getCouleur()==this.couleur){
+					c=false;
+				}
+			
+				if(c==true){
+					valid=true;
+				}else{
+					valid=false;
+				}
+				
+		   }   
+			 else if (departL-arriveeL>0 && departC-arriveeC>0&& arriveeC==departC-1&& arriveeL==departL-1){  
+				Piece p = (Echiquier.plateauBouton[departC-1][departL-1]).getPiece();
+				if(p!=null && p.getCouleur()== this.couleur){
+					c=false;
+				}
+				
+				if(c==true){
+					valid=true;
+				}else{
+					valid=false;
+				}
+
+			}
+			
+			else if(departL-arriveeL>0 && departC-arriveeC<0&& arriveeC==departC+1&& arriveeL==departL-1){
+				
+				Piece p = (Echiquier.plateauBouton[departC+1][departL-1]).getPiece();
+				if(p!=null&&p.getCouleur()==this.couleur){
+					c=false;
+				}
+				
+				if(c==true){
+					valid=true;
+				}else{
+					valid=false;
+				}
+		
+			}
+			
+			else if(departL-arriveeL<0 && departC-arriveeC>0&& arriveeC==departC-1&& arriveeL==departL+1){
+			
+				Piece p = (Echiquier.plateauBouton[departC-1][departL+1]).getPiece();
+				if(p!=null&&p.getCouleur()==this.couleur){
+					c=false;
+				}
+				
+				if(c==true){
+					valid=true;
+				}else{
+					valid=false;
+				}
+				
+				
+			}
+			
+			
+			
 		}
 		
 		return valid;
