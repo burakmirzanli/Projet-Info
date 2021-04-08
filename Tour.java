@@ -64,11 +64,48 @@ public class Tour extends Piece implements interfaceValidite{
 		return s;
 	}
 	
-	public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){		
+	public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){	
 		boolean valid = false;
-		if ((Math.abs(departL-arriveeL)>=0 && Math.abs(departC-arriveeC)==0) || (Math.abs(departL-arriveeL)==0 && Math.abs(departC-arriveeC)>=0)){
+		
+		if (Math.abs(departL-arriveeL)>=0 && Math.abs(departC-arriveeC)==0){ // DEPLACEMENT VERTICAL //
 			valid = true;
+			
+			if (departL < arriveeL) { // DEPLACEMENT VERS LE BAS //	
+			
+				for (int i = departL + 1; i < arriveeL; i++)
+					if ((Echiquier.plateauBouton[departC][i]).getPiece() != null)
+						valid = false;
+			
+			} else { // DEPLACEMENT VERS LE HAUT //	
+			
+				for (int i = departL - 1; i > arriveeL; i--)
+					if ((Echiquier.plateauBouton[departC][i]).getPiece() != null)
+						valid = false;
+			}
+		}
+		
+		if((Math.abs(departL-arriveeL)==0) && Math.abs(departC-arriveeC)>=0){ // DEPLACEMENT HORIZONTAL//
+			valid = true;
+			
+			if(departC < arriveeC){ // DEPLACEMENT SUR LA DROITE //
+				
+				for(int i=departC+1 ; i<arriveeC; i++){
+					if((Echiquier.plateauBouton[i][departL]).getPiece() != null){
+						valid = false;
+					}
+				}
+			
+			} else { // DEPLACEMENT SUR LA GAUCHE //
+				
+				for(int i=departC-1 ; i>arriveeC; i--){
+					if((Echiquier.plateauBouton[i][departL]).getPiece() != null){
+						valid = false;
+					}
+				}
+			}
+		
 		}
 		return valid;
 	}
 }
+
