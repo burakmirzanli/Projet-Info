@@ -73,28 +73,105 @@ public class Fou extends Piece implements interfaceValidite {
 	public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){        
         
         boolean valid = false;
-        //Test de déplacement possible sur la diagonale
-        if (Math.abs(departL-arriveeL)>=0 && Math.abs(departC-arriveeC)>=0){
-            //Test de présence d'une pièce sur la diagonale
-            for(int i = departL+1;i<arriveeL;i++){
-                
-                for(int j = departC+1;j<arriveeC;j++){
-                    
-                    Piece pt =(Echiquier.plateauBouton[j][i]).getPiece();
-                    
-                    if(pt!=null){
-                        
-                        valid=false;
-                    }
-                    
-                    else{
-                        
-                        valid = true;
-                    }
-                }
-            }
-        }
+        boolean c=true;
+        //TEST DE DEPLACEMENT SUR LA DIAGONALE
         
+        if(Math.abs(departC-arriveeC)==Math.abs(departL-arriveeL)){
+         
+			if (departL-arriveeL<0 && departC-arriveeC<0){
+				
+				
+				for(int i=1;(i<arriveeC)&&(i<arriveeL);i++){
+					if((departL+i)<7 && (departC+i)<7){
+						Piece p = (Echiquier.plateauBouton[departC+i][departL+i]).getPiece();
+						if(p!=null&&p.getCouleur()==this.couleur){
+							c=false;
+						}
+					}
+				}
+				
+				if(c==true){
+					valid=true;
+				}else{
+					valid=false;
+				}
+				
+			 }   
+			 else if (departL-arriveeL>0 && departC-arriveeC>0){  
+				int j = departL-1;
+				for(int i=departC-1;i>arriveeC;i--){
+					if(j>arriveeL){
+						if(j>=0 && i>=0){
+							Piece p = (Echiquier.plateauBouton[i][j]).getPiece();
+							if(p!=null && p.getCouleur()== this.couleur){
+								c=false;
+							}
+						}
+						j--;
+					}
+				}
+				
+				if(c==true){
+					valid=true;
+				}else{
+					valid=false;
+				}
+
+			}
+			
+			else if(departL-arriveeL>0 && departC-arriveeC<0){
+				
+				int j=departL-1;;
+				for(int i=departC+1;i<arriveeC;i++){
+					if(j>arriveeL){
+					
+						if(j>=0 && i<7){
+							Piece p = (Echiquier.plateauBouton[i][j]).getPiece();
+							if(p!=null&&p.getCouleur()==this.couleur){
+								c=false;
+							}
+						}
+						j--;
+					}
+				}
+				
+				if(c==true){
+					valid=true;
+				}else{
+					valid=false;
+				}
+		
+			}
+			
+			else if(departL-arriveeL<0 && departC-arriveeC>0){
+				int j=departC-1;
+				for(int i=departL+1;i<arriveeL;i++){
+					if(j>arriveeC){
+					
+						if(i<7 && j>=0){
+							Piece p = (Echiquier.plateauBouton[j][i]).getPiece();
+							if(p!=null&&p.getCouleur()==this.couleur){
+								c=false;
+							}
+						}
+						j--;
+					}
+				}
+				
+				if(c==true){
+					valid=true;
+				}else{
+					valid=false;
+				}
+				
+				
+			}
+			
+			
+			
+		}
         return valid;
+        
     }
+    
 }
