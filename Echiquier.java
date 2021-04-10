@@ -1,3 +1,4 @@
+  
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
@@ -147,6 +148,7 @@ public class Echiquier {
 					
 					JLabel labelHaut = new JLabel("Bonjour tu joues aux echecs");
 					JButton boutonReset = new JButton("Renitialisation");
+					boutonReset.addActionListener(new EcouteurBoutonReset(e,boutonReset)) ;
 					JLabel tpsRestB = new JLabel("Temps restant blancs");
 					JLabel tpsRestN = new JLabel("Temps restant noirs");
 					JTextField tpsB = new JTextField(15);
@@ -285,4 +287,3 @@ public class Echiquier {
    
    
 }
-

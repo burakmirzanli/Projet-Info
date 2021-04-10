@@ -5,8 +5,7 @@ public class EcouteurBouton implements ActionListener{
 	
 	private Echiquier e1;
 	private MonBouton b;
-	private Deplacement d;
-	//private Joueur j
+
 	
 
 	
