@@ -52,7 +52,7 @@ public class Echiquier {
                 b.setMargin(buttonMargin);
                 // Les pièces de notre échequier feront 64*64 pixel donc on rempli
                 // les cases (boutons) de notre plateau par des images vides
-                ImageIcon icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
+                ImageIcon icon = new ImageIcon(new BufferedImage(64,64, BufferedImage.TYPE_INT_ARGB));
                 b.setIcon(icon);
                 if ((jj % 2 == 1 && ii % 2 == 1)
                         //) {
@@ -134,25 +134,37 @@ public class Echiquier {
 			@Override
 				public void run() {
 					Echiquier e = new Echiquier();
-
+					
 					JFrame f = new JFrame("Jeu d'echecs");
 					f.setLayout(new BorderLayout());
 					f.add(e.getInterfaceJeu(),BorderLayout.CENTER);
 					
+					
+					JPanel bandeauHaut = new JPanel(new FlowLayout());
+					
+					
+					//bandeauHaut.setBackground(new Color(116,78,69));
+					
 					JLabel labelHaut = new JLabel("Bonjour tu joues aux echecs");
-					JPanel bandeauHaut = new JPanel();
 					JButton boutonReset = new JButton("Renitialisation");
+					JLabel tpsRestB = new JLabel("Temps restant blancs");
+					JLabel tpsRestN = new JLabel("Temps restant noirs");
+					JTextField tpsB = new JTextField(15);
+					JTextField tpsN = new JTextField(15);
+					
+				
+					bandeauHaut.setBorder(new EmptyBorder(20,20,20,20));
+					bandeauHaut.add(labelHaut);
+					bandeauHaut.add(new JLabel("                                                                    "));
+					bandeauHaut.add(tpsRestB);
+					bandeauHaut.add(tpsB);
+					bandeauHaut.add(tpsRestN);
+					bandeauHaut.add(tpsN);
+					bandeauHaut.add(new JLabel("                                                                  "));
+					bandeauHaut.add(boutonReset);
 					boutonReset.setBackground(Color.ORANGE);
 					
-					
-					bandeauHaut.setLayout(new BorderLayout());
-					bandeauHaut.setBorder(new EmptyBorder(20, 20, 20, 20));
-					bandeauHaut.add(labelHaut, BorderLayout.CENTER);
-					bandeauHaut.add(boutonReset, BorderLayout.WEST);
-					
 					f.add(bandeauHaut, BorderLayout.NORTH);
-					
-					
 					
 					
 					
