@@ -7,7 +7,7 @@ import javax.swing.border.*;
 public class Piece {
 	
 	public String type;
-	private String couleur;
+	public String couleur;
 	private int ligne;
 	private int colonne;
 	private ImageIcon icon;
@@ -23,6 +23,10 @@ public class Piece {
 	public Piece (String type, String couleur){
 		this.type = type;
 		this.couleur = couleur;
+	}
+	
+	public String getType(){
+		return this.type;
 	}
 	
 	public ImageIcon getIcon(){

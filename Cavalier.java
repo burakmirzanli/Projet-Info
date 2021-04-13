@@ -6,7 +6,7 @@ import javax.swing.border.*;
 
 public class Cavalier extends Piece implements interfaceValidite{
 	
-	private String couleur;
+	public String couleur;
 	private int ligne;
 	private int colonne;
 	private ImageIcon icon;

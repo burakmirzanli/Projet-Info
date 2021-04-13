@@ -8,7 +8,7 @@ import javax.swing.border.*;
 
 public class Tour extends Piece implements interfaceValidite{
 	
-	private String couleur;
+	public String couleur;
 	private int colonne;
 	private int ligne;
 	private ImageIcon icon;

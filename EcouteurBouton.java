@@ -22,18 +22,19 @@ public class EcouteurBouton implements ActionListener{
 		Piece p = b.getPiece();
 		
 		if(p!=null){
+			System.out.println("--------------------------------------");
 			System.out.println("Case ligne : " + x + " colonne : " + y );
 			System.out.println("Cette piece est " + p.toString());
-			System.out.println(".......");
 			
 		}else{
+			System.out.println("--------------------------------------");
 			System.out.println("Case ligne : " + x + " colonne : " + y );
 			System.out.println("Il n'y a pas de piece");
-			System.out.println(".......");
 		}
 		
+		
 		// MISE EN MEMOIRE POSITION DEPART //
-		if(e1.compteurBouton % 2 == 0){
+		if(e1.getCompteurBouton() % 2 == 0){
 			if(p !=null){
 			e1.memoirePositionDepart(x,y);
 			
@@ -41,21 +42,22 @@ public class EcouteurBouton implements ActionListener{
 			
 			System.out.println("Position Depart = "+e1.getDepartL()+" ; "+e1.getDepartC()); 
 			
-			e1.compteurBouton++;
+			e1.CompteurBoutonIncrements();
 			}
-		}else if(e1.compteurBouton % 2 == 1){
+		// MISE EN MEMOIRE POSITION ARRIVEE ET TEST DEPLACEMENT POSSIBLE //
+		}else if(e1.getCompteurBouton() % 2 == 1){
 			e1.memoirePositionArrivee(x,y);
 			
 			e1.memoirePieceArrivee(p);
 			
 			System.out.println("Position Arrivee = "+e1.getArriveeL()+" ; "+e1.getArriveeC());
 			
-			e1.deplacementPiece(Echiquier.departL, Echiquier.departC, x, y);
+			e1.deplacementPiece(e1.getDepartL(), e1.getDepartC(), x, y);
 			
-			e1.compteurBouton++;
+			e1.CompteurBoutonIncrements();
 		}
-		System.out.println("Compteur :"+e1.compteurBouton);
-		
+		System.out.println("Compteur :"+e1.getCompteurBouton());
+		System.out.println("CompteurJoueur :"+e1.getCompteurBoutonJoueur());
 	}
 	
 
