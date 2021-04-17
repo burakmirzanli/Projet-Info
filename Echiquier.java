@@ -30,7 +30,7 @@ public class Echiquier {
 	
 	public int compteurBouton;
 	
-	public int compteurBoutonJoueur;
+	public int compteurBoutonJoueur=0;
 
 	public Piece piece;
 	
@@ -135,7 +135,7 @@ public class Echiquier {
         }
         
         
-        
+        /*
         // - CREATION DU CHRONOMETRE - //
 		// - ACTION REALISER PAR LE TIMER BLANC - //
 		tache_timerB= new ActionListener()
@@ -187,7 +187,7 @@ public class Echiquier {
 		Timer timerB= new Timer(delais,tache_timerB);
 		Timer timerN= new Timer(delais,tache_timerN);
 		timerB.start();
-		timerN.start();
+		timerN.start();*/
 		
 	}
 	
@@ -355,15 +355,63 @@ public class Echiquier {
 				
    	public void deplacementPiece(int departL, int departC, int arriveeL, int arriveeC){
 		boolean couleurValid = false;
+		tache_timerB= new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e1)
+			{
+				secondeB++;
+				if(secondeB==60)
+				{
+					secondeB=0;
+					minuteB++;
+				}
+				if(minuteB==60)
+				{
+					minuteB=0;
+					heureB++;
+				}
+				// - RAFRAICHIR LE CHRONO - //
+				tpsB.setText(heureB+":"+minuteB+":"+secondeB);
+				
+			}
+		};
+		// - ACTION REALISER PAR LE TIMER NOIR - //
+		tache_timerN= new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e1)
+			{
+				secondeN++;
+				if(secondeN==60)
+				{
+					secondeN=0;
+					minuteN++;
+				}
+				if(minuteN==60)
+				{
+					minuteN=0;
+					heureN++;
+				}
+				// - RAFRAICHIR LE CHRONO - //
+				tpsN.setText(heureN+":"+minuteN+":"+secondeN);
+				
+			}
+		};
+		
+		Timer timerB= new Timer(delais,tache_timerB);
+		Timer timerN= new Timer(delais,tache_timerN);
 		
 		if(pieceDepart.getCouleur() == "Blanc" && compteurBoutonJoueur % 2 == 0){		
 			couleurValid = true;
+			timerB.start();
 		}else if(pieceDepart.getCouleur() == "Noir" && compteurBoutonJoueur % 2 == 1){
 			couleurValid = true;
+			timerN.start();
+			
 		}else{
 			couleurValid = false;
 			System.out.println("Ce n'est pas le tour de cette couleur");
 		}
+		
 		
 		
 		if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceArrivee==null && couleurValid == true){
