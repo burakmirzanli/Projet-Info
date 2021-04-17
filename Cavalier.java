@@ -6,16 +6,18 @@ import javax.swing.border.*;
 
 public class Cavalier extends Piece implements interfaceValidite{
 	
-	public String couleur;
+	private String couleur;
 	private int ligne;
 	private int colonne;
 	private ImageIcon icon;
+	private Echiquier e1;
 	
-	public Cavalier (String couleur, int ligne, int colonne){
-		super ("Cavalier", couleur, ligne, colonne);
+	public Cavalier (String couleur, int ligne, int colonne, Echiquier e1){
+		super ("Cavalier", couleur, ligne, colonne, e1);
 		this.couleur = couleur;
 		this.ligne = ligne;
 		this.colonne = colonne;
+		this.e1 = e1;
 		// - CREATION IMAGE DES PIECES - //
         if(this.couleur == "Noir"){
 			ImageIcon icon = new ImageIcon(Echiquier.class.getResource("image/CN.png"));

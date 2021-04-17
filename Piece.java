@@ -6,19 +6,21 @@ import javax.swing.border.*;
 
 public class Piece {
 	
-	public String type;
-	public String couleur;
+	private String type;
+	private String couleur;
 	private int ligne;
 	private int colonne;
 	private ImageIcon icon;
+	private Echiquier e1;
 	
-	public Piece (String type, String couleur, int ligne, int colonne){
+	public Piece (String type, String couleur, int ligne, int colonne, Echiquier e1){
 		this.type = type;
 		this.couleur = couleur;
 		this.ligne = ligne;
 		this.colonne = colonne;
 		icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
 		this.icon = icon;
+		this.e1 = e1;
 	}
 	public Piece (String type, String couleur){
 		this.type = type;

@@ -56,7 +56,7 @@ public class EcouteurBouton implements ActionListener{
 			
 			e1.CompteurBoutonIncrements();
 		}
-		System.out.println("Compteur :"+e1.getCompteurBouton());
+		System.out.println("CompteurClic :"+e1.getCompteurBouton());
 		System.out.println("CompteurJoueur :"+e1.getCompteurBoutonJoueur());
 	}
 	

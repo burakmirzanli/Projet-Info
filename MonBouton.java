@@ -51,7 +51,4 @@ public class MonBouton extends JButton /* implements ActionListener */ {
 	}
 
 	
-    /* public void ActionPerform(ActionEvent e) {
-		
-    } */
 }

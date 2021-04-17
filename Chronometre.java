@@ -18,10 +18,12 @@ public class Chronometre {
     public static int heureN=0, minuteN=0, secondeN=0;
     public static final JLabel tpsB = new JLabel(heureB+":"+minuteB+":"+secondeB);
 	public static final JLabel tpsN = new JLabel(heureN+":"+minuteN+":"+secondeN);
+	public static Timer timerN;
+	public static Timer timerB;
 	
 	public static void main (String[] args) {
 		
-		// - CREATION DU CHRONOMETRE - //
+				// - CREATION DU CHRONOMETRE - //
 		// - ACTION REALISER PAR LE TIMER BLANC - //
 		tache_timerB= new ActionListener()
 		{
@@ -65,15 +67,17 @@ public class Chronometre {
 			}
 		};
 		
-	
-		
 		// - INSTANCIATION DES TIMER - //
 		
-		Timer timerB= new Timer(delais,tache_timerB);
-		Timer timerN= new Timer(delais,tache_timerN);
-		timerB.start();
-		timerN.start();
+		final Timer timerB= new Timer(delais,tache_timerB);
+		final Timer timerN= new Timer(delais,tache_timerN);
 		
+		// - FIN CODE CHRONO - //
+		
+
+		
+		
+
 	}
 	
 	public JLabel getTpsB(){
@@ -84,12 +88,5 @@ public class Chronometre {
 		return this.tpsN;
 	}
 	
-	/* public void resetTimerB(){
-	    timerB.cancel();
-    }
-    
-    public void resetTimerN(){
-		timerN.cancel();
-	} */
 }
 

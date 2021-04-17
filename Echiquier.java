@@ -1,12 +1,12 @@
  
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import javax.swing.*;
 import javax.swing.border.*;
 import java.lang.*;
-import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.event.*;
+import javax.swing.*;
+
 
 
 
@@ -34,16 +34,12 @@ public class Echiquier {
 
 	private Piece piece;
 	
+	public static int heureB=0, minuteB=0, secondeB=0;
+    public static int heureN=0, minuteN=0, secondeN=0;
+    
+    public static final JLabel tpsB = new JLabel(heureB+":"+minuteB+":"+secondeB);
+	public static final JLabel tpsN = new JLabel(heureN+":"+minuteN+":"+secondeN);
 	
-	private static final int delais=1000;
-	private static ActionListener tache_timerB;
-	private static ActionListener tache_timerN;
-    private static int heureB=0, minuteB=0, secondeB=0;
-    private static int heureN=0, minuteN=0, secondeN=0;
-    private static final JLabel tpsB = new JLabel(heureB+":"+minuteB+":"+secondeB);
-	private static final JLabel tpsN = new JLabel(heureN+":"+minuteN+":"+secondeN);
-	private Timer timerB = new Timer(delais, tache_timerB);
-	private Timer timerN = new Timer(delais, tache_timerN);
 	
 	
 	Echiquier() {
@@ -89,30 +85,30 @@ public class Echiquier {
       
        // - INITIALISATION PLATEAU AVEC PIECES - //
        
-       plateauBouton[0][0].setPiece(new Tour("Noir",0,0));
-	   plateauBouton[1][0].setPiece(new Cavalier("Noir",0,1));
-       plateauBouton[2][0].setPiece(new Fou("Noir",0,2));
-       plateauBouton[3][0].setPiece(new Dame("Noir",0,3));
-       plateauBouton[4][0].setPiece(new Roi("Noir",0,4));
-       plateauBouton[5][0].setPiece(new Fou("Noir",0,5));
-       plateauBouton[6][0].setPiece(new Cavalier("Noir",0,6));
-       plateauBouton[7][0].setPiece(new Tour("Noir",0,7));
+       plateauBouton[0][0].setPiece(new Tour("Noir",0,0,this));
+	   plateauBouton[1][0].setPiece(new Cavalier("Noir",0,1,this));
+       plateauBouton[2][0].setPiece(new Fou("Noir",0,2,this));
+       plateauBouton[3][0].setPiece(new Dame("Noir",0,3,this));
+       plateauBouton[4][0].setPiece(new Roi("Noir",0,4,this));
+       plateauBouton[5][0].setPiece(new Fou("Noir",0,5,this));
+       plateauBouton[6][0].setPiece(new Cavalier("Noir",0,6,this));
+       plateauBouton[7][0].setPiece(new Tour("Noir",0,7,this));
        
        for(int i =0; i<8;i++){
-		plateauBouton[i][1].setPiece(new Pion("Noir",0,i));
+		plateauBouton[i][1].setPiece(new Pion("Noir",0,i,this));
        } 
        
-       plateauBouton[0][7].setPiece(new Tour("Blanc",7,0));
-       plateauBouton[1][7].setPiece(new Cavalier("Blanc",7,1));
-       plateauBouton[2][7].setPiece(new Fou("Blanc",7,2));
-       plateauBouton[3][7].setPiece(new Dame("Blanc",7,3));
-       plateauBouton[4][7].setPiece(new Roi("Blanc",7,4));
-       plateauBouton[5][7].setPiece(new Fou("Blanc",7,5));
-       plateauBouton[6][7].setPiece(new Cavalier("Blanc",7,6));
-       plateauBouton[7][7].setPiece(new Tour("Blanc",7,7));
+       plateauBouton[0][7].setPiece(new Tour("Blanc",7,0,this));
+       plateauBouton[1][7].setPiece(new Cavalier("Blanc",7,1,this));
+       plateauBouton[2][7].setPiece(new Fou("Blanc",7,2,this));
+       plateauBouton[3][7].setPiece(new Dame("Blanc",7,3,this));
+       plateauBouton[4][7].setPiece(new Roi("Blanc",7,4,this));
+       plateauBouton[5][7].setPiece(new Fou("Blanc",7,5,this));
+       plateauBouton[6][7].setPiece(new Cavalier("Blanc",7,6,this));
+       plateauBouton[7][7].setPiece(new Tour("Blanc",7,7,this));
        
        for(int i =0; i<8;i++){
-		plateauBouton[i][6].setPiece(new Pion("Blanc",6,i));
+		plateauBouton[i][6].setPiece(new Pion("Blanc",6,i,this));
        }
        
        
@@ -134,8 +130,10 @@ public class Echiquier {
             }
         }
         
+        
 		
 	}
+	
 	
 	// - LANCEMENT DE L'INTERFACE ET DU JEU - //
 	
@@ -199,34 +197,46 @@ public class Echiquier {
 		   }
 	   }
 
-	   plateauBouton[0][0].setPiece(new Tour("Noir",0,0));
-	   plateauBouton[1][0].setPiece(new Cavalier("Noir",0,1));
-       plateauBouton[2][0].setPiece(new Fou("Noir",0,2));
-       plateauBouton[3][0].setPiece(new Dame("Noir",0,3));
-       plateauBouton[4][0].setPiece(new Roi("Noir",0,4));
-       plateauBouton[5][0].setPiece(new Fou("Noir",0,5));
-       plateauBouton[6][0].setPiece(new Cavalier("Noir",0,6));
-       plateauBouton[7][0].setPiece(new Tour("Noir",0,7));
+	   plateauBouton[0][0].setPiece(new Tour("Noir",0,0,this));
+	   plateauBouton[1][0].setPiece(new Cavalier("Noir",0,1,this));
+       plateauBouton[2][0].setPiece(new Fou("Noir",0,2,this));
+       plateauBouton[3][0].setPiece(new Dame("Noir",0,3,this));
+       plateauBouton[4][0].setPiece(new Roi("Noir",0,4,this));
+       plateauBouton[5][0].setPiece(new Fou("Noir",0,5,this));
+       plateauBouton[6][0].setPiece(new Cavalier("Noir",0,6,this));
+       plateauBouton[7][0].setPiece(new Tour("Noir",0,7,this));
        
        for(int i =0; i<8;i++){
-		Echiquier.plateauBouton[i][1].setPiece(new Pion("Noir",0,i));
+		plateauBouton[i][1].setPiece(new Pion("Noir",0,i,this));
        } 
        
-       plateauBouton[0][7].setPiece(new Tour("Blanc",7,0));
-       plateauBouton[1][7].setPiece(new Cavalier("Blanc",7,1));
-       plateauBouton[2][7].setPiece(new Fou("Blanc",7,2));
-       plateauBouton[3][7].setPiece(new Dame("Blanc",7,3));
-       plateauBouton[4][7].setPiece(new Roi("Blanc",7,4));
-       plateauBouton[5][7].setPiece(new Fou("Blanc",7,5));
-       plateauBouton[6][7].setPiece(new Cavalier("Blanc",7,6));
-       plateauBouton[7][7].setPiece(new Tour("Blanc",7,7));
+       plateauBouton[0][7].setPiece(new Tour("Blanc",7,0,this));
+       plateauBouton[1][7].setPiece(new Cavalier("Blanc",7,1,this));
+       plateauBouton[2][7].setPiece(new Fou("Blanc",7,2,this));
+       plateauBouton[3][7].setPiece(new Dame("Blanc",7,3,this));
+       plateauBouton[4][7].setPiece(new Roi("Blanc",7,4,this));
+       plateauBouton[5][7].setPiece(new Fou("Blanc",7,5,this));
+       plateauBouton[6][7].setPiece(new Cavalier("Blanc",7,6,this));
+       plateauBouton[7][7].setPiece(new Tour("Blanc",7,7,this));
        
        for(int i =0; i<8;i++){
-		plateauBouton[i][6].setPiece(new Pion("Blanc",6,i));
+		plateauBouton[i][6].setPiece(new Pion("Blanc",6,i,this));
        }
        
        compteurBouton=0;
        compteurBoutonJoueur=0;
+       
+       /* timerB.stop();
+       timerN.stop();
+       
+       heureB=0;
+       minuteB=0;
+       secondeB=0;
+       
+       heureN=0;
+       minuteN=0;
+       secondeN=0; */
+       
 	    
 	}
 	
@@ -308,8 +318,11 @@ public class Echiquier {
    	public void deplacementPiece(int departL, int departC, int arriveeL, int arriveeC){
 		boolean couleurValid = false;
 		
-		// - CREATION DU CHRONOMETRE - //
-		// - ACTION REALISER PAR LE TIMER BLANC - //
+		int delais=1000;
+		
+		ActionListener tache_timerB;
+		ActionListener tache_timerN;
+		
 		tache_timerB= new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e1)
@@ -352,17 +365,21 @@ public class Echiquier {
 			}
 		};
 		
-		Timer timerB= new Timer(delais,tache_timerB);
-		Timer timerN= new Timer(delais,tache_timerN);
-		
-		// - FIN CODE CHRONO - //
+		final Timer timerB= new Timer(delais,tache_timerB);
+		final Timer timerN= new Timer(delais,tache_timerN);
+
+		if(compteurBoutonJoueur % 2 == 1){
+				timerB.restart();
+				timerN.stop();
+		}else if (compteurBoutonJoueur % 2 == 0){
+				timerN.restart();
+				timerB.stop();
+		}
 		
 		if(pieceDepart.getCouleur() == "Blanc" && compteurBoutonJoueur % 2 == 0){		
 			couleurValid = true;
-			timerB.start();
 		}else if(pieceDepart.getCouleur() == "Noir" && compteurBoutonJoueur % 2 == 1){
 			couleurValid = true;
-			timerN.start();
 			
 		}else{
 			couleurValid = false;
@@ -374,7 +391,14 @@ public class Echiquier {
 		if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceArrivee==null && couleurValid == true){
 			(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDepart);
 			(plateauBouton[departC][departL]).setPiece(null);
-			compteurBoutonJoueur++;
+			
+			// - LE DEPLACEMENT EST VALIDE CHANGEMENT DE JOUEUR - PAIR = BLANC IMPAIR = NOIR - //
+			
+			compteurBoutonJoueur++; 
+			
+			
+			
+			
 			if(pieceDepart.getType() == "Pion" ){
 				promotionPion(plateauBouton[arriveeC][arriveeL]);
 			}
@@ -384,7 +408,13 @@ public class Echiquier {
 		else if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceArrivee!=null  && pieceDepart.getCouleur()!=pieceArrivee.getCouleur() && couleurValid == true){
 			(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDepart);
 			(plateauBouton[departC][departL]).setPiece(null);
-			compteurBoutonJoueur++;
+			
+			// - LE DEPLACEMENT EST VALIDE CHANGEMENT DE JOUEUR - PAIR = BLANC IMPAIR = NOIR - //
+			
+			compteurBoutonJoueur++; 
+			
+
+			
 			if(pieceDepart.getType() == "Pion"){
 				promotionPion(plateauBouton[arriveeC][arriveeL]);
 			}
@@ -401,6 +431,9 @@ public class Echiquier {
 			System.out.println("Déplacement impossible ! Choisis une autre case");
 		} 
 		
+		
+		
+		
 	}
 			
 			
@@ -413,24 +446,17 @@ public class Echiquier {
 		
 			if((b.getPiece()).getCouleur()=="Blanc"){ // - TEST COULEUR PIECE - //
 				
-				b.setPiece(new Dame("Blanc",b.getL(),b.getC())); // - PROMOTION EN DAME BLANCHE - //
+				b.setPiece(new Dame("Blanc",b.getL(),b.getC(),this)); // - PROMOTION EN DAME BLANCHE - //
 				
 			} else if((b.getPiece()).getCouleur()=="Noir"){ // - TEST COULEUR PIECE - //
 				
-				b.setPiece(new Dame("Noir",b.getL(),b.getC())); // - PROMOTION EN DAME NOIR - //
+				b.setPiece(new Dame("Noir",b.getL(),b.getC(),this)); // - PROMOTION EN DAME NOIR - //
 				
 			}
 		}
 	
 	}
 	
-	// - METHODE CHRONOMETRE - //
-    public void resetTimerB(){
-	    timerB.restart();
-    }
-    
-    public void resetTimerN(){
-		timerN.restart();
-	}
+
    
 }

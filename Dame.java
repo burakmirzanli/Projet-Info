@@ -7,16 +7,18 @@ import javax.swing.border.*;
 
 public class Dame extends Piece implements interfaceValidite {
 	
-	public String couleur;
+	private String couleur;
 	private int ligne;
 	private int colonne;
 	private ImageIcon icon;
+	private Echiquier e1;
 	
-	public Dame (String couleur, int ligne, int colonne){
-		super ("Dame", couleur, ligne, colonne);
+	public Dame (String couleur, int ligne, int colonne, Echiquier e1){
+		super ("Dame", couleur, ligne, colonne, e1);
 		this.couleur = couleur;
 		this.ligne = ligne;
 		this.colonne = colonne;
+		this.e1 = e1;
 		// - CREATION IMAGE DES PIECES - //
         if(this.couleur == "Noir"){
 			ImageIcon icon = new ImageIcon(Echiquier.class.getResource("image/DN.png"));
@@ -82,13 +84,13 @@ public class Dame extends Piece implements interfaceValidite {
 			if (departL < arriveeL) { // DEPLACEMENT VERS LE BAS //	
 			
 				for (int i = departL + 1; i < arriveeL; i++)
-					if (((e1.getBoutonPlateau())[departC][i]).getPiece() != null)
+					if (((e1.getBoutonPlateau(departC,i))).getPiece() != null)
 						valid = false;
 			
 			} else { // DEPLACEMENT VERS LE HAUT //	
 			
 				for (int i = departL - 1; i > arriveeL; i--)
-					if (((e1.getBoutonPlateau())[departC][i]).getPiece() != null)
+					if (((e1.getBoutonPlateau(departC,i))).getPiece() != null)
 						valid = false;
 			}
 		}
@@ -99,7 +101,7 @@ public class Dame extends Piece implements interfaceValidite {
 			if(departC < arriveeC){ // DEPLACEMENT SUR LA DROITE //
 				
 				for(int i=departC+1 ; i<arriveeC; i++){
-					if(((e1.getBoutonPlateau())[i][departL]).getPiece() != null){
+					if(((e1.getBoutonPlateau(i, departL))).getPiece() != null){
 						valid = false;
 					}
 				}
@@ -107,7 +109,7 @@ public class Dame extends Piece implements interfaceValidite {
 			} else { // DEPLACEMENT SUR LA GAUCHE //
 				
 				for(int i=departC-1 ; i>arriveeC; i--){
-					if(((e1.getBoutonPlateau())[i][departL]).getPiece() != null){
+					if(((e1.getBoutonPlateau(i, departL))).getPiece() != null){
 						valid = false;
 					}
 				}
@@ -124,7 +126,7 @@ public class Dame extends Piece implements interfaceValidite {
 				
 				for(int i=1;(i<arriveeC)&&(i<arriveeL);i++){
 					if((departL+i)<7 && (departC+i)<7){
-						Piece p = ((e1.getBoutonPlateau())[departC+i][departL+i]).getPiece();
+						Piece p = ((e1.getBoutonPlateau(departC+i,departL+i))).getPiece();
 						if(p!=null&&p.getCouleur()==this.couleur){
 							c=false;
 						}
@@ -143,7 +145,7 @@ public class Dame extends Piece implements interfaceValidite {
 				for(int i=departC-1;i>arriveeC;i--){
 					if(j>arriveeL){
 						if(j>=0 && i>=0){
-							Piece p = ((e1.getBoutonPlateau())[i][j]).getPiece();
+							Piece p = ((e1.getBoutonPlateau(i,j))).getPiece();
 							if(p!=null && p.getCouleur()== this.couleur){
 								c=false;
 							}
@@ -167,7 +169,7 @@ public class Dame extends Piece implements interfaceValidite {
 					if(j>arriveeL){
 					
 						if(j>=0 && i<7){
-							Piece p = ((e1.getBoutonPlateau())[i][j]).getPiece();
+							Piece p = ((e1.getBoutonPlateau(i,j))).getPiece();
 							if(p!=null&&p.getCouleur()==this.couleur){
 								c=false;
 							}
@@ -190,7 +192,7 @@ public class Dame extends Piece implements interfaceValidite {
 					if(j>arriveeC){
 					
 						if(i<7 && j>=0){
-							Piece p = ((e1.getBoutonPlateau())[j][i]).getPiece();
+							Piece p = ((e1.getBoutonPlateau(j,i))).getPiece();
 							if(p!=null&&p.getCouleur()==this.couleur){
 								c=false;
 							}

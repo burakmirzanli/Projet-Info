@@ -7,16 +7,18 @@ import javax.swing.border.*;
 
 public class Roi extends Piece implements interfaceValidite{
 	
-	public String couleur;
+	private String couleur;
 	private int ligne;
 	private int colonne;
 	private ImageIcon icon;
+	private Echiquier e1;
 	
-	public Roi (String couleur, int ligne, int colonne){
-		super ("Roi", couleur, ligne, colonne);
+	public Roi (String couleur, int ligne, int colonne, Echiquier e1){
+		super ("Roi", couleur, ligne, colonne, e1);
 		this.couleur = couleur;
 		this.ligne = ligne;
 		this.colonne = colonne;
+		this.e1 = e1;
 		// - CREATION IMAGE DES PIECES - //
         if(this.couleur == "Noir"){
 			ImageIcon icon = new ImageIcon(Echiquier.class.getResource("image/RN.png"));
@@ -71,7 +73,7 @@ public class Roi extends Piece implements interfaceValidite{
 		String s = super.toString();
 		return s;
 	}
-	public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){		
+public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){		
 		
 		boolean valid = false;
 		boolean c=true;
@@ -80,13 +82,13 @@ public class Roi extends Piece implements interfaceValidite{
 			valid = true;
 			
 			if (departL < arriveeL) { // DEPLACEMENT VERS LE BAS //	
-				Piece p1= ((e1.getBoutonPlateau())[departC][departL+1]).getPiece();
+				Piece p1= (e1.getBoutonPlateau(departC,departL+1)).getPiece();
 				if (p1 != null && p1.getCouleur()==this.couleur){
 					valid = false;
 				}
 			
 			} else { // DEPLACEMENT VERS LE HAUT //	
-				Piece p1= ((e1.getBoutonPlateau())[departC][departL-1]).getPiece();
+				Piece p1= (e1.getBoutonPlateau(departC,departL-1)).getPiece();
 				if (p1 != null&&p1.getCouleur()==this.couleur){
 						valid = false;
 				}
@@ -97,7 +99,7 @@ public class Roi extends Piece implements interfaceValidite{
 			valid = true;
 			
 			if(departC < arriveeC ){ // DEPLACEMENT SUR LA DROITE //
-				Piece p2= ((e1.getBoutonPlateau())[departC+1][departL]).getPiece();
+				Piece p2= (e1.getBoutonPlateau(departC+1,departL)).getPiece();
 				
 				if( p2 != null&&p2.getCouleur()==this.couleur){
 						valid = false;
@@ -105,7 +107,7 @@ public class Roi extends Piece implements interfaceValidite{
 				
 			
 			} else { // DEPLACEMENT SUR LA GAUCHE //
-				Piece p2= ((e1.getBoutonPlateau())[departC-1][departL]).getPiece();
+				Piece p2= (e1.getBoutonPlateau(departC-1,departL)).getPiece();
 				
 				if(p2 != null&&p2.getCouleur()==this.couleur){
 						valid = false;
@@ -120,7 +122,7 @@ public class Roi extends Piece implements interfaceValidite{
         if(Math.abs(departC-arriveeC)==Math.abs(departL-arriveeL)){
          
 			if (departL-arriveeL<0 && departC-arriveeC<0 && arriveeL==departL+1&& arriveeC==departC+1){
-				Piece p = ((e1.getBoutonPlateau())[departC+1][departL+1]).getPiece();
+				Piece p = (e1.getBoutonPlateau(departC+1,departL+1)).getPiece();
 				if(p!=null&&p.getCouleur()==this.couleur){
 					c=false;
 				}
@@ -133,7 +135,7 @@ public class Roi extends Piece implements interfaceValidite{
 				
 		   }   
 			 else if (departL-arriveeL>0 && departC-arriveeC>0&& arriveeC==departC-1&& arriveeL==departL-1){  
-				Piece p = ((e1.getBoutonPlateau())[departC-1][departL-1]).getPiece();
+				Piece p = (e1.getBoutonPlateau(departC-1,departL-1)).getPiece();
 				if(p!=null && p.getCouleur()== this.couleur){
 					c=false;
 				}
@@ -148,7 +150,7 @@ public class Roi extends Piece implements interfaceValidite{
 			
 			else if(departL-arriveeL>0 && departC-arriveeC<0&& arriveeC==departC+1&& arriveeL==departL-1){
 				
-				Piece p = ((e1.getBoutonPlateau())[departC+1][departL-1]).getPiece();
+				Piece p = (e1.getBoutonPlateau(departC+1,departL-1)).getPiece();
 				if(p!=null&&p.getCouleur()==this.couleur){
 					c=false;
 				}
@@ -163,7 +165,7 @@ public class Roi extends Piece implements interfaceValidite{
 			
 			else if(departL-arriveeL<0 && departC-arriveeC>0&& arriveeC==departC-1&& arriveeL==departL+1){
 			
-				Piece p = ((e1.getBoutonPlateau())[departC-1][departL+1]).getPiece();
+				Piece p = (e1.getBoutonPlateau(departC-1,departL+1)).getPiece();
 				if(p!=null&&p.getCouleur()==this.couleur){
 					c=false;
 				}

@@ -7,16 +7,18 @@ import javax.swing.border.*;
 
 public class Pion extends Piece implements interfaceValidite{
 	
-	public String couleur;
+	private String couleur;
 	private int ligne;
 	private int colonne;
 	private ImageIcon icon;
+	private Echiquier e1;
 	
-	public Pion (String couleur, int ligne, int colonne){
+	public Pion (String couleur, int ligne, int colonne, Echiquier e1){
 		super ("Pion", couleur);
 		this.couleur = couleur;
 		this.ligne = ligne;
 		this.colonne = colonne;
+		this.e1 = e1;
 		// - CREATION IMAGE DES PIECES - //
 		if(this.couleur == "Noir"){
 			ImageIcon icon = new ImageIcon(Echiquier.class.getResource("image/PN.png"));
@@ -75,8 +77,8 @@ public class Pion extends Piece implements interfaceValidite{
 		
 		boolean valid = false;
 		
-		MonBouton boutonD = Echiquier.plateauBouton[departC][departL];
-		MonBouton boutonA = Echiquier.plateauBouton[arriveeC][arriveeL];
+		MonBouton boutonD = (e1.getBoutonPlateau(departC,departL));
+		MonBouton boutonA = (e1.getBoutonPlateau(arriveeC,arriveeL));
 		
 		if(departL-arriveeL<0 && this.couleur=="Noir"){
 			if ((boutonA.getPiece()) != null && !couleur.equals((boutonA.getPiece()).getCouleur())){ //methode de la classe Echequier qui envoie un boolean et l'autre qui renvoie un String couleur

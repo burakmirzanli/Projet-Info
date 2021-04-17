@@ -8,16 +8,18 @@ import javax.swing.border.*;
 
 public class Tour extends Piece implements interfaceValidite{
 	
-	public String couleur;
+	private String couleur;
 	private int colonne;
 	private int ligne;
 	private ImageIcon icon;
+	private Echiquier e1;
 	
-	public Tour (String couleur, int ligne, int colonne){
-		super ("Tour", couleur, ligne, colonne);
+	public Tour (String couleur, int ligne, int colonne, Echiquier e1){
+		super ("Tour", couleur, ligne, colonne, e1);
 		this.couleur = couleur;
 		this.ligne = ligne;
 		this.colonne = colonne;
+		this.e1 = e1;
 		// - CREATION IMAGE DES PIECES - //
         if(this.couleur == "Noir"){
 			ImageIcon icon = new ImageIcon(Echiquier.class.getResource("image/TN.png"));
@@ -73,13 +75,13 @@ public class Tour extends Piece implements interfaceValidite{
 			if (departL < arriveeL) { // DEPLACEMENT VERS LE BAS //	
 			
 				for (int i = departL + 1; i < arriveeL; i++)
-					if (((e1.getBoutonPlateau())[departC][i]).getPiece() != null)
+					if (((e1.getBoutonPlateau(departC,i))).getPiece() != null)
 						valid = false;
 			
 			} else { // DEPLACEMENT VERS LE HAUT //	
 			
 				for (int i = departL - 1; i > arriveeL; i--)
-					if (((e1.getBoutonPlateau())[departC][i]).getPiece() != null)
+					if (((e1.getBoutonPlateau(departC, i))).getPiece() != null)
 						valid = false;
 			}
 		}
@@ -90,7 +92,7 @@ public class Tour extends Piece implements interfaceValidite{
 			if(departC < arriveeC){ // DEPLACEMENT SUR LA DROITE //
 				
 				for(int i=departC+1 ; i<arriveeC; i++){
-					if(((e1.getBoutonPlateau())[i][departL]).getPiece() != null){
+					if(((e1.getBoutonPlateau(i, departL))).getPiece() != null){
 						valid = false;
 					}
 				}
@@ -98,7 +100,7 @@ public class Tour extends Piece implements interfaceValidite{
 			} else { // DEPLACEMENT SUR LA GAUCHE //
 				
 				for(int i=departC-1 ; i>arriveeC; i--){
-					if(((e1.getBoutonPlateau())[i][departL]).getPiece() != null){
+					if(((e1.getBoutonPlateau(i, departL))).getPiece() != null){
 						valid = false;
 					}
 				}
