@@ -1,4 +1,4 @@
-  
+ 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
@@ -16,32 +16,32 @@ public class Echiquier {
 	
 	private JPanel interfaceJeu = new JPanel(new BorderLayout(3, 3));
 
-	public static MonBouton[][] plateauBouton = new MonBouton [8][8];
+	private static MonBouton[][] plateauBouton = new MonBouton [8][8];
 	private JPanel plateauPanel = new JPanel();
-	public static final String COLS = "ABCDEFGH";
+	private static final String COLS = "ABCDEFGH";
 	
-	public static int departL;
-	public static int departC;
-    public static int arriveeL;
-	public static int arriveeC;
+	private static int departL;
+	private static int departC;
+    private static int arriveeL;
+	private static int arriveeC;
 	
-	public Piece pieceDepart;
-	public Piece pieceArrivee;
+	private Piece pieceDepart;
+	private Piece pieceArrivee;
 	
-	public int compteurBouton;
+	private int compteurBouton;
 	
-	public int compteurBoutonJoueur=0;
+	private int compteurBoutonJoueur=0;
 
-	public Piece piece;
+	private Piece piece;
 	
 	
-	public static final int delais=1000;
-	public static ActionListener tache_timerB;
-	public static ActionListener tache_timerN;
-    public static int heureB=0, minuteB=0, secondeB=0;
-    public static int heureN=0, minuteN=0, secondeN=0;
-    public static final JLabel tpsB = new JLabel(heureB+":"+minuteB+":"+secondeB);
-	public static final JLabel tpsN = new JLabel(heureN+":"+minuteN+":"+secondeN);
+	private static final int delais=1000;
+	private static ActionListener tache_timerB;
+	private static ActionListener tache_timerN;
+    private static int heureB=0, minuteB=0, secondeB=0;
+    private static int heureN=0, minuteN=0, secondeN=0;
+    private static final JLabel tpsB = new JLabel(heureB+":"+minuteB+":"+secondeB);
+	private static final JLabel tpsN = new JLabel(heureN+":"+minuteN+":"+secondeN);
 	private Timer timerB = new Timer(delais, tache_timerB);
 	private Timer timerN = new Timer(delais, tache_timerN);
 	
@@ -134,60 +134,6 @@ public class Echiquier {
             }
         }
         
-        
-        /*
-        // - CREATION DU CHRONOMETRE - //
-		// - ACTION REALISER PAR LE TIMER BLANC - //
-		tache_timerB= new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e1)
-			{
-				secondeB++;
-				if(secondeB==60)
-				{
-					secondeB=0;
-					minuteB++;
-				}
-				if(minuteB==60)
-				{
-					minuteB=0;
-					heureB++;
-				}
-				// - RAFRAICHIR LE CHRONO - //
-				tpsB.setText(heureB+":"+minuteB+":"+secondeB);
-				
-			}
-		};
-		// - ACTION REALISER PAR LE TIMER NOIR - //
-		tache_timerN= new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e1)
-			{
-				secondeN++;
-				if(secondeN==60)
-				{
-					secondeN=0;
-					minuteN++;
-				}
-				if(minuteN==60)
-				{
-					minuteN=0;
-					heureN++;
-				}
-				// - RAFRAICHIR LE CHRONO - //
-				tpsN.setText(heureN+":"+minuteN+":"+secondeN);
-				
-			}
-		};
-		
-	
-		
-		// - INSTANCIATION DES TIMER - //
-		
-		Timer timerB= new Timer(delais,tache_timerB);
-		Timer timerN= new Timer(delais,tache_timerN);
-		timerB.start();
-		timerN.start();*/
 		
 	}
 	
@@ -245,6 +191,7 @@ public class Echiquier {
 	}
 	
 	// - RENITIALISATION ECHIQUIER - //
+	
 	public void renitialisationEchiquier(){
 		for(int i=0; i<8;i++){
 		   for(int j=0; j<8; j++){
@@ -309,7 +256,7 @@ public class Echiquier {
 			this.pieceArrivee = P;
 	}
 	
-	// - GETTER DEPART / ARRIVEE - //
+	// - GETTERS - //
 	
 	public int getDepartC(){
 		return this.departC;
@@ -330,10 +277,17 @@ public class Echiquier {
 	public MonBouton[][] getPlateau(){
 		return this.plateauBouton;
 	}
+	
+	public MonBouton getBoutonPlateau(int C, int L){
+		return this.plateauBouton[C][L];
+	}
 		
 	public final JComponent getInterfaceJeu() {
         return interfaceJeu;
     }
+	
+	
+	// - METHODE COMPTEUR BOUTON CLIC ET BOUTON JOUEUR - //
 	
 	public int getCompteurBouton(){
 		return this.compteurBouton;
@@ -342,8 +296,6 @@ public class Echiquier {
 	public int getCompteurBoutonJoueur(){
 		return this.compteurBoutonJoueur;
 	}
-	
-	
 	
 	public void CompteurBoutonIncrements(){
 		compteurBouton++;
@@ -355,6 +307,9 @@ public class Echiquier {
 				
    	public void deplacementPiece(int departL, int departC, int arriveeL, int arriveeC){
 		boolean couleurValid = false;
+		
+		// - CREATION DU CHRONOMETRE - //
+		// - ACTION REALISER PAR LE TIMER BLANC - //
 		tache_timerB= new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e1)
@@ -399,6 +354,8 @@ public class Echiquier {
 		
 		Timer timerB= new Timer(delais,tache_timerB);
 		Timer timerN= new Timer(delais,tache_timerN);
+		
+		// - FIN CODE CHRONO - //
 		
 		if(pieceDepart.getCouleur() == "Blanc" && compteurBoutonJoueur % 2 == 0){		
 			couleurValid = true;
@@ -467,6 +424,7 @@ public class Echiquier {
 	
 	}
 	
+	// - METHODE CHRONOMETRE - //
     public void resetTimerB(){
 	    timerB.restart();
     }
