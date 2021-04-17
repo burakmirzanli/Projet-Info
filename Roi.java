@@ -80,13 +80,13 @@ public class Roi extends Piece implements interfaceValidite{
 			valid = true;
 			
 			if (departL < arriveeL) { // DEPLACEMENT VERS LE BAS //	
-				Piece p1= (Echiquier.plateauBouton[departC][departL+1]).getPiece();
+				Piece p1= ((e1.getBoutonPlateau())[departC][departL+1]).getPiece();
 				if (p1 != null && p1.getCouleur()==this.couleur){
 					valid = false;
 				}
 			
 			} else { // DEPLACEMENT VERS LE HAUT //	
-				Piece p1= (Echiquier.plateauBouton[departC][departL-1]).getPiece();
+				Piece p1= ((e1.getBoutonPlateau())[departC][departL-1]).getPiece();
 				if (p1 != null&&p1.getCouleur()==this.couleur){
 						valid = false;
 				}
@@ -97,7 +97,7 @@ public class Roi extends Piece implements interfaceValidite{
 			valid = true;
 			
 			if(departC < arriveeC ){ // DEPLACEMENT SUR LA DROITE //
-				Piece p2= (Echiquier.plateauBouton[departC+1][departL]).getPiece();
+				Piece p2= ((e1.getBoutonPlateau())[departC+1][departL]).getPiece();
 				
 				if( p2 != null&&p2.getCouleur()==this.couleur){
 						valid = false;
@@ -105,7 +105,7 @@ public class Roi extends Piece implements interfaceValidite{
 				
 			
 			} else { // DEPLACEMENT SUR LA GAUCHE //
-				Piece p2= (Echiquier.plateauBouton[departC-1][departL]).getPiece();
+				Piece p2= ((e1.getBoutonPlateau())[departC-1][departL]).getPiece();
 				
 				if(p2 != null&&p2.getCouleur()==this.couleur){
 						valid = false;
@@ -120,7 +120,7 @@ public class Roi extends Piece implements interfaceValidite{
         if(Math.abs(departC-arriveeC)==Math.abs(departL-arriveeL)){
          
 			if (departL-arriveeL<0 && departC-arriveeC<0 && arriveeL==departL+1&& arriveeC==departC+1){
-				Piece p = (Echiquier.plateauBouton[departC+1][departL+1]).getPiece();
+				Piece p = ((e1.getBoutonPlateau())[departC+1][departL+1]).getPiece();
 				if(p!=null&&p.getCouleur()==this.couleur){
 					c=false;
 				}
@@ -133,7 +133,7 @@ public class Roi extends Piece implements interfaceValidite{
 				
 		   }   
 			 else if (departL-arriveeL>0 && departC-arriveeC>0&& arriveeC==departC-1&& arriveeL==departL-1){  
-				Piece p = (Echiquier.plateauBouton[departC-1][departL-1]).getPiece();
+				Piece p = ((e1.getBoutonPlateau())[departC-1][departL-1]).getPiece();
 				if(p!=null && p.getCouleur()== this.couleur){
 					c=false;
 				}
@@ -148,7 +148,7 @@ public class Roi extends Piece implements interfaceValidite{
 			
 			else if(departL-arriveeL>0 && departC-arriveeC<0&& arriveeC==departC+1&& arriveeL==departL-1){
 				
-				Piece p = (Echiquier.plateauBouton[departC+1][departL-1]).getPiece();
+				Piece p = ((e1.getBoutonPlateau())[departC+1][departL-1]).getPiece();
 				if(p!=null&&p.getCouleur()==this.couleur){
 					c=false;
 				}
@@ -163,7 +163,7 @@ public class Roi extends Piece implements interfaceValidite{
 			
 			else if(departL-arriveeL<0 && departC-arriveeC>0&& arriveeC==departC-1&& arriveeL==departL+1){
 			
-				Piece p = (Echiquier.plateauBouton[departC-1][departL+1]).getPiece();
+				Piece p = ((e1.getBoutonPlateau())[departC-1][departL+1]).getPiece();
 				if(p!=null&&p.getCouleur()==this.couleur){
 					c=false;
 				}
