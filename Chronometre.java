@@ -12,18 +12,22 @@ public class Chronometre {
 	
 		
 	public static final int delais=1000;
+	
 	public static ActionListener tache_timerB;
 	public static ActionListener tache_timerN;
+    
     public static int heureB=0, minuteB=0, secondeB=0;
     public static int heureN=0, minuteN=0, secondeN=0;
-    public static final JLabel tpsB = new JLabel(heureB+":"+minuteB+":"+secondeB);
-	public static final JLabel tpsN = new JLabel(heureN+":"+minuteN+":"+secondeN);
+    
+    public static JLabel tpsB = new JLabel(heureB+" : "+minuteB+" : "+secondeB);
+	public static JLabel tpsN = new JLabel(heureN+" : "+minuteN+" : "+secondeN);
+	
 	public static Timer timerN;
 	public static Timer timerB;
 	
 	public static void main (String[] args) {
 		
-				// - CREATION DU CHRONOMETRE - //
+		// - CREATION DU CHRONOMETRE - //
 		// - ACTION REALISER PAR LE TIMER BLANC - //
 		tache_timerB= new ActionListener()
 		{
@@ -69,8 +73,8 @@ public class Chronometre {
 		
 		// - INSTANCIATION DES TIMER - //
 		
-		final Timer timerB= new Timer(delais,tache_timerB);
-		final Timer timerN= new Timer(delais,tache_timerN);
+		Timer timerB= new Timer(delais,tache_timerB);
+		Timer timerN= new Timer(delais,tache_timerN);
 		
 		// - FIN CODE CHRONO - //
 		
@@ -88,5 +92,20 @@ public class Chronometre {
 		return this.tpsN;
 	}
 	
+	public void startTpsB(){
+		timerB.start();
+	}
+	
+	public void startTpsN(){
+		timerN.start();
+	}
+	
+	public void stopTpsB(){
+		timerB.stop();
+	}
+	
+	public void stopTpsN(){
+		timerN.start();
+	}
 }
 

@@ -40,6 +40,52 @@ public class Echiquier {
     public static final JLabel tpsB = new JLabel(heureB+":"+minuteB+":"+secondeB);
 	public static final JLabel tpsN = new JLabel(heureN+":"+minuteN+":"+secondeN);
 	
+	public ActionListener tache_timerB = new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e1)
+			{
+				secondeB++;
+				if(secondeB==60)
+				{
+					secondeB=0;
+					minuteB++;
+				}
+				if(minuteB==60)
+				{
+					minuteB=0;
+					heureB++;
+				}
+				// - RAFRAICHIR LE CHRONO - //
+				tpsB.setText(heureB+":"+minuteB+":"+secondeB);
+				
+			}
+		};
+		
+	public ActionListener tache_timerN= new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e1)
+			{
+				secondeN++;
+				if(secondeN==60)
+				{
+					secondeN=0;
+					minuteN++;
+				}
+				if(minuteN==60)
+				{
+					minuteN=0;
+					heureN++;
+				}
+				// - RAFRAICHIR LE CHRONO - //
+				tpsN.setText(heureN+":"+minuteN+":"+secondeN);
+				
+			}
+		};
+	 
+	public int delais=1000;
+		
+	public Timer timerB= new Timer(delais,tache_timerB);
+	public Timer timerN= new Timer(delais,tache_timerN);
 	
 	
 	Echiquier() {
@@ -116,8 +162,7 @@ public class Echiquier {
        
 	   plateauPanel.add(new JLabel(""));
         for (int ii = 0; ii < 8; ii++) {
-            plateauPanel.add(
-                    new JLabel(COLS.substring(ii, ii + 1),SwingConstants.CENTER));
+            plateauPanel.add(new JLabel(COLS.substring(ii, ii + 1),SwingConstants.CENTER));
         }
         for (int ii = 0; ii < 8; ii++) {
             for (int jj = 0; jj < 8; jj++) {
@@ -130,8 +175,9 @@ public class Echiquier {
             }
         }
         
-        
+       
 		
+		timerB.start();
 	}
 	
 	
@@ -174,7 +220,7 @@ public class Echiquier {
 					
 					f.add(bandeauHaut, BorderLayout.NORTH);
 					
-					
+
 					
 					f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					f.setLocationByPlatform(true);
@@ -226,7 +272,8 @@ public class Echiquier {
        compteurBouton=0;
        compteurBoutonJoueur=0;
        
-       /* timerB.stop();
+       timerB.stop();
+       timerB.restart();
        timerN.stop();
        
        heureB=0;
@@ -235,7 +282,7 @@ public class Echiquier {
        
        heureN=0;
        minuteN=0;
-       secondeN=0; */
+       secondeN=0;
        
 	    
 	}
@@ -316,65 +363,9 @@ public class Echiquier {
 	
 				
    	public void deplacementPiece(int departL, int departC, int arriveeL, int arriveeC){
-		boolean couleurValid = false;
-		
-		int delais=1000;
-		
-		ActionListener tache_timerB;
-		ActionListener tache_timerN;
-		
-		tache_timerB= new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e1)
-			{
-				secondeB++;
-				if(secondeB==60)
-				{
-					secondeB=0;
-					minuteB++;
-				}
-				if(minuteB==60)
-				{
-					minuteB=0;
-					heureB++;
-				}
-				// - RAFRAICHIR LE CHRONO - //
-				tpsB.setText(heureB+":"+minuteB+":"+secondeB);
-				
-			}
-		};
-		// - ACTION REALISER PAR LE TIMER NOIR - //
-		tache_timerN= new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e1)
-			{
-				secondeN++;
-				if(secondeN==60)
-				{
-					secondeN=0;
-					minuteN++;
-				}
-				if(minuteN==60)
-				{
-					minuteN=0;
-					heureN++;
-				}
-				// - RAFRAICHIR LE CHRONO - //
-				tpsN.setText(heureN+":"+minuteN+":"+secondeN);
-				
-			}
-		};
-		
-		final Timer timerB= new Timer(delais,tache_timerB);
-		final Timer timerN= new Timer(delais,tache_timerN);
 
-		if(compteurBoutonJoueur % 2 == 1){
-				timerB.restart();
-				timerN.stop();
-		}else if (compteurBoutonJoueur % 2 == 0){
-				timerN.restart();
-				timerB.stop();
-		}
+
+		boolean couleurValid = false;
 		
 		if(pieceDepart.getCouleur() == "Blanc" && compteurBoutonJoueur % 2 == 0){		
 			couleurValid = true;
@@ -396,8 +387,13 @@ public class Echiquier {
 			
 			compteurBoutonJoueur++; 
 			
-			
-			
+			if(compteurBoutonJoueur % 2 == 1){
+				timerN.start();
+				timerB.stop();
+			}else if(compteurBoutonJoueur % 2 == 0){
+				timerB.start();
+				timerN.stop();
+			}			
 			
 			if(pieceDepart.getType() == "Pion" ){
 				promotionPion(plateauBouton[arriveeC][arriveeL]);
@@ -413,7 +409,13 @@ public class Echiquier {
 			
 			compteurBoutonJoueur++; 
 			
-
+			if(compteurBoutonJoueur % 2 == 1){
+				timerN.start();
+				timerB.stop();
+			}else if(compteurBoutonJoueur % 2 == 0){
+				timerB.start();
+				timerN.stop();
+			}			
 			
 			if(pieceDepart.getType() == "Pion"){
 				promotionPion(plateauBouton[arriveeC][arriveeL]);
@@ -457,6 +459,29 @@ public class Echiquier {
 	
 	}
 	
+	/* public JLabel getTpsB(){
+		return this.tpsB;
+	}
+	
+	public JLabel getTpsN(){
+		return this.tpsN;
+	}
+	
+	public void startTpsB(){
+		timerB.start();
+	}
+	
+	public void startTpsN(){
+		timerN.start();
+	}
+	
+	public void stopTpsB(){
+		timerB.stop();
+	}
+	
+	public void stopTpsN(){
+		timerN.start();
+	} */
 
    
 }
