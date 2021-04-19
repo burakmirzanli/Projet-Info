@@ -34,11 +34,11 @@ public class Echiquier {
 
 	private Piece piece;
 	
-	public static int heureB=0, minuteB=0, secondeB=0;
-    public static int heureN=0, minuteN=0, secondeN=0;
+	private static int heureB=0, minuteB=0, secondeB=0;
+    private static int heureN=0, minuteN=0, secondeN=0;
     
-    public static final JLabel tpsB = new JLabel(heureB+":"+minuteB+":"+secondeB);
-	public static final JLabel tpsN = new JLabel(heureN+":"+minuteN+":"+secondeN);
+    private static final JLabel tpsB = new JLabel(heureB+":"+minuteB+":"+secondeB);
+	private static final JLabel tpsN = new JLabel(heureN+":"+minuteN+":"+secondeN);
 	
 	public ActionListener tache_timerB = new ActionListener()
 		{
@@ -82,10 +82,10 @@ public class Echiquier {
 			}
 		};
 	 
-	public int delais=1000;
+	private int delais=1000;
 		
-	public Timer timerB= new Timer(delais,tache_timerB);
-	public Timer timerN= new Timer(delais,tache_timerN);
+	private Timer timerB= new Timer(delais,tache_timerB);
+	private Timer timerN= new Timer(delais,tache_timerN);
 	
 	
 	Echiquier() {
@@ -175,9 +175,6 @@ public class Echiquier {
             }
         }
         
-       
-		
-		timerB.start();
 	}
 	
 	
@@ -201,7 +198,9 @@ public class Echiquier {
 					//bandeauHaut.setBackground(new Color(116,78,69));
 					
 					JButton boutonReset = new JButton("Renitialisation");
-					boutonReset.addActionListener(new EcouteurBoutonReset(e,boutonReset)) ;
+					JButton boutonLancer = new JButton ("Lancer Jeu");
+					boutonReset.addActionListener(new EcouteurBoutonReset(e)) ;
+					boutonLancer.addActionListener(new EcouteurBoutonLancer(e));
 					JLabel tpsRestB = new JLabel("Temps restant blancs");
 					JLabel tpsRestN = new JLabel("Temps restant noirs");
 					// JTextField tpsB = new JTextField(15);
@@ -216,6 +215,7 @@ public class Echiquier {
 					bandeauHaut.add(tpsN);
 					bandeauHaut.add(new JLabel("                             "));
 					bandeauHaut.add(boutonReset);
+					bandeauHaut.add(boutonLancer);
 					boutonReset.setBackground(Color.ORANGE);
 					
 					f.add(bandeauHaut, BorderLayout.NORTH);
@@ -273,7 +273,6 @@ public class Echiquier {
        compteurBoutonJoueur=0;
        
        timerB.stop();
-       timerB.restart();
        timerN.stop();
        
        heureB=0;
@@ -283,6 +282,10 @@ public class Echiquier {
        heureN=0;
        minuteN=0;
        secondeN=0;
+       
+       tpsB.setText(heureB+":"+minuteB+":"+secondeB);
+       tpsN.setText(heureN+":"+minuteN+":"+secondeN);
+       
        
 	    
 	}
@@ -343,6 +346,9 @@ public class Echiquier {
         return interfaceJeu;
     }
 	
+	public void startTpsB(){
+		timerB.start();
+	}
 	
 	// - METHODE COMPTEUR BOUTON CLIC ET BOUTON JOUEUR - //
 	
@@ -363,7 +369,7 @@ public class Echiquier {
 	
 				
    	public void deplacementPiece(int departL, int departC, int arriveeL, int arriveeC){
-
+		
 
 		boolean couleurValid = false;
 		

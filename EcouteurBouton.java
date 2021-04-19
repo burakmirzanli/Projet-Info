@@ -21,9 +21,6 @@ public class EcouteurBouton implements ActionListener{
 		int y = b.getC();
 		Piece p = b.getPiece();
 		
-		
-		
-		
 		if(p!=null){
 			System.out.println("--------------------------------------");
 			System.out.println("Case ligne : " + x + " colonne : " + y );
