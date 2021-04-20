@@ -6,7 +6,7 @@ import java.lang.*;
 import javax.swing.border.*;
 import java.awt.event.*;
 import javax.swing.*;
-
+import java.util.ArrayList;
 
 
 
@@ -27,18 +27,54 @@ public class Echiquier {
 	
 	private Piece pieceDepart;
 	private Piece pieceArrivee;
-	
+    //
+	private int ligneBlanc;
+    private String colonneBlanc;
+    //
 	private int compteurBouton;
 	
 	private int compteurBoutonJoueur=0;
 
 	private Piece piece;
-	
+    
+	//INITIALISATION HISTORIQUE BLANC
+    public class HistoriqueBlanc {
+    private String colonneBlanc;
+    private int ligneBlanc;
+    public HistoriqueBlanc(int l, String c) {
+    colonneBlanc=c;
+    ligneBlanc=l;
+    }
+    public String toString (){
+		String s = ligneBlanc+""+colonneBlanc+" ";
+		return s;
+	}
+    }
+    ArrayList<HistoriqueBlanc> listeBlanc = new ArrayList<HistoriqueBlanc>();
+    
+    //INITIALISATION HISTORIQUE NOIR
+    public class HistoriqueNoir {
+    private String colonneNoir;
+    private int ligneNoir;
+    public HistoriqueNoir(int l, String c) {
+    colonneNoir=c;
+    ligneNoir=l;
+    }
+    public String toString (){
+		String s = ligneNoir+""+colonneNoir+" ";
+		return s;
+	}
+    }
+    ArrayList<HistoriqueNoir> listeNoir = new ArrayList<HistoriqueNoir>();
+    //
+    
 	private static int heureB=0, minuteB=0, secondeB=0;
     private static int heureN=0, minuteN=0, secondeN=0;
     
     private static final JLabel tpsB = new JLabel(heureB+":"+minuteB+":"+secondeB);
 	private static final JLabel tpsN = new JLabel(heureN+":"+minuteN+":"+secondeN);
+   
+	
 	
 	public ActionListener tache_timerB = new ActionListener()
 		{
@@ -203,6 +239,7 @@ public class Echiquier {
 					boutonLancer.addActionListener(new EcouteurBoutonLancer(e));
 					JLabel tpsRestB = new JLabel("Temps restant blancs");
 					JLabel tpsRestN = new JLabel("Temps restant noirs");
+            
 					// JTextField tpsB = new JTextField(15);
 					// JTextField tpsN = new JTextField(15);
 					
@@ -381,9 +418,10 @@ public class Echiquier {
 		}else{
 			couleurValid = false;
 			System.out.println("Ce n'est pas le tour de cette couleur");
+            
 		}
 		
-		
+    
 		
 		if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceArrivee==null && couleurValid == true){
 			(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDepart);
@@ -438,14 +476,103 @@ public class Echiquier {
 		else if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==false && couleurValid == true){
 			System.out.println("Déplacement impossible ! Choisis une autre case");
 		} 
-		
-		
-		
-		
-	}
-			
-			
-		
+	//HISTORIQUE
+   
+    if (pieceDepart.getCouleur()== "Blanc"){
+        System.out.print("Historique Blanc: ");
+     if (getArriveeC()==0){
+         
+        HistoriqueBlanc HB0=new HistoriqueBlanc(getArriveeL()+1, "A");
+        listeBlanc.add(HB0);
+        for (HistoriqueBlanc deplacement : listeBlanc) {
+        System.out.println(deplacement);}
+        }else if(getArriveeC()==1){
+        HistoriqueBlanc HB1=new HistoriqueBlanc(getArriveeL()+1, "B");
+        listeBlanc.add(HB1);
+        for (HistoriqueBlanc deplacement : listeBlanc) {
+        System.out.print(deplacement);}
+        }else if(getArriveeC()==2){
+        HistoriqueBlanc HB2=new HistoriqueBlanc(getArriveeL()+1, "C");
+        listeBlanc.add(HB2);
+        for (HistoriqueBlanc deplacement : listeBlanc) {
+        System.out.print(deplacement);}
+        }else if(getArriveeC()==3){	 
+        HistoriqueBlanc HB3=new HistoriqueBlanc(getArriveeL()+1, "D");
+        listeBlanc.add(HB3);
+        for (HistoriqueBlanc deplacement : listeBlanc) {
+        System.out.print(deplacement);}
+        }else if (getArriveeC()==4){
+         HistoriqueBlanc HB4=new HistoriqueBlanc(getArriveeL()+1, "E");
+        listeBlanc.add(HB4);
+        for (HistoriqueBlanc deplacement : listeBlanc) {
+        System.out.print(deplacement);}
+        }else if (getArriveeC()==5){
+        HistoriqueBlanc HB5=new HistoriqueBlanc(getArriveeL()+1, "F");
+        listeBlanc.add(HB5);
+        for (HistoriqueBlanc deplacement : listeBlanc) {
+        System.out.print(deplacement);}
+        }else if (getArriveeC()==6){
+         HistoriqueBlanc HB6=new HistoriqueBlanc(getArriveeL()+1, "G");
+        listeBlanc.add(HB6);
+        for (HistoriqueBlanc deplacement : listeBlanc) {
+        System.out.print(deplacement);}
+        }else if (getArriveeC()==7){
+         HistoriqueBlanc HB7=new HistoriqueBlanc(getArriveeL()+1, "H");
+        listeBlanc.add(HB7);
+        for (HistoriqueBlanc deplacement : listeBlanc) {
+        System.out.print(deplacement);}
+
+        } 
+        System.out.println();  
+    }
+    if (pieceDepart.getCouleur()== "Noir"){
+        System.out.print("Historique Noir: ");
+     if (getArriveeC()==0){
+         
+        HistoriqueNoir HN0=new HistoriqueNoir(getArriveeL()+1, "A");
+        listeNoir.add(HN0);
+        for (HistoriqueNoir deplacement : listeNoir) {
+        System.out.println(deplacement);}
+        }else if(getArriveeC()==1){
+        HistoriqueNoir HN1=new HistoriqueNoir(getArriveeL()+1, "B");
+        listeNoir.add(HN1);
+        for (HistoriqueNoir deplacement : listeNoir) {
+        System.out.print(deplacement);}
+        }else if(getArriveeC()==2){
+        HistoriqueNoir HN2=new HistoriqueNoir(getArriveeL()+1, "C");
+        listeNoir.add(HN2);
+        for (HistoriqueNoir deplacement : listeNoir) {
+        System.out.print(deplacement);}
+        }else if(getArriveeC()==3){	 
+        HistoriqueNoir HN3=new HistoriqueNoir(getArriveeL()+1, "D");
+        listeNoir.add(HN3);
+        for (HistoriqueNoir deplacement : listeNoir) {
+        System.out.print(deplacement);}
+        }else if (getArriveeC()==4){
+         HistoriqueNoir HN4=new HistoriqueNoir(getArriveeL()+1, "E");
+        listeNoir.add(HN4);
+        for (HistoriqueNoir deplacement : listeNoir) {
+        System.out.print(deplacement);}
+        }else if (getArriveeC()==5){
+        HistoriqueNoir HN5=new HistoriqueNoir(getArriveeL()+1, "F");
+        listeNoir.add(HN5);
+        for (HistoriqueNoir deplacement : listeNoir) {
+        System.out.print(deplacement);}
+        }else if (getArriveeC()==6){
+         HistoriqueNoir HN6=new HistoriqueNoir(getArriveeL()+1, "G");
+        listeNoir.add(HN6);
+        for (HistoriqueNoir deplacement : listeNoir) {
+        System.out.print(deplacement);}
+        }else if (getArriveeC()==7){
+         HistoriqueNoir HN7=new HistoriqueNoir(getArriveeL()+1, "H");
+        listeNoir.add(HN7);
+        for (HistoriqueNoir deplacement : listeNoir) {
+        System.out.print(deplacement);}
+
+        } 
+        System.out.println();  
+}		
+}	
 	// - PROMOTION D'UN PION ARRIVANT AU BOUT DU PLATEAU EN DAME - //
 
 	public void promotionPion(MonBouton b){
