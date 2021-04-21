@@ -83,15 +83,18 @@ public class Fou extends Piece implements interfaceValidite {
 			if (departL-arriveeL<0 && departC-arriveeC<0){
 				
 				
-				for(int i=1;(i<arriveeC)&&(i<arriveeL);i++){
-					if((departL+i)<7 && (departC+i)<7){
-						Piece p = ((e1.getBoutonPlateau(departC+i,departL+i))).getPiece();
-						if(p!=null&&p.getCouleur()==this.couleur){
-							c=false;
+				int j = departL+1;
+				for(int i=departC+1;i>arriveeC;i++){
+					if(j<arriveeL){
+						if(j<7 && i<7){
+							Piece p = ((e1.getBoutonPlateau(i,j))).getPiece();
+							if(p!=null){
+								c=false;
+							}
 						}
+						j--;
 					}
 				}
-				
 				if(c==true){
 					valid=true;
 				}else{
@@ -105,7 +108,7 @@ public class Fou extends Piece implements interfaceValidite {
 					if(j>arriveeL){
 						if(j>=0 && i>=0){
 							Piece p = ((e1.getBoutonPlateau(i,j))).getPiece();
-							if(p!=null && p.getCouleur()== this.couleur){
+							if(p!=null){
 								c=false;
 							}
 						}
@@ -129,7 +132,7 @@ public class Fou extends Piece implements interfaceValidite {
 					
 						if(j>=0 && i<7){
 							Piece p = ((e1.getBoutonPlateau(i,j))).getPiece();
-							if(p!=null&&p.getCouleur()==this.couleur){
+							if(p!=null){
 								c=false;
 							}
 						}
@@ -152,7 +155,7 @@ public class Fou extends Piece implements interfaceValidite {
 					
 						if(i<7 && j>=0){
 							Piece p = ((e1.getBoutonPlateau(j,i))).getPiece();
-							if(p!=null&&p.getCouleur()==this.couleur){
+							if(p!=null){
 								c=false;
 							}
 						}

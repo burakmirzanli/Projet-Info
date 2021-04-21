@@ -119,7 +119,7 @@ public class Dame extends Piece implements interfaceValidite {
 		 
         //TEST DE DEPLACEMENT SUR LA DIAGONALE
         
-        if(Math.abs(departC-arriveeC)==Math.abs(departL-arriveeL)){
+                if(Math.abs(departC-arriveeC)==Math.abs(departL-arriveeL)){
          
 			if (departL-arriveeL<0 && departC-arriveeC<0){
 				
@@ -129,14 +129,13 @@ public class Dame extends Piece implements interfaceValidite {
 					if(j<arriveeL){
 						if(j<7 && i<7){
 							Piece p = ((e1.getBoutonPlateau(i,j))).getPiece();
-							if(p!=null && p.getCouleur()== this.couleur){
+							if(p!=null){
 								c=false;
 							}
 						}
 						j--;
 					}
 				}
-				
 				if(c==true){
 					valid=true;
 				}else{
@@ -150,7 +149,7 @@ public class Dame extends Piece implements interfaceValidite {
 					if(j>arriveeL){
 						if(j>=0 && i>=0){
 							Piece p = ((e1.getBoutonPlateau(i,j))).getPiece();
-							if(p!=null && p.getCouleur()== this.couleur){
+							if(p!=null){
 								c=false;
 							}
 						}
@@ -174,7 +173,7 @@ public class Dame extends Piece implements interfaceValidite {
 					
 						if(j>=0 && i<7){
 							Piece p = ((e1.getBoutonPlateau(i,j))).getPiece();
-							if(p!=null&&p.getCouleur()==this.couleur){
+							if(p!=null){
 								c=false;
 							}
 						}
@@ -197,7 +196,7 @@ public class Dame extends Piece implements interfaceValidite {
 					
 						if(i<7 && j>=0){
 							Piece p = ((e1.getBoutonPlateau(j,i))).getPiece();
-							if(p!=null&&p.getCouleur()==this.couleur){
+							if(p!=null){
 								c=false;
 							}
 						}
@@ -217,7 +216,6 @@ public class Dame extends Piece implements interfaceValidite {
 			
 			
 		}
-		
 		return valid;
 	}
 }
