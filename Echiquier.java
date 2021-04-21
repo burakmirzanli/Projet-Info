@@ -37,36 +37,14 @@ public class Echiquier {
 
 	private Piece piece;
     
-	//INITIALISATION HISTORIQUE BLANC
-    public class HistoriqueBlanc {
-    private String colonneBlanc;
-    private int ligneBlanc;
-    public HistoriqueBlanc(int l, String c) {
-    colonneBlanc=c;
-    ligneBlanc=l;
-    }
-    public String toString (){
-		String s = ligneBlanc+""+colonneBlanc+" ";
-		return s;
-	}
-    }
+	//INITIALISATION ARRAYLIST HISTORIQUE BLANC
+   
     ArrayList<HistoriqueBlanc> listeBlanc = new ArrayList<HistoriqueBlanc>();
     
-    //INITIALISATION HISTORIQUE NOIR
-    public class HistoriqueNoir {
-    private String colonneNoir;
-    private int ligneNoir;
-    public HistoriqueNoir(int l, String c) {
-    colonneNoir=c;
-    ligneNoir=l;
-    }
-    public String toString (){
-		String s = ligneNoir+""+colonneNoir+" ";
-		return s;
-	}
-    }
+    //INITIALISATION ARRAYLIST HISTORIQUE NOIR
+    
     ArrayList<HistoriqueNoir> listeNoir = new ArrayList<HistoriqueNoir>();
-    //
+    
     
 	private static int heureB=0, minuteB=0, secondeB=0;
     private static int heureN=0, minuteN=0, secondeN=0;
