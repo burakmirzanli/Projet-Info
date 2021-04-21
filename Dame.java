@@ -124,12 +124,16 @@ public class Dame extends Piece implements interfaceValidite {
 			if (departL-arriveeL<0 && departC-arriveeC<0){
 				
 				
-				for(int i=1;(i<arriveeC)&&(i<arriveeL);i++){
-					if((departL+i)<7 && (departC+i)<7){
-						Piece p = ((e1.getBoutonPlateau(departC+i,departL+i))).getPiece();
-						if(p!=null&&p.getCouleur()==this.couleur){
-							c=false;
+				int j = departL+1;
+				for(int i=departC+1;i>arriveeC;i++){
+					if(j<arriveeL){
+						if(j<7 && i<7){
+							Piece p = ((e1.getBoutonPlateau(i,j))).getPiece();
+							if(p!=null && p.getCouleur()== this.couleur){
+								c=false;
+							}
 						}
+						j--;
 					}
 				}
 				
