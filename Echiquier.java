@@ -27,10 +27,7 @@ public class Echiquier {
 	
 	private Piece pieceDepart;
 	private Piece pieceArrivee;
-    //
-	private int ligneBlanc;
-    private String colonneBlanc;
-    //
+   
 	private int compteurBouton;
 	
 	private int compteurBoutonJoueur=0;
