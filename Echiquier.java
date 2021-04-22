@@ -1,4 +1,3 @@
- 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.swing.border.*;
@@ -383,8 +382,7 @@ public class Echiquier {
 	// - ATTENTION PLATEAU BOUTON [COLONNE][LIGNE] ET NON PAS [LIGNE][COLONNE] - //
 	
 				
-   	public void deplacementPiece(int departL, int departC, int arriveeL, int arriveeC){
-		
+   	public void deplacementPiece(int departL, int departC, int arriveeL, int arriveeC){		
 
 		boolean couleurValid = false;
 		
@@ -398,13 +396,13 @@ public class Echiquier {
 			System.out.println("Ce n'est pas le tour de cette couleur");
             
 		}
-		
-    
-		
+
 		if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceArrivee==null && couleurValid == true){
-			(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDepart);
-			(plateauBouton[departC][departL]).setPiece(null);
-			
+			if ((pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDepart.getType().equals("Roi")){
+				(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDepart);
+				(plateauBouton[departC][departL]).setPiece(null);
+					
+
 			// - LE DEPLACEMENT EST VALIDE CHANGEMENT DE JOUEUR - PAIR = BLANC IMPAIR = NOIR - //
 			
 			compteurBoutonJoueur++; 
@@ -421,12 +419,13 @@ public class Echiquier {
 				promotionPion(plateauBouton[arriveeC][arriveeL]);
 			}
 				
+			}
 		}
-		
 		else if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceArrivee!=null  && pieceDepart.getCouleur()!=pieceArrivee.getCouleur() && couleurValid == true){
-			(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDepart);
-			(plateauBouton[departC][departL]).setPiece(null);
-			
+			if ((pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDepart.getType().equals("Roi")){
+				(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDepart);
+				(plateauBouton[departC][departL]).setPiece(null);
+							
 			// - LE DEPLACEMENT EST VALIDE CHANGEMENT DE JOUEUR - PAIR = BLANC IMPAIR = NOIR - //
 			
 			compteurBoutonJoueur++; 
@@ -434,6 +433,7 @@ public class Echiquier {
 			if(compteurBoutonJoueur % 2 == 1){
 				timerN.start();
 				timerB.stop();
+
 			}else if(compteurBoutonJoueur % 2 == 0){
 				timerB.start();
 				timerN.stop();
@@ -443,9 +443,9 @@ public class Echiquier {
 				promotionPion(plateauBouton[arriveeC][arriveeL]);
 			}
 
+			}
+			
 		}
-			
-			
 		else if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceArrivee!=null  && pieceDepart.getCouleur()==pieceArrivee.getCouleur() && couleurValid == true){
 			System.out.println("Déplacement impossible ! Choisis une autre case");
 		}
@@ -453,6 +453,30 @@ public class Echiquier {
 			
 		else if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==false && couleurValid == true){
 			System.out.println("Déplacement impossible ! Choisis une autre case");
+		}
+		
+		for (int ii = 0; ii < plateauBouton.length; ii++) {
+			for (int jj = 0; jj < plateauBouton[ii].length; jj++) {
+				if ((jj % 2 == 1 && ii % 2 == 1)
+                       //) {
+						|| (jj % 2 == 0 && ii % 2 == 0)) {
+						plateauBouton[jj][ii].setBackground(Color.WHITE);
+				} else {
+					plateauBouton[jj][ii].setBackground(Color.GRAY);
+				}
+			}
+		}	
+		
+		System.out.println("Roi Noir:   C - "+positionRoi("colonneRoiNoir")+"	L - "+positionRoi("ligneRoiNoir"));	
+		System.out.println("Roi Noir:   C - "+positionRoi("colonneRoiBlanc")+"	L - "+positionRoi("ligneRoiBlanc"));	
+		///////////////////////////////////////////////////	
+		if (testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){
+			getBoutonPlateau(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")).setBackground(Color.RED);
+		}
+
+			///////////////////////////////////////////////////	
+		if (testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))){
+			getBoutonPlateau(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc")).setBackground(Color.RED);
 		} 
 		
 		//HISTORIQUE
@@ -604,6 +628,632 @@ public class Echiquier {
 			System.out.println();  
 		}		
 	}	
+	
+	public int positionRoi(String s){
+		
+		int position = 0;
+		
+		int ligneRoiNoir = 0;
+		int ligneRoiBlanc = 0;
+		int colonneRoiNoir = 0;
+		int colonneRoiBlanc = 0;
+		
+		for (int i = 0; i <= 7; i++){
+			for (int j = 0; j <= 7; j++){
+				if (getBoutonPlateau(j, i).getPiece() != null){
+							
+					if (getBoutonPlateau(j, i).getPiece().getType().equals("Roi") && getBoutonPlateau(j, i).getPiece().getCouleur().equals("Noir")){
+						ligneRoiNoir = i;
+						colonneRoiNoir = j;
+					}
+					if (getBoutonPlateau(j, i).getPiece().getType().equals("Roi") && getBoutonPlateau(j, i).getPiece().getCouleur().equals("Blanc")){
+						ligneRoiBlanc = i;
+						colonneRoiBlanc = j;
+					}
+				}
+			}
+		}
+		if (s.equals("ligneRoiNoir")){
+			position = ligneRoiNoir;
+		}
+		else if (s.equals("ligneRoiBlanc")){
+			position = ligneRoiBlanc;
+		}
+		else if (s.equals("colonneRoiNoir")){
+			position = colonneRoiNoir;
+		}
+		else if (s.equals("colonneRoiBlanc")){
+			position = colonneRoiBlanc;
+		}
+		
+		return position;
+	}
+	
+	public boolean testEchecNoir(int c, int l){
+		boolean echec = false;
+		int a = 0; //condition de while
+		int i = 1;
+		
+		while (l+i<=7 && a==0){ //echec par le bas pour Tour et Dame Blanc
+			if(getBoutonPlateau(c, l+i).getPiece() != null){
+				if((getBoutonPlateau(c, l+i).getPiece().getType().equals("Dame") || getBoutonPlateau(c, l+i).getPiece().getType().equals("Tour")) && getBoutonPlateau(c, l+i).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+				if((!getBoutonPlateau(c, l+i).getPiece().getType().equals("Dame") || !getBoutonPlateau(c, l+i).getPiece().getType().equals("Tour")) || !getBoutonPlateau(c, l+i).getPiece().getType().equals("Roi")){
+					a = 1;
+				}
+				if (getBoutonPlateau(c, l+i).getPiece().getType().equals("Roi") && getBoutonPlateau(c, l+i).getPiece().getCouleur().equals("Noir")){
+					a = 0;
+				}
+			}
+			i++;
+		}
+		i = 1;
+		a = 0;
+		
+		while (l-i>=0 && a==0){ //echec par le haut pour Tour et Dame Blanc
+			if(getBoutonPlateau(c, l-i).getPiece() != null){
+				if((getBoutonPlateau(c, l-i).getPiece().getType().equals("Dame") || getBoutonPlateau(c, l-i).getPiece().getType().equals("Tour")) && getBoutonPlateau(c, l-i).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+				if(!getBoutonPlateau(c, l-i).getPiece().getType().equals("Dame") || !getBoutonPlateau(c, l-i).getPiece().getType().equals("Tour")){
+					a = 1;
+				}
+				if (getBoutonPlateau(c, l-i).getPiece().getType().equals("Roi") && getBoutonPlateau(c, l-i).getPiece().getCouleur().equals("Noir")){
+					a = 0;
+				}
+			}
+			i++;
+		}
+        i = 1;
+		a = 0;
+		
+		while (c-i>=0 && a==0){ //echec par le gauche pour Tour et Dame Blanc
+			if(getBoutonPlateau(c-i, l).getPiece() != null){
+				if((getBoutonPlateau(c-i, l).getPiece().getType().equals("Dame") || getBoutonPlateau(c-i, l).getPiece().getType().equals("Tour")) && getBoutonPlateau(c-i, l).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+				if(!getBoutonPlateau(c-i, l).getPiece().getType().equals("Dame") || !getBoutonPlateau(c-i, l).getPiece().getType().equals("Tour")){
+					a = 1;
+				}
+				if (getBoutonPlateau(c-i, l).getPiece().getType().equals("Roi") && getBoutonPlateau(c-i, l).getPiece().getCouleur().equals("Noir")){
+					a = 0;
+				}
+			}
+			i++;
+		}
+        i = 1;
+		a = 0;
+		
+		while (c+i<=7 && a==0){ //echec par le droite pour Tour et Dame Blanc
+			if(getBoutonPlateau(c+i, l).getPiece() != null){
+				if((getBoutonPlateau(c+i, l).getPiece().getType().equals("Dame") || getBoutonPlateau(c+i, l).getPiece().getType().equals("Tour")) && getBoutonPlateau(c+i, l).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+				if(!getBoutonPlateau(c+i, l).getPiece().getType().equals("Dame") || !getBoutonPlateau(c+i, l).getPiece().getType().equals("Tour")){
+					a = 1;
+				}
+				if (getBoutonPlateau(c+i, l).getPiece().getType().equals("Roi") && getBoutonPlateau(c+i, l).getPiece().getCouleur().equals("Noir")){
+					a = 0;
+				}
+			}
+			i++;
+		}
+        i = 1;
+		a = 0;
+		
+         while (c+i<=7 && l+i<=7 && a==0){  //echec par le diagonale a droite en bas pour Fou et Dame Blanc
+			if(getBoutonPlateau(c+i, l+i).getPiece() != null){
+				if((getBoutonPlateau(c+i, l+i).getPiece().getType().equals("Dame") || getBoutonPlateau(c+i, l+i).getPiece().getType().equals("Fou")) && getBoutonPlateau(c+i, l+i).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+				if(!getBoutonPlateau(c+i, l+i).getPiece().getType().equals("Dame") || !getBoutonPlateau(c+i, l+i).getPiece().getType().equals("Fou")){
+					a = 1;
+				}
+				if (getBoutonPlateau(c+i, l+i).getPiece().getType().equals("Roi") && getBoutonPlateau(c+i, l+i).getPiece().getCouleur().equals("Noir")){
+					a = 0;
+				}
+			}
+			i++;
+		}
+        i = 1;
+		a = 0;
+         while (c-i>=0 && l+i<=7 && a==0){  //echec par le diagonale a droite en haut pour Fou et Dame Blanc
+			if(getBoutonPlateau(c-i, l+i).getPiece() != null){
+				if((getBoutonPlateau(c-i, l+i).getPiece().getType().equals("Dame") || getBoutonPlateau(c-i, l+i).getPiece().getType().equals("Fou")) && getBoutonPlateau(c-i, l+i).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+				if(!getBoutonPlateau(c-i, l+i).getPiece().getType().equals("Dame") || !getBoutonPlateau(c-i, l+i).getPiece().getType().equals("Fou")){
+					a = 1;
+				}
+				if (getBoutonPlateau(c-i, l+i).getPiece().getType().equals("Roi") && getBoutonPlateau(c-i, l+i).getPiece().getCouleur().equals("Noir")){
+					a = 0;
+				}
+			}
+			i++;
+		}
+        i = 1;
+		a = 0;
+         while (c-i>=0 && l-i>=0 && a==0){  //echec par le diagonale a gauche en bas pour Fou et Dame Blanc
+			if(getBoutonPlateau(c-i, l-i).getPiece() != null){
+				if((getBoutonPlateau(c-i, l-i).getPiece().getType().equals("Dame") || getBoutonPlateau(c-i, l-i).getPiece().getType().equals("Tour")) && getBoutonPlateau(c-i, l-i).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+				if(!getBoutonPlateau(c-i, l-i).getPiece().getType().equals("Dame") || !getBoutonPlateau(c-i, l-i).getPiece().getType().equals("Fou")){
+					a = 1;
+				}
+				if (getBoutonPlateau(c-i, l-i).getPiece().getType().equals("Roi") && getBoutonPlateau(c-i, l-i).getPiece().getCouleur().equals("Noir")){
+					a = 0;
+				}
+			}
+			i++;
+		}
+        i = 1;
+		a = 0;
+         while (c+i<=7 && l-i>=0 && a==0){  //echec par le diagonale a droite en haut pour Fou et Dame Blanc
+			if(getBoutonPlateau(c+i, l-i).getPiece() != null){
+				if((getBoutonPlateau(c+i, l-i).getPiece().getType().equals("Dame") || getBoutonPlateau(c+i, l-i).getPiece().getType().equals("Fou")) && getBoutonPlateau(c+i, l-i).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+				if(!getBoutonPlateau(c+i, l-i).getPiece().getType().equals("Dame") || !getBoutonPlateau(c+i, l-i).getPiece().getType().equals("Fou")){
+					a = 1;
+				}
+				if (getBoutonPlateau(c+i, l-i).getPiece().getType().equals("Roi") && getBoutonPlateau(c+i, l-i).getPiece().getCouleur().equals("Noir")){
+					a = 0;
+				}
+			}
+			i++;
+		}
+        
+        if(c+2<=7 && l-1>=0){// echec par Cavalier Blanc droite en haut horizontal
+            if(getBoutonPlateau(c+2, l-1).getPiece() != null){
+				if(getBoutonPlateau(c+2, l-1).getPiece().getType().equals("Cavalier")  && getBoutonPlateau(c+2, l-1).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+        if(c+1<=7 && l-2>=0){// echec par Cavalier Blanc droite en haut vertical
+            if(getBoutonPlateau(c+1, l-2).getPiece() != null){
+				if(getBoutonPlateau(c+1, l-2).getPiece().getType().equals("Cavalier")  && getBoutonPlateau(c+1, l-2).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+        if(c-1>=0 && l-2>=0){// echec par Cavalier Blanc gauche en haut vertical
+            if(getBoutonPlateau(c-1, l-2).getPiece() != null){
+				if(getBoutonPlateau(c-1, l-2).getPiece().getType().equals("Cavalier")  && getBoutonPlateau(c-1, l-2).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+         if(c-2>=0 && l-1>=0){// echec par Cavalier Blanc gauche en haut horizontal
+            if(getBoutonPlateau(c-2, l-1).getPiece() != null){
+				if(getBoutonPlateau(c-2, l-1).getPiece().getType().equals("Cavalier")  && getBoutonPlateau(c-2, l-1).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+        if(c-2>=0 && l+1<=7){// echec par Cavalier Blanc gauche en bas horizontal
+            if(getBoutonPlateau(c-2, l+1).getPiece() != null){
+				if(getBoutonPlateau(c-2, l+1).getPiece().getType().equals("Cavalier")  && getBoutonPlateau(c-2, l+1).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+        if(c-1>=0 && l+2<=7){// echec par Cavalier Blanc gauche en bas vertical
+            if(getBoutonPlateau(c-1, l+2).getPiece() != null){
+				if(getBoutonPlateau(c-1, l+2).getPiece().getType().equals("Cavalier")  && getBoutonPlateau(c-1, l+2).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+         if(c+1<=7 && l+2<=7){// echec par Cavalier Blanc droite en bas vertical
+            if(getBoutonPlateau(c+1, l+2).getPiece() != null){
+				if(getBoutonPlateau(c+1, l+2).getPiece().getType().equals("Cavalier")  && getBoutonPlateau(c+1, l+2).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+         if(c+2<=7 && l+1<=7){// echec par Cavalier Blanc droite en bas horizontal
+            if(getBoutonPlateau(c+2, l+1).getPiece() != null){
+				if(getBoutonPlateau(c+2, l+1).getPiece().getType().equals("Cavalier")  && getBoutonPlateau(c+2, l+1).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+         if(c+1<=7 && l+1<=7){// echec par Pion Blanc diagonale droite 
+            if(getBoutonPlateau(c+1, l+1).getPiece() != null){
+				if(getBoutonPlateau(c+1, l+1).getPiece().getType().equals("Pion")  && getBoutonPlateau(c+1, l+1).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+         if(c-1>=0 && l+1<=7){// echec par Pion Blanc diagonale gauche 
+            if(getBoutonPlateau(c-1, l+1).getPiece() != null){
+				if(getBoutonPlateau(c-1, l+1).getPiece().getType().equals("Pion")  && getBoutonPlateau(c-1, l+1).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+        if(c+1<=7 && l-1>=0){// echec par Roi Blanc par diagonale droite vers le haut
+            if(getBoutonPlateau(c+1, l-1).getPiece() != null){
+				if(getBoutonPlateau(c+1, l-1).getPiece().getType().equals("Roi")  && getBoutonPlateau(c+1, l-1).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+         if(c+1<=7 && l>=0 && l<=7){// echec par Roi Blanc par droite
+            if(getBoutonPlateau(c+1, l).getPiece() != null){
+				if(getBoutonPlateau(c+1, l).getPiece().getType().equals("Roi")  && getBoutonPlateau(c+1, l).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+         if(c+1<=7 && l+1<=7){// echec par Roi Blanc par diagonale droite vers le bas
+            if(getBoutonPlateau(c+1, l+1).getPiece() != null){
+				if(getBoutonPlateau(c+1, l+1).getPiece().getType().equals("Roi")  && getBoutonPlateau(c+1, l+1).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+
+        if(c-1>=0 && l-1>=0){// echec par Roi Blanc par diagonale gauche vers le haut
+            if(getBoutonPlateau(c-1, l-1).getPiece() != null){
+				if(getBoutonPlateau(c-1, l-1).getPiece().getType().equals("Roi")  && getBoutonPlateau(c-1, l-1).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+         if(c-1>=0 && l>=0 && l<=7){// echec par Roi Blanc par gauche
+            if(getBoutonPlateau(c-1, l).getPiece() != null){
+				if(getBoutonPlateau(c-1, l).getPiece().getType().equals("Roi")  && getBoutonPlateau(c-1, l).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+         if(c-1>=0 && l+1<=7){// echec par Roi Blanc par diagonale gauche vers le bas
+            if(getBoutonPlateau(c-1, l+1).getPiece() != null){
+				if(getBoutonPlateau(c-1, l+1).getPiece().getType().equals("Roi")  && getBoutonPlateau(c-1, l+1).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+         if(c>=0 && c <= 7 && l+1<=7){// echec par Roi Blanc en bas
+            if(getBoutonPlateau(c, l+1).getPiece() != null){
+				if(getBoutonPlateau(c, l+1).getPiece().getType().equals("Roi")  && getBoutonPlateau(c, l+1).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+         if(c>=0 && c <= 7 && l-1>=0){// echec par Roi Blanc en haut
+            if(getBoutonPlateau(c, l-1).getPiece() != null){
+				if(getBoutonPlateau(c, l-1).getPiece().getType().equals("Roi")  && getBoutonPlateau(c, l-1).getPiece().getCouleur().equals("Blanc")){
+					echec = true;
+					System.out.println("ECHEC NOIR TRUE");
+				}
+            }
+        }
+        
+       
+		return echec;
+	}
+	
+	public boolean testEchecBlanc(int c, int l){
+		boolean echec = false;
+		int a = 0; //condition de while
+		int i = 1;
+		
+		while (l+i<=7 && a==0){ //echec par le bas pour Tour et Dame Noir
+			if(getBoutonPlateau(c, l+i).getPiece() != null){
+				if((getBoutonPlateau(c, l+i).getPiece().getType().equals("Dame") || getBoutonPlateau(c, l+i).getPiece().getType().equals("Tour")) && getBoutonPlateau(c, l+i).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+				}
+				if(!getBoutonPlateau(c, l+i).getPiece().getType().equals("Dame") || !getBoutonPlateau(c, l+i).getPiece().getType().equals("Tour")){
+					a = 1;
+				}
+				if (getBoutonPlateau(c, l+i).getPiece().getType().equals("Roi") && getBoutonPlateau(c, l+i).getPiece().getCouleur().equals("Blanc")){
+					a = 0;
+				}
+			}
+			i++;
+		}
+        i = 1;
+		a = 0;
+		
+		while (l-i>=0 && a==0){ //echec par le bas pour Tour et Dame Noir
+			if(getBoutonPlateau(c, l-i).getPiece() != null){
+				if((getBoutonPlateau(c, l-i).getPiece().getType().equals("Dame") || getBoutonPlateau(c, l-i).getPiece().getType().equals("Tour")) && getBoutonPlateau(c, l-i).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+				if(!getBoutonPlateau(c, l-i).getPiece().getType().equals("Dame") || !getBoutonPlateau(c, l-i).getPiece().getType().equals("Tour")){
+					a = 1;
+				}
+				if (getBoutonPlateau(c, l-i).getPiece().getType().equals("Roi") && getBoutonPlateau(c, l-i).getPiece().getCouleur().equals("Blanc")){
+					a = 0;
+				}
+			}
+			i++;
+		}  i = 1;
+		a = 0;
+		
+		while (c-i>=0 && a==0){  //echec par le gauche pour Tour et Dame Noir
+			if(getBoutonPlateau(c-i, l).getPiece() != null){
+				if((getBoutonPlateau(c-i,l).getPiece().getType().equals("Dame") || getBoutonPlateau(c-i,l).getPiece().getType().equals("Tour")) && getBoutonPlateau(c-i,l).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+				if(!getBoutonPlateau(c-i, l).getPiece().getType().equals("Dame") || !getBoutonPlateau(c-i, l).getPiece().getType().equals("Tour")){
+					a = 1;
+				}
+				if (getBoutonPlateau(c-i, l).getPiece().getType().equals("Roi") && getBoutonPlateau(c-i, l).getPiece().getCouleur().equals("Blanc")){
+					a = 0;
+				}
+			}
+			i++;
+		}
+        i = 1;
+		a = 0;
+		
+		while (c+i<=7 && a==0){  //echec par le droite pour Tour et Dame Noir
+			if(getBoutonPlateau(c+i, l).getPiece() != null){
+				if((getBoutonPlateau(c+i, l).getPiece().getType().equals("Dame") || getBoutonPlateau(c+i, l).getPiece().getType().equals("Tour")) && getBoutonPlateau(c+i, l).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+				if(!getBoutonPlateau(c+i, l).getPiece().getType().equals("Dame") || !getBoutonPlateau(c+i, l).getPiece().getType().equals("Tour")){
+					a = 1;
+				}
+				if (getBoutonPlateau(c+i, l).getPiece().getType().equals("Roi") && getBoutonPlateau(c+i, l).getPiece().getCouleur().equals("Blanc")){
+					a = 0;
+				}
+			}
+			i++;
+		}
+        i = 1;
+		a = 0;
+        
+
+         while (c+i<=7 && l+i<=7 && a==0){  //echec par le diagonale a droite en bas pour Fou et Dame Noir
+			if(getBoutonPlateau(c+i, l+i).getPiece() != null){
+				if((getBoutonPlateau(c+i, l+i).getPiece().getType().equals("Dame") || getBoutonPlateau(c+i, l+i).getPiece().getType().equals("Fou")) && getBoutonPlateau(c+i, l+i).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+				if(!getBoutonPlateau(c+i, l+i).getPiece().getType().equals("Dame") || !getBoutonPlateau(c+i, l+i).getPiece().getType().equals("Fou")){
+					a = 1;
+				}
+				if (getBoutonPlateau(c+i, l+i).getPiece().getType().equals("Roi") && getBoutonPlateau(c+i, l+i).getPiece().getCouleur().equals("Blanc")){
+					a = 0;
+				}
+			}
+			i++;
+		}
+        i = 1;
+		a = 0;
+		
+         while (c-i>=0 && l+i<=7 && a==0){  //echec par le diagonale a droite en haut pour Fou et Dame Blanc
+			if(getBoutonPlateau(c-i, l+i).getPiece() != null){
+				if((getBoutonPlateau(c-i, l+i).getPiece().getType().equals("Dame") || getBoutonPlateau(c-i, l+i).getPiece().getType().equals("Fou")) && getBoutonPlateau(c-i, l+i).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+				if(!getBoutonPlateau(c-i, l+i).getPiece().getType().equals("Dame") || !getBoutonPlateau(c-i, l+i).getPiece().getType().equals("Fou")){
+					a = 1;
+				}
+				if (getBoutonPlateau(c-i, l+i).getPiece().getType().equals("Roi") && getBoutonPlateau(c-i, l+i).getPiece().getCouleur().equals("Blanc")){
+					a = 0;
+				}
+			}
+			i++;
+		}
+        i = 1;
+		a = 0;
+         while (c-i>=0 && l-i>=0 && a==0){  //echec par le diagonale a gauche en bas pour Fou et Dame Blanc
+			if(getBoutonPlateau(c-i, l-i).getPiece() != null){
+				if((getBoutonPlateau(c-i, l-i).getPiece().getType().equals("Dame") || getBoutonPlateau(c-i, l-i).getPiece().getType().equals("Fou")) && getBoutonPlateau(c-i, l-i).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+				if(!getBoutonPlateau(c-i, l-i).getPiece().getType().equals("Dame") || !getBoutonPlateau(c-i, l-i).getPiece().getType().equals("Fou")){
+					a = 1;
+				}
+				if (getBoutonPlateau(c-i, l-i).getPiece().getType().equals("Roi") && getBoutonPlateau(c-i, l-i).getPiece().getCouleur().equals("Blanc")){
+					a = 0;
+				}
+			}
+			i++;
+		}
+        i = 1;
+		a = 0;
+         while (c+i<=7 && l-i>=0 && a==0){  //echec par le diagonale a droite en haut pour Fou et Dame Blanc
+			if(getBoutonPlateau(c+i, l-i).getPiece() != null){
+				if((getBoutonPlateau(c+i, l-i).getPiece().getType().equals("Dame") || getBoutonPlateau(c+i, l-i).getPiece().getType().equals("Fou")) && getBoutonPlateau(c+i, l-i).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+				if(!getBoutonPlateau(c+i, l-i).getPiece().getType().equals("Dame") || !getBoutonPlateau(c+i, l-i).getPiece().getType().equals("Fou")){
+					a = 1;
+				}
+				if (getBoutonPlateau(c+i, l-i).getPiece().getType().equals("Roi") && getBoutonPlateau(c+i, l-i).getPiece().getCouleur().equals("Blanc")){
+					a = 0;
+				}
+			}
+			i++;
+		}
+             if(c+2<=7 && l-1>=0){// echec par Cavalier Noir droite en haut horizontal
+            if(getBoutonPlateau(c+2, l-1).getPiece() != null){
+				if(getBoutonPlateau(c+2, l-1).getPiece().getType().equals("Cavalier")  && getBoutonPlateau(c+2, l-1).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+        if(c+1<=7 && l-2>=0){// echec par Cavalier droite en haut vertical
+            if(getBoutonPlateau(c+1, l-2).getPiece() != null){
+				if(getBoutonPlateau(c+1, l-2).getPiece().getType().equals("Cavalier")  && getBoutonPlateau(c+1, l-2).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+        if(c-1>=0 && l-2>=0){// echec par Cavalier Noir gauche en haut vertical
+            if(getBoutonPlateau(c-1, l-2).getPiece() != null){
+				if(getBoutonPlateau(c-1, l-2).getPiece().getType().equals("Cavalier")  && getBoutonPlateau(c-1, l-2).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+         if(c-2>=0 && l-1>=0){// echec par Cavalier Noir gauche en haut horizontal
+            if(getBoutonPlateau(c-2, l-1).getPiece() != null){
+				if(getBoutonPlateau(c-2, l-1).getPiece().getType().equals("Cavalier")  && getBoutonPlateau(c-2, l-1).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+        if(c-2>=0 && l+1<=7){// echec par Cavalier Noir gauche en bas horizontal
+            if(getBoutonPlateau(c-2, l+1).getPiece() != null){
+				if(getBoutonPlateau(c-2, l+1).getPiece().getType().equals("Cavalier")  && getBoutonPlateau(c-2, l+1).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+        if(c-1>=0 && l+2<=7){// echec par Cavalier Noir gauche en bas vertical
+            if(getBoutonPlateau(c-1, l+2).getPiece() != null){
+				if(getBoutonPlateau(c-1, l+2).getPiece().getType().equals("Cavalier")  && getBoutonPlateau(c-1, l+2).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+         if(c+1<=7 && l+2<=7){// echec par Cavalier Noir droite en bas vertical
+            if(getBoutonPlateau(c+1, l+2).getPiece() != null){
+				if(getBoutonPlateau(c+1, l+2).getPiece().getType().equals("Cavalier")  && getBoutonPlateau(c+1, l+2).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+         if(c+2<=7 && l+1<=7){// echec par Cavalier Noir droite en bas horizontal
+            if(getBoutonPlateau(c+2, l+1).getPiece() != null){
+				if(getBoutonPlateau(c+2, l+1).getPiece().getType().equals("Cavalier")  && getBoutonPlateau(c+2, l+1).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+        
+         if(c-1>=0 && l-1>=0){// echec par Pion Noir diagonale gauche 
+            if(getBoutonPlateau(c-1, l-1).getPiece() != null){
+				if(getBoutonPlateau(c-1, l-1).getPiece().getType().equals("Pion")  && getBoutonPlateau(c-1, l-1).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+         if(c+1<=7 && l-1>=0){// echec par Pion Noir diagonale droite 
+            if(getBoutonPlateau(c+1, l-1).getPiece() != null){
+				if(getBoutonPlateau(c+1, l-1).getPiece().getType().equals("Pion")  && getBoutonPlateau(c+1, l-1).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+         if(c+1<=7 && l-1>=0){// echec par Roi Noir droite haut
+            if(getBoutonPlateau(c+1, l-1).getPiece() != null){
+				if(getBoutonPlateau(c+1, l-1).getPiece().getType().equals("Roi")  && getBoutonPlateau(c+1, l-1).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+         if(c+1<=7 && l>=0 && l<=7){// echec par Roi Noir droite
+            if(getBoutonPlateau(c+1, l).getPiece() != null){
+				if(getBoutonPlateau(c+1, l).getPiece().getType().equals("Roi")  && getBoutonPlateau(c+1, l).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+         if(c+1<=7 && l+1<=7){// echec par Roi Noir diagonale droite bas
+            if(getBoutonPlateau(c+1, l+1).getPiece() != null){
+				if(getBoutonPlateau(c+1, l+1).getPiece().getType().equals("Roi")  && getBoutonPlateau(c+1, l+1).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+         if(c-1>=0 && l-1>=0){// echec par Roi Noir par diagonale gauche vers le haut
+            if(getBoutonPlateau(c-1, l-1).getPiece() != null){
+				if(getBoutonPlateau(c-1, l-1).getPiece().getType().equals("Roi")  && getBoutonPlateau(c-1, l-1).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+         if(c-1>=0 && l>=0 && l<=7){// echec par Roi Noir par gauche
+            if(getBoutonPlateau(c-1, l).getPiece() != null){
+				if(getBoutonPlateau(c-1, l).getPiece().getType().equals("Roi")  && getBoutonPlateau(c-1, l).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+         if(c-1>=0 && l+1<=7){// echec par Roi Noir par diagonale gauche vers le bas
+            if(getBoutonPlateau(c-1, l+1).getPiece() != null){
+				if(getBoutonPlateau(c-1, l+1).getPiece().getType().equals("Roi")  && getBoutonPlateau(c-1, l+1).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+        if(c>=0 && c <= 7 && l+1<=7){// echec par Roi Noir en bas
+            if(getBoutonPlateau(c, l+1).getPiece() != null){
+				if(getBoutonPlateau(c, l+1).getPiece().getType().equals("Roi")  && getBoutonPlateau(c, l+1).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+         if(c>=0 && c <= 7 && l-1>=0){// echec par Roi Noir en haut
+            if(getBoutonPlateau(c, l-1).getPiece() != null){
+				if(getBoutonPlateau(c, l-1).getPiece().getType().equals("Roi")  && getBoutonPlateau(c, l-1).getPiece().getCouleur().equals("Noir")){
+					echec = true;
+					System.out.println("ECHEC BLANC TRUE");
+				}
+            }
+        }
+        
+		return echec;
+	}
 	
 	// - PROMOTION D'UN PION ARRIVANT AU BOUT DU PLATEAU EN DAME - //
 
