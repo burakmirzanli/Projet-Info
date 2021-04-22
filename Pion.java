@@ -91,7 +91,7 @@ public class Pion extends Piece implements interfaceValidite{
 					valid = true;
 				}
 			}
-			if(departL == 1 && Math.abs(departL-arriveeL)==2){
+			if(departL == 1 && Math.abs(departL-arriveeL)==2 && Math.abs(departC-arriveeC)==0){
 				valid = true;
 			} 
 		}
@@ -107,7 +107,7 @@ public class Pion extends Piece implements interfaceValidite{
 					valid = true;
 				}
 			}
-			if(departL == 6 && Math.abs(departL-arriveeL)==2){
+			if(departL == 6 && Math.abs(departL-arriveeL)==2 && Math.abs(departC-arriveeC)==0){
 				valid = true;
 			}
 		}
