@@ -401,47 +401,96 @@ public class Echiquier {
 			if ((pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDepart.getType().equals("Roi")){
 				(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDepart);
 				(plateauBouton[departC][departL]).setPiece(null);
-					
+				if (compteurBoutonJoueur % 2 == 1 && !testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){ //condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
 
 			// - LE DEPLACEMENT EST VALIDE CHANGEMENT DE JOUEUR - PAIR = BLANC IMPAIR = NOIR - //
 			
-			compteurBoutonJoueur++; 
+					compteurBoutonJoueur++; 
 			
-			if(compteurBoutonJoueur % 2 == 1){
-				timerN.start();
-				timerB.stop();
-			}else if(compteurBoutonJoueur % 2 == 0){
-				timerB.start();
-				timerN.stop();
-			}			
+					if(compteurBoutonJoueur % 2 == 1){
+						timerN.start();
+					timerB.stop();
+					}else if(compteurBoutonJoueur % 2 == 0){
+						timerB.start();
+						timerN.stop();
+					}			
 			
-			if(pieceDepart.getType() == "Pion" ){
-				promotionPion(plateauBouton[arriveeC][arriveeL]);
-			}
+					if(pieceDepart.getType() == "Pion" ){
+						promotionPion(plateauBouton[arriveeC][arriveeL]);
+					}
 				
+				}
+				else if (compteurBoutonJoueur % 2 == 0 && !testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))){//condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
+					
+					compteurBoutonJoueur++; 
+			
+					if(compteurBoutonJoueur % 2 == 1){
+						timerN.start();
+						timerB.stop();
+					}else if(compteurBoutonJoueur % 2 == 0){
+						timerB.start();
+						timerN.stop();
+					}			
+				
+					if(pieceDepart.getType() == "Pion" ){
+						promotionPion(plateauBouton[arriveeC][arriveeL]);
+					}
+				
+				}
+				
+				else if ((compteurBoutonJoueur % 2 == 0 && testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))) || (compteurBoutonJoueur % 2 == 1 && testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")))){//condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
+					plateauBouton[departC][departL].setPiece(pieceDepart);
+					plateauBouton[arriveeC][arriveeL].setPiece(null);
+				}
+			
 			}
 		}
 		else if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceArrivee!=null  && pieceDepart.getCouleur()!=pieceArrivee.getCouleur() && couleurValid == true){
 			if ((pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDepart.getType().equals("Roi")){
 				(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDepart);
 				(plateauBouton[departC][departL]).setPiece(null);
-							
+				if (compteurBoutonJoueur % 2 == 1 && !testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){ //condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
+
 			// - LE DEPLACEMENT EST VALIDE CHANGEMENT DE JOUEUR - PAIR = BLANC IMPAIR = NOIR - //
 			
-			compteurBoutonJoueur++; 
+					compteurBoutonJoueur++; 
 			
-			if(compteurBoutonJoueur % 2 == 1){
-				timerN.start();
-				timerB.stop();
-
-			}else if(compteurBoutonJoueur % 2 == 0){
-				timerB.start();
-				timerN.stop();
-			}			
+					if(compteurBoutonJoueur % 2 == 1){
+						timerN.start();
+					timerB.stop();
+					}else if(compteurBoutonJoueur % 2 == 0){
+						timerB.start();
+						timerN.stop();
+					}			
 			
-			if(pieceDepart.getType() == "Pion"){
-				promotionPion(plateauBouton[arriveeC][arriveeL]);
-			}
+					if(pieceDepart.getType() == "Pion" ){
+						promotionPion(plateauBouton[arriveeC][arriveeL]);
+					}
+				
+				}
+				else if (compteurBoutonJoueur % 2 == 0 && !testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))){//condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
+					
+					compteurBoutonJoueur++; 
+			
+					if(compteurBoutonJoueur % 2 == 1){
+						timerN.start();
+						timerB.stop();
+					}else if(compteurBoutonJoueur % 2 == 0){
+						timerB.start();
+						timerN.stop();
+					}			
+				
+					if(pieceDepart.getType() == "Pion" ){
+						promotionPion(plateauBouton[arriveeC][arriveeL]);
+					}
+				
+				}
+				
+				else if ((compteurBoutonJoueur % 2 == 0 && testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))) || (compteurBoutonJoueur % 2 == 1 && testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")))){//condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
+					plateauBouton[departC][departL].setPiece(pieceDepart);
+					plateauBouton[arriveeC][arriveeL].setPiece(pieceArrivee);
+				}
+			
 
 			}
 			
