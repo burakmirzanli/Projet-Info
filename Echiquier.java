@@ -507,6 +507,8 @@ public class Echiquier {
 			System.out.println("Déplacement impossible ! Choisis une autre case");
 		}
 		
+		//REINITIALISATION DES COULEURS DES BOUTONS
+		
 		for (int ii = 0; ii < plateauBouton.length; ii++) {
 			for (int jj = 0; jj < plateauBouton[ii].length; jj++) {
 				if ((jj % 2 == 1 && ii % 2 == 1)
@@ -519,9 +521,12 @@ public class Echiquier {
 			}
 		}	
 		
-		System.out.println("Roi Noir:   C - "+positionRoi("colonneRoiNoir")+"	L - "+positionRoi("ligneRoiNoir"));	
-		System.out.println("Roi Noir:   C - "+positionRoi("colonneRoiBlanc")+"	L - "+positionRoi("ligneRoiBlanc"));	
-		///////////////////////////////////////////////////	
+		//AFFICHAGES DES POSITIONS DES DEUX ROI
+		
+		System.out.println("Roi Noir:   C - "+(positionRoi("colonneRoiNoir")+1)+"	L - "+(positionRoi("ligneRoiNoir")+1));	
+		System.out.println("Roi Noir:   C - "+(positionRoi("colonneRoiBlanc")+1)+"	L - "+(positionRoi("ligneRoiBlanc")+1));
+		
+		// CHANGEMENT DU COULEUR EN CAS D'ECHEC NOIR	
 		if (testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){
 			getBoutonPlateau(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")).setBackground(Color.RED);
 			/*if (testMatNoir(cMat, lMat)){
@@ -529,7 +534,7 @@ public class Echiquier {
 			}*/
 		}
 
-			///////////////////////////////////////////////////	
+		// CHANGEMENT DU COULEUR EN CAS D'ECHEC BLANC	
 		if (testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))){
 			getBoutonPlateau(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc")).setBackground(Color.RED);
 		} 
