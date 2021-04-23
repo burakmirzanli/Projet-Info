@@ -32,6 +32,9 @@ public class Echiquier {
 	private int compteurBoutonJoueur=0;
 
 	private Piece piece;
+	
+	private static EcouteurBoutonLancer eL;
+	
     
 	//INITIALISATION ARRAYLIST HISTORIQUE BLANC
    
@@ -213,7 +216,9 @@ public class Echiquier {
 					JButton boutonReset = new JButton("Renitialisation");
 					JButton boutonLancer = new JButton ("Lancer Jeu");
 					boutonReset.addActionListener(new EcouteurBoutonReset(e)) ;
-					boutonLancer.addActionListener(new EcouteurBoutonLancer(e));
+					//boutonLancer.addActionListener(new EcouteurBoutonLancer(e));
+					eL=new EcouteurBoutonLancer(e);
+					boutonLancer.addActionListener(eL);
 					JLabel tpsRestB = new JLabel("Temps restant blancs");
 					JLabel tpsRestN = new JLabel("Temps restant noirs");
             
@@ -299,7 +304,8 @@ public class Echiquier {
        
        tpsB.setText(heureB+":"+minuteB+":"+secondeB);
        tpsN.setText(heureN+":"+minuteN+":"+secondeN);
-       
+		
+       eL.setF(false);
        
 	    
 	}
@@ -362,6 +368,10 @@ public class Echiquier {
 	
 	public void startTpsB(){
 		timerB.start();
+	}
+	
+	public EcouteurBoutonLancer getEcout(){
+		return eL;
 	}
 	
 	// - METHODE COMPTEUR BOUTON CLIC ET BOUTON JOUEUR - //

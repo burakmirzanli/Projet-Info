@@ -9,7 +9,8 @@ import java.lang.*;
 public class EcouteurBoutonLancer implements ActionListener{
 	
 	private Echiquier e1;
-	
+	private boolean f;
+
 	public EcouteurBoutonLancer(Echiquier e1){
 		this.e1=e1;
 	}
@@ -17,6 +18,16 @@ public class EcouteurBoutonLancer implements ActionListener{
     public void actionPerformed(ActionEvent e){
 	   
 	   e1.startTpsB();
+	   f=true;
+	   
 
+	}
+	
+	public boolean getF(){
+		return f;
+	}
+	
+	public void setF(boolean k){
+		f=k;
 	}
 }
