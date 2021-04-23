@@ -211,7 +211,7 @@ public class Echiquier {
 					JPanel bandeauHaut = new JPanel(new FlowLayout());
 					
 					
-					//bandeauHaut.setBackground(new Color(116,78,69));
+					bandeauHaut.setBackground(Color.GRAY);
 					
 					JButton boutonReset = new JButton("Renitialisation");
 					JButton boutonLancer = new JButton ("Lancer Jeu");
@@ -221,6 +221,10 @@ public class Echiquier {
 					boutonLancer.addActionListener(eL);
 					JLabel tpsRestB = new JLabel("Temps restant blancs");
 					JLabel tpsRestN = new JLabel("Temps restant noirs");
+					tpsRestB.setForeground(Color.ORANGE);
+					tpsRestN.setForeground(Color.ORANGE);
+					//tpsB.setForeground(Color.WHITE);
+					//tpsN.setForeground(Color.WHITE);
             
 					// JTextField tpsB = new JTextField(15);
 					// JTextField tpsN = new JTextField(15);
@@ -236,6 +240,7 @@ public class Echiquier {
 					bandeauHaut.add(boutonReset);
 					bandeauHaut.add(boutonLancer);
 					boutonReset.setBackground(Color.ORANGE);
+					boutonLancer.setBackground(Color.ORANGE);
 					
 					f.add(bandeauHaut, BorderLayout.NORTH);
 					
