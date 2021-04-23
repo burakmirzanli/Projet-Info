@@ -13,9 +13,6 @@ public class Echiquier {
 	
 	// Attributs //
 	
-	//private int cMat;
-	//private int lMat;
-	
 	private JPanel interfaceJeu = new JPanel(new BorderLayout(3, 3));
 
 	private static MonBouton[][] plateauBouton = new MonBouton [8][8];
@@ -293,11 +290,11 @@ public class Echiquier {
        timerN.stop();
        
        heureB=0;
-       minuteB=0;
+       minuteB=20;
        secondeB=0;
        
        heureN=0;
-       minuteN=0;
+       minuteN=20;
        secondeN=0;
        
        tpsB.setText(heureB+":"+minuteB+":"+secondeB);
@@ -401,7 +398,7 @@ public class Echiquier {
 		}
 
 		if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceArrivee==null && couleurValid == true){
-			if ((pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDepart.getType().equals("Roi")){ // si on ne fait pas un auto - echec avec le roi OU si la piece qu'on bouge n'est pas un roi
+			if ((pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDepart.getType().equals("Roi")){
 				(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDepart);
 				(plateauBouton[departC][departL]).setPiece(null);
 				if (compteurBoutonJoueur % 2 == 1 && !testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){ //condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
@@ -449,7 +446,7 @@ public class Echiquier {
 			}
 		}
 		else if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceArrivee!=null  && pieceDepart.getCouleur()!=pieceArrivee.getCouleur() && couleurValid == true){
-			if ((pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDepart.getType().equals("Roi")){ // si on ne fait pas un auto - echec avec le roi OU si la piece qu'on bouge n'est pas un roi
+			if ((pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDepart.getType().equals("Roi")){
 				(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDepart);
 				(plateauBouton[departC][departL]).setPiece(null);
 				if (compteurBoutonJoueur % 2 == 1 && !testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){ //condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
@@ -507,8 +504,6 @@ public class Echiquier {
 			System.out.println("Déplacement impossible ! Choisis une autre case");
 		}
 		
-		//REINITIALISATION DES COULEURS DES BOUTONS
-		
 		for (int ii = 0; ii < plateauBouton.length; ii++) {
 			for (int jj = 0; jj < plateauBouton[ii].length; jj++) {
 				if ((jj % 2 == 1 && ii % 2 == 1)
@@ -521,20 +516,14 @@ public class Echiquier {
 			}
 		}	
 		
-		//AFFICHAGES DES POSITIONS DES DEUX ROI
-		
-		System.out.println("Roi Noir:   C - "+(positionRoi("colonneRoiNoir")+1)+"	L - "+(positionRoi("ligneRoiNoir")+1));	
-		System.out.println("Roi Noir:   C - "+(positionRoi("colonneRoiBlanc")+1)+"	L - "+(positionRoi("ligneRoiBlanc")+1));
-		
-		// CHANGEMENT DU COULEUR EN CAS D'ECHEC NOIR	
+		System.out.println("Roi Noir:   C - "+positionRoi("colonneRoiNoir")+"	L - "+positionRoi("ligneRoiNoir"));	
+		System.out.println("Roi Noir:   C - "+positionRoi("colonneRoiBlanc")+"	L - "+positionRoi("ligneRoiBlanc"));	
+		///////////////////////////////////////////////////	
 		if (testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){
 			getBoutonPlateau(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")).setBackground(Color.RED);
-			/*if (testMatNoir(cMat, lMat)){
-				getBoutonPlateau(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")).setBackground(Color.BLUE);
-			}*/
 		}
 
-		// CHANGEMENT DU COULEUR EN CAS D'ECHEC BLANC	
+			///////////////////////////////////////////////////	
 		if (testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))){
 			getBoutonPlateau(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc")).setBackground(Color.RED);
 		} 
@@ -739,13 +728,11 @@ public class Echiquier {
 				if((getBoutonPlateau(c, l+i).getPiece().getType().equals("Dame") || getBoutonPlateau(c, l+i).getPiece().getType().equals("Tour")) && getBoutonPlateau(c, l+i).getPiece().getCouleur().equals("Blanc")){
 					echec = true;
 					System.out.println("ECHEC NOIR TRUE");
-					//cMat = c;
-					//lMat = l+i;
 				}
-				if((!getBoutonPlateau(c, l+i).getPiece().getType().equals("Dame") || !getBoutonPlateau(c, l+i).getPiece().getType().equals("Tour")) || !getBoutonPlateau(c, l+i).getPiece().getType().equals("Roi")){ // condition d'arret de recherche de l'echec s'il y a une piece entre le roi et la dame/tour
+				if((!getBoutonPlateau(c, l+i).getPiece().getType().equals("Dame") || !getBoutonPlateau(c, l+i).getPiece().getType().equals("Tour")) || !getBoutonPlateau(c, l+i).getPiece().getType().equals("Roi")){
 					a = 1;
 				}
-				if (getBoutonPlateau(c, l+i).getPiece().getType().equals("Roi") && getBoutonPlateau(c, l+i).getPiece().getCouleur().equals("Noir")){ // condition qui permet d'ignorer la presence du roi noir (empeche le roi en echec de reculer plus loin de la piece qui donne l'echec, si ce mouvement de recul entraine toujour au meme echec 
+				if (getBoutonPlateau(c, l+i).getPiece().getType().equals("Roi") && getBoutonPlateau(c, l+i).getPiece().getCouleur().equals("Noir")){
 					a = 0;
 				}
 			}
@@ -1316,17 +1303,6 @@ public class Echiquier {
         
 		return echec;
 	}
-	
-	/*public boolean testMatNoir(int c, int l){
-		boolean mat = false;
-		
-		if (positionRoi("colonneRoiNoir") + 1 <= 7 && testEchecNoir(positionRoi("colonneRoiNoir") + 1, positionRoi("ligneRoiNoir"))){
-			mat = true;
-		}
-		
-		return mat;
-		
-	}*/
 	
 	// - PROMOTION D'UN PION ARRIVANT AU BOUT DU PLATEAU EN DAME - //
 
