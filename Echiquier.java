@@ -36,7 +36,7 @@ public class Echiquier {
 	
 	private static EcouteurBoutonLancer eL;
 	
-	private ArrayList<MonBouton[][]> listeHistoriquePlateau = new ArrayList<MonBouton[][]>();
+	private ArrayList<Piece[][]> listeHistoriquePlateau = new ArrayList<Piece[][]>();
 	
 	private ArrayList<int[][]> listeHistoriqueTimerSec = new ArrayList<int[][]>() ;
 	
@@ -324,7 +324,8 @@ public class Echiquier {
        
        tpsB.setText(heureB+":"+minuteB+":"+secondeB);
        tpsN.setText(heureN+":"+minuteN+":"+secondeN);
-		
+	
+	   bandeauBas.removeAll();
        eL.setF(false);
        
        this.setCouleurComplet();
@@ -1305,7 +1306,8 @@ public class Echiquier {
 	
 	public void augmentationListeHisto(){
 		
-		if (getArriveeC()==0){
+		listeHistoriqueString.add("Tour : "+(compteurHistorique+1));
+		/* if (getArriveeC()==0){
 			listeHistoriqueString.add("A"+Integer.toString(getArriveeL()+1));
 		}
 		else if(getArriveeC()==1){
@@ -1328,14 +1330,14 @@ public class Echiquier {
 		}
 		else if (getArriveeC()==7){
 			listeHistoriqueString.add("H"+Integer.toString(getArriveeL()+1));
-		}
+		} */
 	}
 	
 	public void augmentationListeHistoPlateau(){
-		MonBouton[][] tempPlateau = new MonBouton[8][8];
+		Piece[][] tempPlateau = new Piece[8][8];
 		for(int i=0; i<8;i++){
 		   for(int j=0; j<8; j++){
-			   tempPlateau[j][i]= this.getBoutonPlateau(j,i);
+			   tempPlateau[i][j]= (plateauBouton[j][i]).getPiece();
 		   }
 		}
 		
@@ -1354,9 +1356,16 @@ public class Echiquier {
 	// - ACTION REVENIR EN ARRIERE DANS HISTORIQUE - //
 	
 	public void retourArriereJeu(int numero){
-	
-		plateauBouton = listeHistoriquePlateau.get(numero);
-	    
+		Piece[][] tempTab;
+		compteurHistorique=numero;
+		tempTab = listeHistoriquePlateau.get(numero);
+		
+		for(int i=0; i<8;i++){
+		   for(int j=0; j<8; j++){
+			   plateauBouton[j][i].setPiece(tempTab[i][j]);
+		   }
+		}
+		
 	}
 
    
