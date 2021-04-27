@@ -84,7 +84,7 @@ public class Fou extends Piece implements interfaceValidite {
 				
 				
 				int j = departL+1;
-				for(int i=departC+1;i>arriveeC;i++){
+				for(int i=departC+1;i<arriveeC;i++){
 					if(j<arriveeL){
 						if(j<7 && i<7){
 							Piece p = ((e1.getBoutonPlateau(i,j))).getPiece();
@@ -92,7 +92,7 @@ public class Fou extends Piece implements interfaceValidite {
 								c=false;
 							}
 						}
-						j--;
+						j++;
 					}
 				}
 				if(c==true){
