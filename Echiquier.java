@@ -312,6 +312,8 @@ public class Echiquier {
 		
        eL.setF(false);
        
+       this.setCouleurComplet();
+       
 	    
 	}
 	
@@ -1349,6 +1351,26 @@ public class Echiquier {
 			}
 		}
 	
+	}
+	
+	
+	public void affichageCasePossible(Piece p){
+		for(int i = 0;i<this.getPlateau().length;i++){
+			for(int j = 0;j<this.getPlateau().length;j++){
+				if(p instanceof interfaceValidite){
+					if(((interfaceValidite)p).deplacementValid(departL,departC,i,j)==true){
+						if(plateauBouton[j][i].getPiece()==null){
+							this.plateauBouton[j][i].setBackground(Color.CYAN);
+						}
+						else if(((plateauBouton[j][i].getPiece()).getCouleur())!=p.getCouleur()&&(plateauBouton[j][i].getPiece())!=null){
+							this.plateauBouton[j][i].setBackground(Color.CYAN);
+						}
+						
+					}
+				}
+			}
+		}	
+		
 	}
 	
 	
