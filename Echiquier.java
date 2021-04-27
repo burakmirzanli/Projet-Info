@@ -341,6 +341,27 @@ public class Echiquier {
 			this.pieceArrivee = P;
 	}
 	
+	// - SETTERS - //
+	
+	public void setCouleurCaseVert(int l, int c){
+		this.plateauBouton[c][l].setBackground(Color.GREEN);
+	}
+	
+	public void setCouleurComplet(){
+		
+		for (int ii = 0; ii < plateauBouton.length; ii++) {
+			for (int jj = 0; jj < plateauBouton[ii].length; jj++) {
+				if ((jj % 2 == 1 && ii % 2 == 1)
+                       //) {
+						|| (jj % 2 == 0 && ii % 2 == 0)) {
+						plateauBouton[jj][ii].setBackground(Color.WHITE);
+				} else {
+					plateauBouton[jj][ii].setBackground(Color.GRAY);
+				}
+			}
+		}
+	}
+	
 	// - GETTERS - //
 	
 	public int getDepartC(){
@@ -371,12 +392,14 @@ public class Echiquier {
         return interfaceJeu;
     }
 	
-	public void startTpsB(){
-		timerB.start();
-	}
-	
 	public EcouteurBoutonLancer getEcout(){
 		return eL;
+	}
+	
+	// - TIMER - //
+	
+	public void startTpsB(){
+		timerB.start();
 	}
 	
 	// - METHODE COMPTEUR BOUTON CLIC ET BOUTON JOUEUR - //
@@ -519,17 +542,7 @@ public class Echiquier {
 			System.out.println("Déplacement impossible ! Choisis une autre case");
 		}
 		
-		for (int ii = 0; ii < plateauBouton.length; ii++) {
-			for (int jj = 0; jj < plateauBouton[ii].length; jj++) {
-				if ((jj % 2 == 1 && ii % 2 == 1)
-                       //) {
-						|| (jj % 2 == 0 && ii % 2 == 0)) {
-						plateauBouton[jj][ii].setBackground(Color.WHITE);
-				} else {
-					plateauBouton[jj][ii].setBackground(Color.GRAY);
-				}
-			}
-		}	
+		this.setCouleurComplet();	
 		
 		System.out.println("Roi Noir:   C - "+positionRoi("colonneRoiNoir")+"	L - "+positionRoi("ligneRoiNoir"));	
 		System.out.println("Roi Noir:   C - "+positionRoi("colonneRoiBlanc")+"	L - "+positionRoi("ligneRoiBlanc"));	
@@ -1338,29 +1351,7 @@ public class Echiquier {
 	
 	}
 	
-	/* public JLabel getTpsB(){
-		return this.tpsB;
-	}
 	
-	public JLabel getTpsN(){
-		return this.tpsN;
-	}
-	
-	public void startTpsB(){
-		timerB.start();
-	}
-	
-	public void startTpsN(){
-		timerN.start();
-	}
-	
-	public void stopTpsB(){
-		timerB.stop();
-	}
-	
-	public void stopTpsN(){
-		timerN.start();
-	} */
 
    
 }

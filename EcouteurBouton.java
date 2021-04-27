@@ -45,6 +45,8 @@ public class EcouteurBouton implements ActionListener{
 				
 				System.out.println("Position Depart = "+e1.getDepartL()+" ; "+e1.getDepartC()); 
 				
+				e1.setCouleurCaseVert(x,y);
+				
 				e1.CompteurBoutonIncrements();
 				}
 			// MISE EN MEMOIRE POSITION ARRIVEE ET TEST DEPLACEMENT POSSIBLE //
