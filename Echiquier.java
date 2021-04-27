@@ -229,18 +229,22 @@ public class Echiquier {
 					// JTextField tpsB = new JTextField(15);
 					// JTextField tpsN = new JTextField(15);
 					
-				
 					bandeauHaut.setBorder(new EmptyBorder(20,20,20,20));
 					bandeauHaut.add(new JLabel("                       "));
+					
+					bandeauHaut.add(boutonLancer);
+					bandeauHaut.add(boutonReset);
+					
+					bandeauHaut.add(new JLabel("                             "));
+					
 					bandeauHaut.add(tpsRestB);
 					bandeauHaut.add(tpsB);
 					bandeauHaut.add(tpsRestN);
 					bandeauHaut.add(tpsN);
-					bandeauHaut.add(new JLabel("                             "));
-					bandeauHaut.add(boutonReset);
-					bandeauHaut.add(boutonLancer);
+					
 					boutonReset.setBackground(Color.ORANGE);
 					boutonLancer.setBackground(Color.ORANGE);
+					
 					
 					f.add(bandeauHaut, BorderLayout.NORTH);
 					
