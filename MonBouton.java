@@ -25,7 +25,6 @@ public class MonBouton extends JButton /* implements ActionListener */ {
 		if (this.p != null){
 			this.setIcon(p.getIcon());
 		}
-        // addActionListener(this);
 	}
 	
 	public int getL(){

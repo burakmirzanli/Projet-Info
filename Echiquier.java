@@ -17,6 +17,7 @@ public class Echiquier {
 
 	private static MonBouton[][] plateauBouton = new MonBouton [8][8];
 	private JPanel plateauPanel = new JPanel();
+	private static JPanel bandeauBas = new JPanel(new GridLayout());
 	private static final String COLS = "ABCDEFGH";
 	
 	private static int departL;
@@ -35,22 +36,31 @@ public class Echiquier {
 	
 	private static EcouteurBoutonLancer eL;
 	
+	private ArrayList<MonBouton[][]> listeHistoriquePlateau = new ArrayList<MonBouton[][]>();
+	
+	private ArrayList<int[][]> listeHistoriqueTimerSec = new ArrayList<int[][]>() ;
+	
+	private ArrayList<int[][]> listeHistoriqueTimerMin = new ArrayList<int[][]>() ;
+	
+	private ArrayList<int[][]>	listeHistoriqueTimerHeu = new ArrayList<int[][]>() ;
+	
+	private ArrayList<String> listeHistoriqueString = new ArrayList<String>();
     
-	//INITIALISATION ARRAYLIST HISTORIQUE BLANC
+	// - INITIALISATION ARRAYLIST HISTORIQUE BLANC - //
    
     ArrayList<HistoriqueBlanc> listeBlanc = new ArrayList<HistoriqueBlanc>();
     
-    //INITIALISATION ARRAYLIST HISTORIQUE NOIR
+    // - INITIALISATION ARRAYLIST HISTORIQUE NOIR - //
     
     ArrayList<HistoriqueNoir> listeNoir = new ArrayList<HistoriqueNoir>();
-    
     
 	private static int heureB=0, minuteB=20, secondeB=0;
     private static int heureN=0, minuteN=20, secondeN=0;
     
     private static final JLabel tpsB = new JLabel(heureB+":"+minuteB+":"+secondeB);
 	private static final JLabel tpsN = new JLabel(heureN+":"+minuteN+":"+secondeN);
-   
+	
+	private int compteurHistorique = 0;
 	
 	
 	
@@ -204,6 +214,7 @@ public class Echiquier {
 					Echiquier e = new Echiquier();
 					
 					JFrame f = new JFrame("Jeu d'echecs");
+					
 					f.setLayout(new BorderLayout());
 					f.add(e.getInterfaceJeu(),BorderLayout.CENTER);
 					
@@ -211,23 +222,23 @@ public class Echiquier {
 					JPanel bandeauHaut = new JPanel(new FlowLayout());
 					
 					
+					
 					bandeauHaut.setBackground(Color.GRAY);
 					
 					JButton boutonReset = new JButton("Renitialisation");
 					JButton boutonLancer = new JButton ("Lancer Jeu");
+					
 					boutonReset.addActionListener(new EcouteurBoutonReset(e)) ;
-					//boutonLancer.addActionListener(new EcouteurBoutonLancer(e));
+
 					eL=new EcouteurBoutonLancer(e);
 					boutonLancer.addActionListener(eL);
+					
 					JLabel tpsRestB = new JLabel("Temps restant blancs");
 					JLabel tpsRestN = new JLabel("Temps restant noirs");
+					
 					tpsRestB.setForeground(Color.ORANGE);
 					tpsRestN.setForeground(Color.ORANGE);
-					//tpsB.setForeground(Color.WHITE);
-					//tpsN.setForeground(Color.WHITE);
-            
-					// JTextField tpsB = new JTextField(15);
-					// JTextField tpsN = new JTextField(15);
+
 					
 					bandeauHaut.setBorder(new EmptyBorder(20,20,20,20));
 					bandeauHaut.add(new JLabel("                       "));
@@ -247,7 +258,7 @@ public class Echiquier {
 					
 					
 					f.add(bandeauHaut, BorderLayout.NORTH);
-					
+					f.add(bandeauBas, BorderLayout.SOUTH);
 
 					
 					f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -255,7 +266,6 @@ public class Echiquier {
 					f.setSize(1000,1000);
 					
 					f.setMinimumSize(f.getSize());
-					f.setResizable(false);
 					f.setVisible(true);
 				}
 		};
@@ -451,13 +461,18 @@ public class Echiquier {
 			// - LE DEPLACEMENT EST VALIDE CHANGEMENT DE JOUEUR - PAIR = BLANC IMPAIR = NOIR - //
 			
 					compteurBoutonJoueur++; 
+					augmentationListeHisto();
 			
 					if(compteurBoutonJoueur % 2 == 1){
 						timerN.start();
-					timerB.stop();
+						creationBoutonHistoriqueBlanc();
+						compteurHistorique++;
+						timerB.stop();
 					}else if(compteurBoutonJoueur % 2 == 0){
 						timerB.start();
 						timerN.stop();
+						creationBoutonHistoriqueNoir();
+						compteurHistorique++;
 					}			
 			
 					if(pieceDepart.getType() == "Pion" ){
@@ -467,14 +482,19 @@ public class Echiquier {
 				}
 				else if (compteurBoutonJoueur % 2 == 0 && !testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))){//condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
 					
-					compteurBoutonJoueur++; 
+					compteurBoutonJoueur++;
+					augmentationListeHisto();
 			
 					if(compteurBoutonJoueur % 2 == 1){
 						timerN.start();
 						timerB.stop();
+						creationBoutonHistoriqueBlanc();
+						compteurHistorique++;
 					}else if(compteurBoutonJoueur % 2 == 0){
 						timerB.start();
 						timerN.stop();
+						creationBoutonHistoriqueNoir();
+						compteurHistorique++;
 					}			
 				
 					if(pieceDepart.getType() == "Pion" ){
@@ -487,6 +507,8 @@ public class Echiquier {
 					plateauBouton[departC][departL].setPiece(pieceDepart);
 					plateauBouton[arriveeC][arriveeL].setPiece(null);
 				}
+				
+				
 			
 			}
 		}
@@ -498,14 +520,19 @@ public class Echiquier {
 
 			// - LE DEPLACEMENT EST VALIDE CHANGEMENT DE JOUEUR - PAIR = BLANC IMPAIR = NOIR - //
 			
-					compteurBoutonJoueur++; 
-			
+					compteurBoutonJoueur++;
+					augmentationListeHisto();
+					
 					if(compteurBoutonJoueur % 2 == 1){
 						timerN.start();
-					timerB.stop();
+						timerB.stop();
+						creationBoutonHistoriqueBlanc();
+						compteurHistorique++;
 					}else if(compteurBoutonJoueur % 2 == 0){
 						timerB.start();
 						timerN.stop();
+						creationBoutonHistoriqueNoir();
+						compteurHistorique++;
 					}			
 			
 					if(pieceDepart.getType() == "Pion" ){
@@ -515,14 +542,19 @@ public class Echiquier {
 				}
 				else if (compteurBoutonJoueur % 2 == 0 && !testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))){//condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
 					
-					compteurBoutonJoueur++; 
+					compteurBoutonJoueur++;
+					augmentationListeHisto();
 			
 					if(compteurBoutonJoueur % 2 == 1){
 						timerN.start();
 						timerB.stop();
+						creationBoutonHistoriqueBlanc();
+						compteurHistorique++;
 					}else if(compteurBoutonJoueur % 2 == 0){
 						timerB.start();
 						timerN.stop();
+						creationBoutonHistoriqueNoir();
+						compteurHistorique++;
 					}			
 				
 					if(pieceDepart.getType() == "Pion" ){
@@ -535,6 +567,8 @@ public class Echiquier {
 					plateauBouton[departC][departL].setPiece(pieceDepart);
 					plateauBouton[arriveeC][arriveeL].setPiece(pieceArrivee);
 				}
+				
+				
 			
 
 			}
@@ -548,6 +582,8 @@ public class Echiquier {
 		else if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==false && couleurValid == true){
 			System.out.println("Déplacement impossible ! Choisis une autre case");
 		}
+		
+		// - PAINT PLATEAU NOIR ET BLANC - //
 		
 		this.setCouleurComplet();	
 		
@@ -563,154 +599,8 @@ public class Echiquier {
 			getBoutonPlateau(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc")).setBackground(Color.RED);
 		} 
 		
-		//HISTORIQUE
-   
-		if (pieceDepart.getCouleur()== "Blanc"){
 			
-			System.out.print("Historique Blanc: ");
-			
-			if (getArriveeC()==0){
-				HistoriqueBlanc HB0=new HistoriqueBlanc(getArriveeL()+1, "A");
-				listeBlanc.add(HB0);
-				for (HistoriqueBlanc deplacement : listeBlanc) {
-					System.out.println(deplacement);
-				}
-				
-			}
-			
-			else if(getArriveeC()==1){
-				HistoriqueBlanc HB1=new HistoriqueBlanc(getArriveeL()+1, "B");
-				listeBlanc.add(HB1);
-				for (HistoriqueBlanc deplacement : listeBlanc) {
-					System.out.print(deplacement);
-				}
-				
-			}
-			
-			else if(getArriveeC()==2){
-				HistoriqueBlanc HB2=new HistoriqueBlanc(getArriveeL()+1, "C");
-				listeBlanc.add(HB2);
-				for (HistoriqueBlanc deplacement : listeBlanc) {
-					System.out.print(deplacement);
-				}
-				
-			}
-			
-			else if(getArriveeC()==3){	
-				HistoriqueBlanc HB3=new HistoriqueBlanc(getArriveeL()+1, "D");
-				listeBlanc.add(HB3);
-				for (HistoriqueBlanc deplacement : listeBlanc) {
-					System.out.print(deplacement);
-				}
-				
-			}
-			
-			else if (getArriveeC()==4){
-				HistoriqueBlanc HB4=new HistoriqueBlanc(getArriveeL()+1, "E");
-				listeBlanc.add(HB4);
-				for (HistoriqueBlanc deplacement : listeBlanc) {
-					System.out.print(deplacement);
-				}
-			}
-			
-			else if (getArriveeC()==5){
-				HistoriqueBlanc HB5=new HistoriqueBlanc(getArriveeL()+1, "F");
-				listeBlanc.add(HB5);
-				for (HistoriqueBlanc deplacement : listeBlanc) {
-					System.out.print(deplacement);
-				}
-					
-			}
-			
-			else if (getArriveeC()==6){
-				HistoriqueBlanc HB6=new HistoriqueBlanc(getArriveeL()+1, "G");
-				listeBlanc.add(HB6);
-				for (HistoriqueBlanc deplacement : listeBlanc) {
-					System.out.print(deplacement);
-				}
-			}
-			
-			else if (getArriveeC()==7){
-				HistoriqueBlanc HB7=new HistoriqueBlanc(getArriveeL()+1, "H");
-				listeBlanc.add(HB7);
-				for (HistoriqueBlanc deplacement : listeBlanc) {
-					System.out.print(deplacement);
-				}
-
-			} 
-			System.out.println();  
-		}
 		
-		if (pieceDepart.getCouleur()== "Noir"){
-			
-			System.out.print("Historique Noir: ");
-			if (getArriveeC()==0){
-			 
-				HistoriqueNoir HN0=new HistoriqueNoir(getArriveeL()+1, "A");
-				listeNoir.add(HN0);
-				for (HistoriqueNoir deplacement : listeNoir) {
-					System.out.println(deplacement);
-				}
-			}
-			
-			else if(getArriveeC()==1){
-				HistoriqueNoir HN1=new HistoriqueNoir(getArriveeL()+1, "B");
-				listeNoir.add(HN1);
-				for (HistoriqueNoir deplacement : listeNoir) {
-					System.out.print(deplacement);
-				}
-			}
-			
-			else if(getArriveeC()==2){
-				HistoriqueNoir HN2=new HistoriqueNoir(getArriveeL()+1, "C");
-				listeNoir.add(HN2);
-				for (HistoriqueNoir deplacement : listeNoir) {
-					System.out.print(deplacement);
-				}
-			}
-			
-			else if(getArriveeC()==3){	 
-				HistoriqueNoir HN3=new HistoriqueNoir(getArriveeL()+1, "D");
-				listeNoir.add(HN3);
-				for (HistoriqueNoir deplacement : listeNoir) {
-					System.out.print(deplacement);
-				}
-			}
-			
-			else if (getArriveeC()==4){
-				HistoriqueNoir HN4=new HistoriqueNoir(getArriveeL()+1, "E");
-				listeNoir.add(HN4);
-				for (HistoriqueNoir deplacement : listeNoir) {
-					System.out.print(deplacement);
-				}
-			}
-			
-			else if (getArriveeC()==5){
-				HistoriqueNoir HN5=new HistoriqueNoir(getArriveeL()+1, "F");
-				listeNoir.add(HN5);
-				for (HistoriqueNoir deplacement : listeNoir) {
-					System.out.print(deplacement);
-				}
-			}
-			
-			else if (getArriveeC()==6){
-				HistoriqueNoir HN6=new HistoriqueNoir(getArriveeL()+1, "G");
-				listeNoir.add(HN6);
-				for (HistoriqueNoir deplacement : listeNoir) {
-					System.out.print(deplacement);
-				}
-			}
-			
-			else if (getArriveeC()==7){
-				HistoriqueNoir HN7=new HistoriqueNoir(getArriveeL()+1, "H");
-				listeNoir.add(HN7);
-				for (HistoriqueNoir deplacement : listeNoir) {
-					System.out.print(deplacement);
-				}
-
-			} 
-			System.out.println();  
-		}		
 	}	
 	
 	public int positionRoi(String s){
@@ -1358,6 +1248,7 @@ public class Echiquier {
 	
 	}
 	
+	// - AFFICHAGE DES COUPS POSSIBLES - //
 	
 	public void affichageCasePossible(Piece p){
 		for(int i = 0;i<this.getPlateau().length;i++){
@@ -1378,7 +1269,95 @@ public class Echiquier {
 		
 	}
 	
+	// - CREATION BOUTON BANDEAU BAS HISTORIQUE - //
 	
+	public void creationBoutonHistoriqueBlanc(){
+		
+		MonBoutonHisto b = new MonBoutonHisto(listeHistoriqueString.get(compteurHistorique),compteurHistorique);
+		b.addActionListener(new EcouteurBoutonHisto(this,b.getNumero()));
+		
+		augmentationListeHistoPlateau();
+		augmentationListeHistoTimer();
+		
+		b.setBackground(Color.WHITE);
+		bandeauBas.add(b);
+		bandeauBas.validate();
+		bandeauBas.repaint();
+		
+	}
+	
+	public void creationBoutonHistoriqueNoir(){
+		
+		MonBoutonHisto b = new MonBoutonHisto(listeHistoriqueString.get(compteurHistorique),compteurHistorique);
+		b.addActionListener(new EcouteurBoutonHisto(this,b.getNumero()));
+		
+		augmentationListeHistoPlateau();
+		augmentationListeHistoTimer();
+		
+		b.setBackground(Color.GRAY);
+		bandeauBas.add(b);
+		bandeauBas.validate();
+		bandeauBas.repaint();
+		
+	}
+	
+	// - AUGMENTATION LISTE HISTORIQUE - //
+	
+	public void augmentationListeHisto(){
+		
+		if (getArriveeC()==0){
+			listeHistoriqueString.add("A"+Integer.toString(getArriveeL()+1));
+		}
+		else if(getArriveeC()==1){
+			listeHistoriqueString.add("B"+Integer.toString(getArriveeL()+1));
+		}
+		else if(getArriveeC()==2){
+			listeHistoriqueString.add("C"+Integer.toString(getArriveeL()+1));
+		}
+		else if(getArriveeC()==3){	 
+			listeHistoriqueString.add("D"+Integer.toString(getArriveeL()+1));
+		}
+		else if (getArriveeC()==4){
+			listeHistoriqueString.add("E"+Integer.toString(getArriveeL()+1));
+		}
+		else if (getArriveeC()==5){
+			listeHistoriqueString.add("F"+Integer.toString(getArriveeL()+1));
+		}
+		else if (getArriveeC()==6){
+			listeHistoriqueString.add("G"+Integer.toString(getArriveeL()+1));
+		}
+		else if (getArriveeC()==7){
+			listeHistoriqueString.add("H"+Integer.toString(getArriveeL()+1));
+		}
+	}
+	
+	public void augmentationListeHistoPlateau(){
+		MonBouton[][] tempPlateau = new MonBouton[8][8];
+		for(int i=0; i<8;i++){
+		   for(int j=0; j<8; j++){
+			   tempPlateau[j][i]= this.getBoutonPlateau(j,i);
+		   }
+		}
+		
+		listeHistoriquePlateau.add(tempPlateau);
+	}
+	
+	public void augmentationListeHistoTimer(){
+		int temp1[][] = {{secondeB},{secondeN}};
+		int temp2[][] = {{minuteB},{minuteN}};
+		int temp3[][] = {{heureB},{heureN}};
+		listeHistoriqueTimerSec.add(temp1);
+		listeHistoriqueTimerMin.add(temp2);
+		listeHistoriqueTimerHeu.add(temp3);
+	}
+	
+	// - ACTION REVENIR EN ARRIERE DANS HISTORIQUE - //
+	
+	public void retourArriereJeu(int numero){
+	
+		plateauBouton = listeHistoriquePlateau.get(numero);
+	    
+	}
 
    
 }
