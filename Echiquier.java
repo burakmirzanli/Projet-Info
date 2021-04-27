@@ -255,6 +255,7 @@ public class Echiquier {
 					f.setSize(1000,1000);
 					
 					f.setMinimumSize(f.getSize());
+					f.setResizable(false);
 					f.setVisible(true);
 				}
 		};
