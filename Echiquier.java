@@ -196,7 +196,7 @@ public class Echiquier {
        }
        
        
-       // - CREATION DES COLONNES 1-8 ET A-H - //
+       // - CREATION DES COLONNES 1-8 ET A-H ET DU PLATEAU - //
        
 	   plateauPanel.add(new JLabel(""));
         for (int ii = 0; ii < 8; ii++) {
@@ -230,6 +230,7 @@ public class Echiquier {
 					JFrame f = new JFrame("Jeu d'echecs");
 					
 					f.setLayout(new BorderLayout());
+					f.setBackground(Color.BLACK);
 					f.add(e.getInterfaceJeu(),BorderLayout.CENTER);
 					
 					// - CREATION BANDEAU HAUT AVEC BOUTON LANCER-RESET ET TIMER  - //
@@ -237,8 +238,13 @@ public class Echiquier {
 					
 					bandeauHaut.setBackground(couleurN);
 					
-					JButton boutonReset = new JButton("Renitialisation");
+					JButton boutonReset = new JButton("Reinitialisation");
 					JButton boutonLancer = new JButton ("Lancer Jeu");
+					
+				
+					boutonReset.setBorder(new EmptyBorder(5,5,5,5));
+					boutonLancer.setBorder(new EmptyBorder(5,5,5,5));
+					
 					
 					boutonReset.addActionListener(new EcouteurBoutonReset(e)) ;
 					eL=new EcouteurBoutonLancer(e);
@@ -653,15 +659,97 @@ public class Echiquier {
 		
 		if (testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){
 			getBoutonPlateau(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")).setBackground(Color.RED);
+			if (testMatNoir()){
+				getBoutonPlateau(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")).setBackground(Color.BLUE);
+				System.out.println("MAT");
+			}
 		}
 
 		if (testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))){
 			getBoutonPlateau(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc")).setBackground(Color.RED);
+			if (testMatBlanc()){
+				getBoutonPlateau(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc")).setBackground(Color.BLUE);
+				System.out.println("MAT");
+			}
 		} 
 		
 			
 		
 	}	
+	
+	public boolean deplacementMat(int departL, int departC, int arriveeL, int arriveeC){		
+		
+		Piece pieceDMat = getBoutonPlateau(departC, departL).getPiece();
+		Piece pieceAMat = getBoutonPlateau(arriveeC, arriveeL).getPiece();
+		
+		boolean deplacementAutorise = false;
+
+		if(((interfaceValidite) pieceDMat).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceAMat==null){
+			if ((pieceDMat.getType().equals("Roi") && pieceDMat.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDMat.getType().equals("Roi") && pieceDMat.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDMat.getType().equals("Roi")){
+				(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDMat);
+				(plateauBouton[departC][departL]).setPiece(null);
+				if (compteurBoutonJoueur % 2 == 1 && !testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){ //condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
+							
+					deplacementAutorise = true;
+				
+				}
+				else if (compteurBoutonJoueur % 2 == 0 && !testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))){//condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
+					
+					deplacementAutorise = true;	
+								
+				}
+				
+				else if ((compteurBoutonJoueur % 2 == 0 && testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))) || (compteurBoutonJoueur % 2 == 1 && testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")))){//condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
+
+					deplacementAutorise = false;
+					
+				}
+				
+					plateauBouton[departC][departL].setPiece(pieceDMat);
+					plateauBouton[arriveeC][arriveeL].setPiece(null);		
+				
+			
+			}
+		}
+		else if(((interfaceValidite) pieceDMat).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceAMat!=null  && pieceDMat.getCouleur()!=pieceAMat.getCouleur()){
+			if ((pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDMat.getType().equals("Roi") && pieceDMat.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDMat.getType().equals("Roi")){
+				(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDMat);
+				(plateauBouton[departC][departL]).setPiece(null);
+				if (compteurBoutonJoueur % 2 == 1 && !testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){ //condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
+
+			// - LE DEPLACEMENT EST VALIDE CHANGEMENT DE JOUEUR - PAIR = BLANC IMPAIR = NOIR - //
+					
+					deplacementAutorise = true;
+				
+				}
+				else if (compteurBoutonJoueur % 2 == 0 && !testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))){//condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
+					
+					deplacementAutorise = true;
+				
+				}
+				
+				else if ((compteurBoutonJoueur % 2 == 0 && testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))) || (compteurBoutonJoueur % 2 == 1 && testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")))){//condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
+					deplacementAutorise = false;
+				}
+					plateauBouton[departC][departL].setPiece(pieceDMat);
+					plateauBouton[arriveeC][arriveeL].setPiece(pieceAMat);
+			}
+			
+		}
+		else if(((interfaceValidite) pieceDMat).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceAMat!=null  && pieceDepart.getCouleur()==pieceAMat.getCouleur()){
+			
+			deplacementAutorise = false;
+		}
+			
+			
+		else if(((interfaceValidite) pieceDMat).deplacementValid(departL, departC, arriveeL,arriveeC)==false){
+			
+			deplacementAutorise = false;
+		}
+		
+		return deplacementAutorise;
+		
+	}
 	
 	public int positionRoi(String s){
 		
@@ -1287,6 +1375,52 @@ public class Echiquier {
         }
         
 		return echec;
+	}
+	
+	public boolean testMatNoir(){
+		boolean matNoir = true;
+		
+		for (int j = 0; j <= 7; j++){
+			for (int i = 0; i <= 7; i++){
+				if (getBoutonPlateau(j, i).getPiece() != null){
+					
+					if (getBoutonPlateau(j, i).getPiece().getCouleur().equals("Noir")){
+						for (int n = 0; n <= 7; n++){   // vertical en haut
+							for (int k = 0; k <= 7; k++){
+								if (deplacementMat(i, j, k, n)){
+									matNoir = false;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return matNoir;
+	}
+	
+	public boolean testMatBlanc(){
+		boolean matBlanc = true;
+		
+		for (int j = 0; j <= 7; j++){
+			for (int i = 0; i <= 7; i++){
+				if (getBoutonPlateau(j, i).getPiece() != null){
+					
+					if (getBoutonPlateau(j, i).getPiece().getCouleur().equals("Blanc")){
+						for (int n = 0; n <= 7; n++){   // vertical en haut
+							for (int k = 0; k <= 7; k++){
+								if (deplacementMat(i, j, k, n)){
+									matBlanc = false;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return matBlanc;
+		
 	}
 	
 	// - PROMOTION D'UN PION ARRIVANT AU BOUT DU PLATEAU EN DAME - //
