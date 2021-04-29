@@ -383,7 +383,7 @@ public class Echiquier {
 	// - SETTERS - //
 	
 	public void setCouleurCaseVert(int l, int c){
-		this.plateauBouton[c][l].setBackground(Color.GREEN);
+		this.plateauBouton[c][l].setBackground(new Color(135, 233, 144));
 	}
 	
 	public void setCouleurComplet(){
@@ -1421,7 +1421,20 @@ public class Echiquier {
 		Piece p1 = plateauBouton[colonneR][ligneR].getPiece();
 		Piece p2 = plateauBouton[colonneT][ligneT].getPiece();
 		
-		if(p1.getCouleur()==p2.getCouleur()&& p1.getType()=="Roi" && p2.getType()=="Tour"  ){
+		boolean couleurValid = false;
+		
+		if(pieceDepart.getCouleur() == "Blanc" && compteurBoutonJoueur % 2 == 0){		
+			couleurValid = true;
+		}else if(pieceDepart.getCouleur() == "Noir" && compteurBoutonJoueur % 2 == 1){
+			couleurValid = true;
+			
+		}else{
+			couleurValid = false;
+			System.out.println("Ce n'est pas le tour de cette couleur");
+            
+		}
+		
+		if(p1.getCouleur()==p2.getCouleur()&& p1.getType()=="Roi" && p2.getType()=="Tour" && couleurValid==true ){
 					
 				if(departC<arriveeC){
 
@@ -1446,21 +1459,22 @@ public class Echiquier {
 						}
 					}
 				}
-				if(roqueValid==true){
-					
-					(plateauBouton[arriveeC][arriveeL]).setPiece(null);
-					(plateauBouton[departC][departL]).setPiece(null);
-						
+				if(roqueValid==true && ((Roi) p1).getRoiPositionDepart() == true && ((Tour) p2).getTourPositionDepart()){
+
 					if(Math.abs(departC-arriveeC)==3){
-							
+					    (plateauBouton[arriveeC][arriveeL]).setPiece(null);
+					    (plateauBouton[departC][departL]).setPiece(null);
 						plateauBouton[departC+2][departL].setPiece(pieceDepart);
 						plateauBouton[arriveeC-2][arriveeL].setPiece(pieceArrivee);
+						compteurBoutonJoueur++;
 					}
 						
 					if(Math.abs(departC-arriveeC)==4){
-							
+						(plateauBouton[arriveeC][arriveeL]).setPiece(null);
+					    (plateauBouton[departC][departL]).setPiece(null);
 						plateauBouton[departC-2][departL].setPiece(pieceDepart);
 						plateauBouton[arriveeC+3][arriveeL].setPiece(pieceArrivee);
+						compteurBoutonJoueur++;
 					}		
 				}
 		}

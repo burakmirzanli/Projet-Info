@@ -56,15 +56,15 @@ public class EcouteurBouton implements ActionListener{
                 e1.memoirePieceArrivee(p);
 
                 System.out.println("Position Arrivee = "+e1.getArriveeL()+" ; "+e1.getArriveeC());
-
-                if(e1.getPieceDep().getType()=="Roi" && e1.getPieceArr().getType()=="Tour"){
-
-                    e1.roque(e1.getDepartL(),e1.getDepartC(),x,y);
-                }
-                else{
-                    e1.deplacementPiece(e1.getDepartL(), e1.getDepartC(), x, y);
-                }
-
+				if(e1.getPieceArr()!=null){
+					if(e1.getPieceDep().getType()=="Roi" && e1.getPieceArr().getType()=="Tour"){
+						e1.roque(e1.getDepartL(),e1.getDepartC(),x,y);
+					}else{
+						e1.deplacementPiece(e1.getDepartL(), e1.getDepartC(), x, y);
+					}
+				}else{
+					e1.deplacementPiece(e1.getDepartL(), e1.getDepartC(), x, y);
+				}
                 e1.CompteurBoutonIncrements();
             }
             System.out.println("CompteurClic :"+e1.getCompteurBouton());
