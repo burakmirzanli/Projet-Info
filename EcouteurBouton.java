@@ -49,27 +49,30 @@ public class EcouteurBouton implements ActionListener{
 				e1.affichageCasePossible(p);
 				e1.CompteurBoutonIncrements();
 				}
-			// MISE EN MEMOIRE POSITION ARRIVEE ET TEST DEPLACEMENT POSSIBLE //
+			// MISE EN MEMOIRE POSITION ARRIVEE ET TEST DEPLACEMENT //
 			}else if(e1.getCompteurBouton() % 2 == 1){
-				e1.memoirePositionArrivee(x,y);
-				
-				e1.memoirePieceArrivee(p);
-				
-				System.out.println("Position Arrivee = "+e1.getArriveeL()+" ; "+e1.getArriveeC());
-				
-				e1.deplacementPiece(e1.getDepartL(), e1.getDepartC(), x, y);
-				
-				e1.CompteurBoutonIncrements();
-			}
-			System.out.println("CompteurClic :"+e1.getCompteurBouton());
-			System.out.println("CompteurJoueur :"+e1.getCompteurBoutonJoueur());
-		}
-	}
-	
+                e1.memoirePositionArrivee(x,y);
 
+                e1.memoirePieceArrivee(p);
+
+                System.out.println("Position Arrivee = "+e1.getArriveeL()+" ; "+e1.getArriveeC());
+
+                if(e1.getPieceDep().getType()=="Roi" && e1.getPieceArr().getType()=="Tour"){
+
+                    e1.roque(e1.getDepartL(),e1.getDepartC(),x,y);
+                }
+                else{
+                    e1.deplacementPiece(e1.getDepartL(), e1.getDepartC(), x, y);
+                }
+
+                e1.CompteurBoutonIncrements();
+            }
+            System.out.println("CompteurClic :"+e1.getCompteurBouton());
+            System.out.println("CompteurJoueur :"+e1.getCompteurBoutonJoueur());
+        }
+    }
+	
 }
-	
-
     
 
 

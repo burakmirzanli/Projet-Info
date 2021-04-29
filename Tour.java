@@ -67,7 +67,7 @@ public class Tour extends Piece implements interfaceValidite{
 		return s;
 	}
 	
-	public boolean getTOurPositionDepart(){
+	public boolean getTourPositionDepart(){
 		return this.tourPositionDepart;
 	}
 	
@@ -119,4 +119,3 @@ public class Tour extends Piece implements interfaceValidite{
 		return valid;
 	}
 }
-
