@@ -117,7 +117,7 @@ public class Dame extends Piece implements interfaceValidite {
 		
 		}
 		 
-        //TEST DE DEPLACEMENT SUR LA DIAGONALE
+        // - TEST DE DEPLACEMENT SUR LA DIAGONALE - //
         
                 if(Math.abs(departC-arriveeC)==Math.abs(departL-arriveeL)){
          

@@ -11,14 +11,23 @@ import java.util.ArrayList;
 
 public class Echiquier {
 	
-	// Attributs //
+	// - ATTRIBUTS INTERFACE - //
 	
 	private JPanel interfaceJeu = new JPanel(new BorderLayout(3, 3));
 
 	private static MonBouton[][] plateauBouton = new MonBouton [8][8];
 	private JPanel plateauPanel = new JPanel();
 	private static JPanel bandeauBas = new JPanel(new GridLayout());
+	
 	private static final String COLS = "ABCDEFGH";
+	
+	private static EcouteurBoutonLancer eL;
+	
+	private static int heureB=0, minuteB=20, secondeB=0;
+    private static int heureN=0, minuteN=20, secondeN=0;
+    
+    private static final JLabel tpsB = new JLabel(heureB+":"+minuteB+":"+secondeB);
+	private static final JLabel tpsN = new JLabel(heureN+":"+minuteN+":"+secondeN);
 	
 	private static int departL;
 	private static int departC;
@@ -33,8 +42,10 @@ public class Echiquier {
 	private int compteurBoutonJoueur=0;
 
 	private Piece piece;
+			
+	private Color couleurB = new Color(253,241,184);
 	
-	private static EcouteurBoutonLancer eL;
+	private Color couleurN = new Color(91,60,17);
 	
 	private ArrayList<Piece[][]> listeHistoriquePlateau = new ArrayList<Piece[][]>();
 	
@@ -54,11 +65,7 @@ public class Echiquier {
     
     ArrayList<HistoriqueNoir> listeNoir = new ArrayList<HistoriqueNoir>();
     
-	private static int heureB=0, minuteB=20, secondeB=0;
-    private static int heureN=0, minuteN=20, secondeN=0;
-    
-    private static final JLabel tpsB = new JLabel(heureB+":"+minuteB+":"+secondeB);
-	private static final JLabel tpsN = new JLabel(heureN+":"+minuteN+":"+secondeN);
+
 	
 	private int compteurHistorique = 0;
 	
@@ -122,7 +129,7 @@ public class Echiquier {
 		
 		// - INITIALISATION EMPLACEMENT PLATEAU - //
 		
-		interfaceJeu.setBorder(new EmptyBorder(5, 5, 5, 5));
+		interfaceJeu.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
 		plateauPanel = new JPanel(new GridLayout(0, 9));
 		
@@ -145,9 +152,9 @@ public class Echiquier {
                 if ((jj % 2 == 1 && ii % 2 == 1)
                         //) {
                         || (jj % 2 == 0 && ii % 2 == 0)) {
-                    b.setBackground(Color.WHITE);
+                    b.setBackground(couleurB);
                 } else {
-                    b.setBackground(Color.GRAY);
+                    b.setBackground(couleurN);
                 }
                 plateauBouton[jj][ii] = b;
             }
@@ -256,6 +263,7 @@ public class Echiquier {
 					boutonReset.setBackground(Color.ORANGE);
 					boutonLancer.setBackground(Color.ORANGE);
 					
+					bandeauBas.setBorder(new EmptyBorder(10, 10, 10, 10));
 					
 					f.add(bandeauHaut, BorderLayout.NORTH);
 					f.add(bandeauBas, BorderLayout.SOUTH);
@@ -372,9 +380,9 @@ public class Echiquier {
 				if ((jj % 2 == 1 && ii % 2 == 1)
                        //) {
 						|| (jj % 2 == 0 && ii % 2 == 0)) {
-						plateauBouton[jj][ii].setBackground(Color.WHITE);
+						plateauBouton[jj][ii].setBackground(couleurB);
 				} else {
-					plateauBouton[jj][ii].setBackground(Color.GRAY);
+					plateauBouton[jj][ii].setBackground(couleurN);
 				}
 			}
 		}
@@ -465,6 +473,7 @@ public class Echiquier {
 			if ((pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDepart.getType().equals("Roi")){
 				(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDepart);
 				(plateauBouton[departC][departL]).setPiece(null);
+				
 				if (compteurBoutonJoueur % 2 == 1 && !testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){ //condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
 
 			// - LE DEPLACEMENT EST VALIDE CHANGEMENT DE JOUEUR - PAIR = BLANC IMPAIR = NOIR - //
@@ -489,6 +498,7 @@ public class Echiquier {
 					}
 				
 				}
+				
 				else if (compteurBoutonJoueur % 2 == 0 && !testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))){//condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
 					
 					compteurBoutonJoueur++;
@@ -525,6 +535,7 @@ public class Echiquier {
 			if ((pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDepart.getType().equals("Roi")){
 				(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDepart);
 				(plateauBouton[departC][departL]).setPiece(null);
+				
 				if (compteurBoutonJoueur % 2 == 1 && !testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){ //condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
 
 			// - LE DEPLACEMENT EST VALIDE CHANGEMENT DE JOUEUR - PAIR = BLANC IMPAIR = NOIR - //
@@ -547,8 +558,10 @@ public class Echiquier {
 					if(pieceDepart.getType() == "Pion" ){
 						promotionPion(plateauBouton[arriveeC][arriveeL]);
 					}
+					
 				
 				}
+				
 				else if (compteurBoutonJoueur % 2 == 0 && !testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))){//condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
 					
 					compteurBoutonJoueur++;
@@ -596,14 +609,15 @@ public class Echiquier {
 		
 		this.setCouleurComplet();	
 		
+		// - PAINT CASE ECHEC ROI EN ROUGE - //
+		
 		System.out.println("Roi Noir:   C - "+positionRoi("colonneRoiNoir")+"	L - "+positionRoi("ligneRoiNoir"));	
 		System.out.println("Roi Noir:   C - "+positionRoi("colonneRoiBlanc")+"	L - "+positionRoi("ligneRoiBlanc"));	
-		///////////////////////////////////////////////////	
+		
 		if (testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){
 			getBoutonPlateau(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")).setBackground(Color.RED);
 		}
 
-			///////////////////////////////////////////////////	
 		if (testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))){
 			getBoutonPlateau(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc")).setBackground(Color.RED);
 		} 
@@ -1265,10 +1279,10 @@ public class Echiquier {
 				if(p instanceof interfaceValidite){
 					if(((interfaceValidite)p).deplacementValid(departL,departC,i,j)==true){
 						if(plateauBouton[j][i].getPiece()==null){
-							this.plateauBouton[j][i].setBackground(Color.CYAN);
+							this.plateauBouton[j][i].setBackground(new Color(0, 204, 203));
 						}
 						else if(((plateauBouton[j][i].getPiece()).getCouleur())!=p.getCouleur()&&(plateauBouton[j][i].getPiece())!=null){
-							this.plateauBouton[j][i].setBackground(Color.CYAN);
+							this.plateauBouton[j][i].setBackground(new Color(0, 204, 203));
 						}
 						
 					}
@@ -1312,33 +1326,8 @@ public class Echiquier {
 	
 	// - AUGMENTATION LISTE HISTORIQUE - //
 	
-	public void augmentationListeHisto(){
-		
+	public void augmentationListeHisto(){	
 		listeHistoriqueString.add("Tour : "+(compteurHistorique+1));
-		/* if (getArriveeC()==0){
-			listeHistoriqueString.add("A"+Integer.toString(getArriveeL()+1));
-		}
-		else if(getArriveeC()==1){
-			listeHistoriqueString.add("B"+Integer.toString(getArriveeL()+1));
-		}
-		else if(getArriveeC()==2){
-			listeHistoriqueString.add("C"+Integer.toString(getArriveeL()+1));
-		}
-		else if(getArriveeC()==3){	 
-			listeHistoriqueString.add("D"+Integer.toString(getArriveeL()+1));
-		}
-		else if (getArriveeC()==4){
-			listeHistoriqueString.add("E"+Integer.toString(getArriveeL()+1));
-		}
-		else if (getArriveeC()==5){
-			listeHistoriqueString.add("F"+Integer.toString(getArriveeL()+1));
-		}
-		else if (getArriveeC()==6){
-			listeHistoriqueString.add("G"+Integer.toString(getArriveeL()+1));
-		}
-		else if (getArriveeC()==7){
-			listeHistoriqueString.add("H"+Integer.toString(getArriveeL()+1));
-		} */
 	}
 	
 	public void augmentationListeHistoPlateau(){
@@ -1373,6 +1362,8 @@ public class Echiquier {
 			   plateauBouton[j][i].setPiece(tempTab[i][j]);
 		   }
 		}
+		
+		setCouleurComplet();
 		
 	}
 
