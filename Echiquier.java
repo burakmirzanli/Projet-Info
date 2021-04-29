@@ -658,17 +658,17 @@ public class Echiquier {
 		System.out.println("Roi Noir:   C - "+positionRoi("colonneRoiBlanc")+"	L - "+positionRoi("ligneRoiBlanc"));	
 		
 		if (testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){
-			getBoutonPlateau(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")).setBackground(new Color(238, 16, 16));
+			getBoutonPlateau(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")).setBackground(Color.RED);
 			if (testMatNoir()){
-				getBoutonPlateau(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")).setBackground(new Color(115, 194, 251));
+				getBoutonPlateau(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")).setBackground(Color.BLUE);
 				System.out.println("MAT");
 			}
 		}
 
 		if (testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))){
-			getBoutonPlateau(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc")).setBackground(new Color(238, 16, 16));
+			getBoutonPlateau(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc")).setBackground(Color.RED);
 			if (testMatBlanc()){
-				getBoutonPlateau(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc")).setBackground(new Color(115, 194, 251));
+				getBoutonPlateau(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc")).setBackground(Color.BLUE);
 				System.out.println("MAT");
 			}
 		} 
@@ -685,7 +685,6 @@ public class Echiquier {
 		boolean deplacementAutorise = false;
 
 		if(((interfaceValidite) pieceDMat).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceAMat==null){
-			if ((pieceDMat.getType().equals("Roi") && pieceDMat.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDMat.getType().equals("Roi") && pieceDMat.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDMat.getType().equals("Roi")){
 				(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDMat);
 				(plateauBouton[departC][departL]).setPiece(null);
 				if (compteurBoutonJoueur % 2 == 1 && !testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){ //condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
@@ -707,17 +706,13 @@ public class Echiquier {
 				
 					plateauBouton[departC][departL].setPiece(pieceDMat);
 					plateauBouton[arriveeC][arriveeL].setPiece(null);		
-				
-			
-			}
+
 		}
 		else if(((interfaceValidite) pieceDMat).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceAMat!=null  && pieceDMat.getCouleur()!=pieceAMat.getCouleur()){
-			if ((pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDMat.getType().equals("Roi") && pieceDMat.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDMat.getType().equals("Roi")){
 				(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDMat);
 				(plateauBouton[departC][departL]).setPiece(null);
 				if (compteurBoutonJoueur % 2 == 1 && !testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){ //condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
 
-			// - LE DEPLACEMENT EST VALIDE CHANGEMENT DE JOUEUR - PAIR = BLANC IMPAIR = NOIR - //
 					
 					deplacementAutorise = true;
 				
@@ -733,7 +728,6 @@ public class Echiquier {
 				}
 					plateauBouton[departC][departL].setPiece(pieceDMat);
 					plateauBouton[arriveeC][arriveeL].setPiece(pieceAMat);
-			}
 			
 		}
 		else if(((interfaceValidite) pieceDMat).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceAMat!=null  && pieceDepart.getCouleur()==pieceAMat.getCouleur()){
