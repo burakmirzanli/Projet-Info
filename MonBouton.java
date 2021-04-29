@@ -15,6 +15,7 @@ public class MonBouton extends JButton /* implements ActionListener */ {
       int ligne, colonne;
       private Piece p;
       private ImageIcon icon;
+      private Border lineBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
       
       
   
@@ -25,6 +26,9 @@ public class MonBouton extends JButton /* implements ActionListener */ {
 		if (this.p != null){
 			this.setIcon(p.getIcon());
 		}
+		this.setBorder(lineBorder);
+		
+		
 	}
 	
 	public int getL(){
