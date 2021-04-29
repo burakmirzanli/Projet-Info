@@ -20,6 +20,12 @@ public class EcouteurBoutonHisto implements ActionListener{
 		
     public void actionPerformed(ActionEvent e){
 	   e1.retourArriereJeu(numero);
+	   if(numero % 2 ==0){
+		e1.setCompteurBoutonJoueur(0);
+	   }else if(numero % 2 ==1){
+		e1.setCompteurBoutonJoueur(1);
+	   }
 	}
+	
 
 }

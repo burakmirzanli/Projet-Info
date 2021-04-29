@@ -380,6 +380,10 @@ public class Echiquier {
 		}
 	}
 	
+	public void setCompteurBoutonJoueur(int i){
+		this.compteurBoutonJoueur=i;
+	}
+	
 	// - GETTERS - //
 	
 	public int getDepartC(){
@@ -412,6 +416,10 @@ public class Echiquier {
 	
 	public EcouteurBoutonLancer getEcout(){
 		return eL;
+	}
+	
+	public int getCompteurHisto(){
+		return this.compteurHistorique;
 	}
 	
 	// - TIMER - //
