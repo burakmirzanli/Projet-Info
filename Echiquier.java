@@ -235,7 +235,7 @@ public class Echiquier {
 					// - CREATION BANDEAU HAUT AVEC BOUTON LANCER-RESET ET TIMER  - //
 					JPanel bandeauHaut = new JPanel(new FlowLayout());
 					
-					bandeauHaut.setBackground(Color.GRAY);
+					bandeauHaut.setBackground(couleurN);
 					
 					JButton boutonReset = new JButton("Renitialisation");
 					JButton boutonLancer = new JButton ("Lancer Jeu");
@@ -247,8 +247,8 @@ public class Echiquier {
 					JLabel tpsRestB = new JLabel("Temps restant blancs");
 					JLabel tpsRestN = new JLabel("Temps restant noirs");
 					
-					tpsRestB.setForeground(Color.ORANGE);
-					tpsRestN.setForeground(Color.ORANGE);
+					tpsRestB.setForeground(Color.WHITE);
+					tpsRestN.setForeground(Color.WHITE);
 
 					
 					bandeauHaut.setBorder(new EmptyBorder(20,20,20,20));
@@ -264,8 +264,8 @@ public class Echiquier {
 					bandeauHaut.add(tpsRestN);
 					bandeauHaut.add(tpsN);
 					
-					boutonReset.setBackground(Color.ORANGE);
-					boutonLancer.setBackground(Color.ORANGE);
+					boutonReset.setBackground(Color.WHITE);
+					boutonLancer.setBackground(Color.WHITE);
 					
 					bandeauBas.setBorder(new EmptyBorder(10, 10, 10, 10));
 					
@@ -1339,7 +1339,7 @@ public class Echiquier {
 		augmentationListeHistoPlateau();
 		augmentationListeHistoTimer();
 		
-		b.setBackground(Color.WHITE);
+		b.setBackground(couleurB);
 		bandeauBas.add(b);
 		bandeauBas.validate();
 		bandeauBas.repaint();
@@ -1354,7 +1354,7 @@ public class Echiquier {
 		augmentationListeHistoPlateau();
 		augmentationListeHistoTimer();
 		
-		b.setBackground(Color.GRAY);
+		b.setBackground(couleurN);
 		bandeauBas.add(b);
 		bandeauBas.validate();
 		bandeauBas.repaint();
