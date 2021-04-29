@@ -12,6 +12,7 @@ public class Roi extends Piece implements interfaceValidite{
 	private int colonne;
 	private ImageIcon icon;
 	private Echiquier e1;
+	private boolean roiPositionDepart = true;
 	
 	public Roi (String couleur, int ligne, int colonne, Echiquier e1){
 		super ("Roi", couleur, ligne, colonne, e1);
@@ -73,116 +74,129 @@ public class Roi extends Piece implements interfaceValidite{
 		String s = super.toString();
 		return s;
 	}
-public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){		
-		
-		boolean valid = false;
-		boolean c=true;
-		
-		if (Math.abs(departL-arriveeL)>=0 && Math.abs(departC-arriveeC)==0&&(arriveeL==departL+1||arriveeL==departL-1)){ // DEPLACEMENT VERTICAL //
-			valid = true;
+	
+	
+	public boolean getRoiPositionDepart(){
+		return this.roiPositionDepart;
+	}
+	
+	public void setRoiPositionDepart(boolean res){
+		this.roiPositionDepart=res;
+	}
+	
+	
+	
+	
+	public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){		
 			
-			if (departL < arriveeL) { // DEPLACEMENT VERS LE BAS //	
-				Piece p1= (e1.getBoutonPlateau(departC,departL+1)).getPiece();
-				if (p1 != null && p1.getCouleur()==this.couleur){
-					valid = false;
-				}
+			boolean valid = false;
+			boolean c=true;
 			
-			} else { // DEPLACEMENT VERS LE HAUT //	
-				Piece p1= (e1.getBoutonPlateau(departC,departL-1)).getPiece();
-				if (p1 != null&&p1.getCouleur()==this.couleur){
-						valid = false;
-				}
-			}
-		}
-		
-		if((Math.abs(departL-arriveeL)==0) && Math.abs(departC-arriveeC)>=0&& (arriveeC==departC+1||arriveeC==departC-1)){ // DEPLACEMENT HORIZONTAL//
-			valid = true;
-			
-			if(departC < arriveeC ){ // DEPLACEMENT SUR LA DROITE //
-				Piece p2= (e1.getBoutonPlateau(departC+1,departL)).getPiece();
+			if (Math.abs(departL-arriveeL)>=0 && Math.abs(departC-arriveeC)==0&&(arriveeL==departL+1||arriveeL==departL-1)){ // DEPLACEMENT VERTICAL //
+				valid = true;
 				
-				if( p2 != null&&p2.getCouleur()==this.couleur){
+				if (departL < arriveeL) { // DEPLACEMENT VERS LE BAS //	
+					Piece p1= (e1.getBoutonPlateau(departC,departL+1)).getPiece();
+					if (p1 != null && p1.getCouleur()==this.couleur){
 						valid = false;
 					}
 				
-			
-			} else { // DEPLACEMENT SUR LA GAUCHE //
-				Piece p2= (e1.getBoutonPlateau(departC-1,departL)).getPiece();
-				
-				if(p2 != null&&p2.getCouleur()==this.couleur){
-						valid = false;
+				} else { // DEPLACEMENT VERS LE HAUT //	
+					Piece p1= (e1.getBoutonPlateau(departC,departL-1)).getPiece();
+					if (p1 != null&&p1.getCouleur()==this.couleur){
+							valid = false;
+					}
 				}
-				
 			}
-		
-		}
-		 
-        //TEST DE DEPLACEMENT SUR LA DIAGONALE
-        
-        if(Math.abs(departC-arriveeC)==Math.abs(departL-arriveeL)){
-         
-			if (departL-arriveeL<0 && departC-arriveeC<0 && arriveeL==departL+1&& arriveeC==departC+1){
-				Piece p = (e1.getBoutonPlateau(departC+1,departL+1)).getPiece();
-				if(p!=null&&p.getCouleur()==this.couleur){
-					c=false;
+			
+			if((Math.abs(departL-arriveeL)==0) && Math.abs(departC-arriveeC)>=0&& (arriveeC==departC+1||arriveeC==departC-1)){ // DEPLACEMENT HORIZONTAL//
+				valid = true;
+				
+				if(departC < arriveeC ){ // DEPLACEMENT SUR LA DROITE //
+					Piece p2= (e1.getBoutonPlateau(departC+1,departL)).getPiece();
+					
+					if( p2 != null&&p2.getCouleur()==this.couleur){
+							valid = false;
+						}
+					
+				
+				} else { // DEPLACEMENT SUR LA GAUCHE //
+					Piece p2= (e1.getBoutonPlateau(departC-1,departL)).getPiece();
+					
+					if(p2 != null&&p2.getCouleur()==this.couleur){
+							valid = false;
+					}
+					
 				}
 			
-				if(c==true){
-					valid=true;
-				}else{
-					valid=false;
-				}
+			}
+			 
+			//TEST DE DEPLACEMENT SUR LA DIAGONALE
+			
+			if(Math.abs(departC-arriveeC)==Math.abs(departL-arriveeL)){
+			 
+				if (departL-arriveeL<0 && departC-arriveeC<0 && arriveeL==departL+1&& arriveeC==departC+1){
+					Piece p = (e1.getBoutonPlateau(departC+1,departL+1)).getPiece();
+					if(p!=null&&p.getCouleur()==this.couleur){
+						c=false;
+					}
 				
-		   }   
-			 else if (departL-arriveeL>0 && departC-arriveeC>0&& arriveeC==departC-1&& arriveeL==departL-1){  
-				Piece p = (e1.getBoutonPlateau(departC-1,departL-1)).getPiece();
-				if(p!=null && p.getCouleur()== this.couleur){
-					c=false;
-				}
-				
-				if(c==true){
-					valid=true;
-				}else{
-					valid=false;
-				}
+					if(c==true){
+						valid=true;
+					}else{
+						valid=false;
+					}
+					
+			   }   
+				 else if (departL-arriveeL>0 && departC-arriveeC>0&& arriveeC==departC-1&& arriveeL==departL-1){  
+					Piece p = (e1.getBoutonPlateau(departC-1,departL-1)).getPiece();
+					if(p!=null && p.getCouleur()== this.couleur){
+						c=false;
+					}
+					
+					if(c==true){
+						valid=true;
+					}else{
+						valid=false;
+					}
 
+				}
+				
+				else if(departL-arriveeL>0 && departC-arriveeC<0&& arriveeC==departC+1&& arriveeL==departL-1){
+					
+					Piece p = (e1.getBoutonPlateau(departC+1,departL-1)).getPiece();
+					if(p!=null&&p.getCouleur()==this.couleur){
+						c=false;
+					}
+					
+					if(c==true){
+						valid=true;
+					}else{
+						valid=false;
+					}
+			
+				}
+				
+				else if(departL-arriveeL<0 && departC-arriveeC>0&& arriveeC==departC-1&& arriveeL==departL+1){
+				
+					Piece p = (e1.getBoutonPlateau(departC-1,departL+1)).getPiece();
+					if(p!=null&&p.getCouleur()==this.couleur){
+						c=false;
+					}
+					
+					if(c==true){
+						valid=true;
+					}else{
+						valid=false;
+					}
+					
+					
+				}
+				
+				
+				
 			}
 			
-			else if(departL-arriveeL>0 && departC-arriveeC<0&& arriveeC==departC+1&& arriveeL==departL-1){
-				
-				Piece p = (e1.getBoutonPlateau(departC+1,departL-1)).getPiece();
-				if(p!=null&&p.getCouleur()==this.couleur){
-					c=false;
-				}
-				
-				if(c==true){
-					valid=true;
-				}else{
-					valid=false;
-				}
-		
-			}
-			
-			else if(departL-arriveeL<0 && departC-arriveeC>0&& arriveeC==departC-1&& arriveeL==departL+1){
-			
-				Piece p = (e1.getBoutonPlateau(departC-1,departL+1)).getPiece();
-				if(p!=null&&p.getCouleur()==this.couleur){
-					c=false;
-				}
-				
-				if(c==true){
-					valid=true;
-				}else{
-					valid=false;
-				}
-				
-				
-			}
-			
-			
-			
+			return valid;
 		}
-		
-		return valid;
-	}
 }
