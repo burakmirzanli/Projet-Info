@@ -29,6 +29,12 @@ public class Echiquier {
     private static final JLabel tpsB = new JLabel(heureB+":"+minuteB+":"+secondeB);
 	private static final JLabel tpsN = new JLabel(heureN+":"+minuteN+":"+secondeN);
 	
+	private static Color couleurB = new Color(255,206,158);
+	
+	private static Color couleurN = new Color(209,139,71);
+	
+	// - ATTRIBUTS PIECE ET MOUVEMENT - //
+	
 	private static int departL;
 	private static int departC;
     private static int arriveeL;
@@ -43,33 +49,27 @@ public class Echiquier {
 
 	private Piece piece;
 			
-	private Color couleurB = new Color(253,241,184);
-	
-	private Color couleurN = new Color(91,60,17);
+	// - ATTRIBUTS LIST HISTORIQUE - //
 	
 	private ArrayList<Piece[][]> listeHistoriquePlateau = new ArrayList<Piece[][]>();
 	
-	private ArrayList<int[][]> listeHistoriqueTimerSec = new ArrayList<int[][]>() ;
+	private ArrayList<Integer> listeHistoriqueTimerSecB = new ArrayList<Integer>() ;
 	
-	private ArrayList<int[][]> listeHistoriqueTimerMin = new ArrayList<int[][]>() ;
+	private ArrayList<Integer> listeHistoriqueTimerMinB = new ArrayList<Integer>() ;
 	
-	private ArrayList<int[][]>	listeHistoriqueTimerHeu = new ArrayList<int[][]>() ;
+	private ArrayList<Integer>	listeHistoriqueTimerHeuB = new ArrayList<Integer>() ;
+	
+	private ArrayList<Integer> listeHistoriqueTimerSecN = new ArrayList<Integer>() ;
+	
+	private ArrayList<Integer> listeHistoriqueTimerMinN = new ArrayList<Integer>() ;
+	
+	private ArrayList<Integer>	listeHistoriqueTimerHeuN = new ArrayList<Integer>() ;
 	
 	private ArrayList<String> listeHistoriqueString = new ArrayList<String>();
-    
-	// - INITIALISATION ARRAYLIST HISTORIQUE BLANC - //
-   
-    ArrayList<HistoriqueBlanc> listeBlanc = new ArrayList<HistoriqueBlanc>();
-    
-    // - INITIALISATION ARRAYLIST HISTORIQUE NOIR - //
-    
-    ArrayList<HistoriqueNoir> listeNoir = new ArrayList<HistoriqueNoir>();
-    
-
 	
 	private int compteurHistorique = 0;
 	
-	
+	// - ATTRIBUTS CREATION CHRONOMETRE - //
 	
 	public ActionListener tache_timerB = new ActionListener()
 		{
@@ -120,7 +120,8 @@ public class Echiquier {
 	private Timer timerB= new Timer(delais,tache_timerB);
 	private Timer timerN= new Timer(delais,tache_timerN);
 	
-	
+	// - ECHIQUIER - //
+
 	Echiquier() {
         initialisation();
     }
@@ -133,7 +134,6 @@ public class Echiquier {
 		
 		plateauPanel = new JPanel(new GridLayout(0, 9));
 		
-		plateauPanel.setBorder(new LineBorder(Color.BLACK));
         interfaceJeu.add(plateauPanel);
         
         // - INITIALISATION DES BOUTONS - //
@@ -145,10 +145,13 @@ public class Echiquier {
                 MonBouton b = new MonBouton(ii,jj,p);
                 b.addActionListener(new EcouteurBouton(this,b)) ;
                 b.setMargin(buttonMargin);
-                // Les pièces de notre échequier feront 64*64 pixel donc on rempli
-                // les cases (boutons) de notre plateau par des images vides
+                
+                // - CREATION DES CASE DU PLATEAU PAR DES CASES VIDES - //
+                
                 ImageIcon icon = new ImageIcon(new BufferedImage(64,64, BufferedImage.TYPE_INT_ARGB));
                 b.setIcon(icon);
+                
+                // - REMPLISSAGE COULEUR DES CASES - //
                 if ((jj % 2 == 1 && ii % 2 == 1)
                         //) {
                         || (jj % 2 == 0 && ii % 2 == 0)) {
@@ -191,7 +194,7 @@ public class Echiquier {
        }
        
        
-       // - CREATION DU PLATEAU GRAPHIQUEMENT - //
+       // - CREATION DES COLONNES 1-8 ET A-H - //
        
 	   plateauPanel.add(new JLabel(""));
         for (int ii = 0; ii < 8; ii++) {
@@ -220,15 +223,15 @@ public class Echiquier {
 				public void run() {
 					Echiquier e = new Echiquier();
 					
+					// - CREATION DE LA FENETRE - //
+					
 					JFrame f = new JFrame("Jeu d'echecs");
 					
 					f.setLayout(new BorderLayout());
 					f.add(e.getInterfaceJeu(),BorderLayout.CENTER);
 					
-					
+					// - CREATION BANDEAU HAUT AVEC BOUTON LANCER-RESET ET TIMER  - //
 					JPanel bandeauHaut = new JPanel(new FlowLayout());
-					
-					
 					
 					bandeauHaut.setBackground(Color.GRAY);
 					
@@ -236,7 +239,6 @@ public class Echiquier {
 					JButton boutonLancer = new JButton ("Lancer Jeu");
 					
 					boutonReset.addActionListener(new EcouteurBoutonReset(e)) ;
-
 					eL=new EcouteurBoutonLancer(e);
 					boutonLancer.addActionListener(eL);
 					
@@ -284,12 +286,17 @@ public class Echiquier {
 	// - RENITIALISATION ECHIQUIER - //
 	
 	public void renitialisationEchiquier(){
+		
+		// - ON COMMENCE PAR VIDER L'ECHIQUIER - //
+		
 		for(int i=0; i<8;i++){
 		   for(int j=0; j<8; j++){
 			   plateauBouton[i][j].setPiece(null);
 		   }
 	   }
-
+		
+	   // - ON INITIALISE LES PIECES - //
+	   
 	   plateauBouton[0][0].setPiece(new Tour("Noir",0,0,this));
 	   plateauBouton[1][0].setPiece(new Cavalier("Noir",0,1,this));
        plateauBouton[2][0].setPiece(new Fou("Noir",0,2,this));
@@ -316,6 +323,8 @@ public class Echiquier {
 		plateauBouton[i][6].setPiece(new Pion("Blanc",6,i,this));
        }
        
+       // - ON RENITIALISE LES COMPTEURS ET LES TEMPS - //
+       
        compteurBouton=0;
        compteurBoutonJoueur=0;
        
@@ -332,7 +341,9 @@ public class Echiquier {
        
        tpsB.setText(heureB+":"+minuteB+":"+secondeB);
        tpsN.setText(heureN+":"+minuteN+":"+secondeN);
-	
+		
+	   // - ON RENITIALISE LES BOUTONS HISTORIQUE - //
+	   
 	   bandeauBas.removeAll();
        eL.setF(false);
        
@@ -1342,12 +1353,14 @@ public class Echiquier {
 	}
 	
 	public void augmentationListeHistoTimer(){
-		int temp1[][] = {{secondeB},{secondeN}};
-		int temp2[][] = {{minuteB},{minuteN}};
-		int temp3[][] = {{heureB},{heureN}};
-		listeHistoriqueTimerSec.add(temp1);
-		listeHistoriqueTimerMin.add(temp2);
-		listeHistoriqueTimerHeu.add(temp3);
+
+		listeHistoriqueTimerSecB.add(secondeB);
+		listeHistoriqueTimerMinB.add(minuteB);
+		listeHistoriqueTimerHeuB.add(heureB);
+		
+		listeHistoriqueTimerSecN.add(secondeN);
+		listeHistoriqueTimerMinN.add(minuteN);
+		listeHistoriqueTimerHeuN.add(heureN);
 	}
 	
 	// - ACTION REVENIR EN ARRIERE DANS HISTORIQUE - //
@@ -1362,6 +1375,14 @@ public class Echiquier {
 			   plateauBouton[j][i].setPiece(tempTab[i][j]);
 		   }
 		}
+		
+		heureB = listeHistoriqueTimerHeuB.get(numero);
+		minuteB = listeHistoriqueTimerMinB.get(numero);
+		secondeB = listeHistoriqueTimerSecB.get(numero);
+		
+		heureN = listeHistoriqueTimerHeuN.get(numero);
+		minuteN = listeHistoriqueTimerMinN.get(numero);
+		secondeN = listeHistoriqueTimerSecN.get(numero);
 		
 		setCouleurComplet();
 		
