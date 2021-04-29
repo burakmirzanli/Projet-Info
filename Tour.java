@@ -13,6 +13,7 @@ public class Tour extends Piece implements interfaceValidite{
 	private int ligne;
 	private ImageIcon icon;
 	private Echiquier e1;
+	private boolean tourPositionDepart = true;
 	
 	public Tour (String couleur, int ligne, int colonne, Echiquier e1){
 		super ("Tour", couleur, ligne, colonne, e1);
@@ -64,6 +65,14 @@ public class Tour extends Piece implements interfaceValidite{
 	public String toString (){
 		String s = super.toString();
 		return s;
+	}
+	
+	public boolean getTOurPositionDepart(){
+		return this.tourPositionDepart;
+	}
+	
+	public void setTourPositionDepart(boolean res){
+		this.tourPositionDepart=res;
 	}
 	
 	public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){	
