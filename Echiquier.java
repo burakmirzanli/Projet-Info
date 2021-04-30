@@ -291,9 +291,9 @@ public class Echiquier {
 		
 	}
 	
-	// - RENITIALISATION ECHIQUIER - //
+	// - REINITIALISATION ECHIQUIER - //
 	
-	public void renitialisationEchiquier(){
+	public void reinitialisationEchiquier(){
 		
 		// - ON COMMENCE PAR VIDER L'ECHIQUIER - //
 		
@@ -331,7 +331,7 @@ public class Echiquier {
 		plateauBouton[i][6].setPiece(new Pion("Blanc",6,i,this));
        }
        
-       // - ON RENITIALISE LES COMPTEURS ET LES TEMPS - //
+       // - ON REINITIALISE LES COMPTEURS ET LES TEMPS - //
        
        compteurBouton=0;
        compteurBoutonJoueur=0;
@@ -350,7 +350,7 @@ public class Echiquier {
        tpsB.setText(heureB+":"+minuteB+":"+secondeB);
        tpsN.setText(heureN+":"+minuteN+":"+secondeN);
 		
-	   // - ON RENITIALISE LES BOUTONS HISTORIQUE - //
+	   // - ON REINITIALISE LES BOUTONS HISTORIQUE - //
 	   
 	   bandeauBas.removeAll();
        eL.setF(false);

@@ -20,7 +20,7 @@ public class EcouteurBoutonReset implements ActionListener{
 		
     public void actionPerformed(ActionEvent e){
 	   
-	   e1.renitialisationEchiquier();
+	   e1.reinitialisationEchiquier();
 	   
 
 	}
