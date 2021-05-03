@@ -148,7 +148,7 @@ public class Echiquier {
                 b.addActionListener(new EcouteurBouton(this,b)) ;
                 b.setMargin(buttonMargin);
                 
-                // - CREATION DES CASE DU PLATEAU PAR DES CASES VIDES - //
+                // - CREATION DES CASES DU PLATEAU PAR DES CASES VIDES - //
                 
                 ImageIcon icon = new ImageIcon(new BufferedImage(64,64, BufferedImage.TYPE_INT_ARGB));
                 b.setIcon(icon);
@@ -234,6 +234,7 @@ public class Echiquier {
 					f.add(e.getInterfaceJeu(),BorderLayout.CENTER);
 					
 					// - CREATION BANDEAU HAUT AVEC BOUTON LANCER-RESET ET TIMER  - //
+					
 					JPanel bandeauHaut = new JPanel(new FlowLayout());
 					
 					bandeauHaut.setBackground(couleurN);
@@ -272,6 +273,8 @@ public class Echiquier {
 					
 					boutonReset.setBackground(Color.WHITE);
 					boutonLancer.setBackground(Color.WHITE);
+					
+					// - AJOUT DU BANDEAU DU BAS QUI SERVIRA DE PANEL POUR LES BOUTONS DE L'HISTORIQUE - //
 					
 					bandeauBas.setBorder(new EmptyBorder(10, 10, 10, 10));
 					
@@ -394,6 +397,8 @@ public class Echiquier {
 	
 	public void setCouleurComplet(){
 		
+		// - METHODE QUI PERMET DE RE-PEINDRE LE PLATEAU EN "NOIR" ET "BLANC" - //
+		
 		for (int ii = 0; ii < plateauBouton.length; ii++) {
 			for (int jj = 0; jj < plateauBouton[ii].length; jj++) {
 				if ((jj % 2 == 1 && ii % 2 == 1)
@@ -477,15 +482,16 @@ public class Echiquier {
 		compteurBouton++;
 	}	
 	
+	
+	// - METHODE DEPLACETEMENT PIECE AVEC TEST DE LA VALIDITE ET ECHEC - //
 	// - DEPLACEMENT DE LA PIECE A PARTIR DU BOUTON DE DEPART VERS CELUI DONT ON A CLIQUER UNE SECONDE FOIS  - // 
-	// - ATTENTION PLATEAU BOUTON [COLONNE][LIGNE] ET NON PAS [LIGNE][COLONNE] - //
 	
 				
    	public void deplacementPiece(int departL, int departC, int arriveeL, int arriveeC){		
 
 		boolean couleurValid = false;
 		
-		//TEST POUR SAVOIR A QUELLE COUlEUR EST LE TOUR DE JOUER
+		// - ON COMMENCE PAR TESTER SI C'EST BIEN LE TOUR DE LA COULEUR - //
 		
 		if(pieceDepart.getCouleur() == "Blanc" && compteurBoutonJoueur % 2 == 0){		
 			couleurValid = true;
@@ -498,8 +504,8 @@ public class Echiquier {
             
 		}
 		
-		//TEST DE POSSIBILITE DE DEPLACEMENT D'UNE PIECE DANS UNE CASE VIDE
-		//SI TEST VALIDE, DEPLACEMENT DE LA PIECE
+		// - TEST DE POSSIBILITE DE DEPLACEMENT D'UNE PIECE DANS UNE CASE VIDE - //
+		// - SI TEST VALIDE, DEPLACEMENT DE LA PIECE - //
 		
 		if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceArrivee==null && couleurValid == true){
 			if ((pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDepart.getType().equals("Roi")){
@@ -572,8 +578,8 @@ public class Echiquier {
 			}
 		}
 		
-		//TEST DE POSSIBILITE DE DEPLACEMENT D'UNE PIECE DANS UNE CASE OCCUPEE PAR UNE PIECE DE L'AUTRE COULEUR
-		//SI TEST VALIDE, DEPLACEMENT DE LA PIECE
+		// - TEST DE POSSIBILITE DE DEPLACEMENT D'UNE PIECE DANS UNE CASE OCCUPEE PAR UNE PIECE DE L'AUTRE COULEUR - //
+		// - SI TEST VALIDE, DEPLACEMENT DE LA PIECE - //
 		
 		else if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceArrivee!=null  && pieceDepart.getCouleur()!=pieceArrivee.getCouleur() && couleurValid == true){
 			if ((pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDepart.getType().equals("Roi")){
@@ -649,15 +655,15 @@ public class Echiquier {
 			
 		}
 		
-		//TEST DE POSSIBILITE DE DEPLACEMENT D'UNE PIECE DANS UNE CASE OCCUPEE PAR UNE PIECE DE LA MEME COULEUR
-		//SI TEST VALIDE, PAS DE DEPLACEMENT DE LA PIECE
+		// - TEST DE POSSIBILITE DE DEPLACEMENT D'UNE PIECE DANS UNE CASE OCCUPEE PAR UNE PIECE DE LA MEME COULEUR - //
+		// - SI TEST VALIDE, PAS DE DEPLACEMENT DE LA PIECE - //
 		
 		else if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceArrivee!=null  && pieceDepart.getCouleur()==pieceArrivee.getCouleur() && couleurValid == true){
 			System.out.println("Déplacement impossible ! Choisis une autre case");
 		}
-			
-		//TEST DE DEPLACEMENT IMPOSSIBLE DE LA PIECE
-		//SI TEST VALIDE, PAS DE DEPLACEMENT DE LA PIECE
+		
+		// - TEST DE DEPLACEMENT IMPOSSIBLE DE LA PIECE - //
+		// - SI TEST VALIDE, PAS DE DEPLACEMENT DE LA PIECE	- //
 			
 		else if(((interfaceValidite) pieceDepart).deplacementValid(departL, departC, arriveeL,arriveeC)==false && couleurValid == true){
 			System.out.println("Déplacement impossible ! Choisis une autre case");
@@ -673,17 +679,18 @@ public class Echiquier {
 		System.out.println("Roi Noir:   C - "+positionRoi("colonneRoiBlanc")+"	L - "+positionRoi("ligneRoiBlanc"));	
 		
 		if (testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){
-			getBoutonPlateau(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")).setBackground(Color.RED);
+			getBoutonPlateau(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")).setBackground(new Color(238, 16, 16));
 			if (testMatNoir()){
-				getBoutonPlateau(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")).setBackground(Color.BLUE);
+				getBoutonPlateau(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")).setBackground(new Color(115, 194, 251));
 				System.out.println("MAT");
 			}
 		}
 
+
 		if (testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))){
-			getBoutonPlateau(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc")).setBackground(Color.RED);
+			getBoutonPlateau(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc")).setBackground(new Color(238, 16, 16));
 			if (testMatBlanc()){
-				getBoutonPlateau(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc")).setBackground(Color.BLUE);
+				getBoutonPlateau(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc")).setBackground(new Color(115, 194, 251));
 				System.out.println("MAT");
 			}
 		} 
@@ -700,6 +707,7 @@ public class Echiquier {
 		boolean deplacementAutorise = false;
 
 		if(((interfaceValidite) pieceDMat).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceAMat==null){
+			if ((pieceDMat.getType().equals("Roi") && pieceDMat.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDMat.getType().equals("Roi") && pieceDMat.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDMat.getType().equals("Roi")){
 				(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDMat);
 				(plateauBouton[departC][departL]).setPiece(null);
 				if (compteurBoutonJoueur % 2 == 1 && !testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){ //condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
@@ -721,13 +729,17 @@ public class Echiquier {
 				
 					plateauBouton[departC][departL].setPiece(pieceDMat);
 					plateauBouton[arriveeC][arriveeL].setPiece(null);		
-
+				
+			
+			}
 		}
 		else if(((interfaceValidite) pieceDMat).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceAMat!=null  && pieceDMat.getCouleur()!=pieceAMat.getCouleur()){
+			if ((pieceDepart.getType().equals("Roi") && pieceDepart.getCouleur().equals("Noir") && !testEchecNoir(arriveeC, arriveeL)) || (pieceDMat.getType().equals("Roi") && pieceDMat.getCouleur().equals("Blanc") && !testEchecBlanc(arriveeC, arriveeL)) || !pieceDMat.getType().equals("Roi")){
 				(plateauBouton[arriveeC][arriveeL]).setPiece(pieceDMat);
 				(plateauBouton[departC][departL]).setPiece(null);
 				if (compteurBoutonJoueur % 2 == 1 && !testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){ //condition de ne pas faire un auto-echec par une piece qui n'est pas le roi
 
+			// - LE DEPLACEMENT EST VALIDE CHANGEMENT DE JOUEUR - PAIR = BLANC IMPAIR = NOIR - //
 					
 					deplacementAutorise = true;
 				
@@ -743,6 +755,7 @@ public class Echiquier {
 				}
 					plateauBouton[departC][departL].setPiece(pieceDMat);
 					plateauBouton[arriveeC][arriveeL].setPiece(pieceAMat);
+			}
 			
 		}
 		else if(((interfaceValidite) pieceDMat).deplacementValid(departL, departC, arriveeL,arriveeC)==true && pieceAMat!=null  && pieceDepart.getCouleur()==pieceAMat.getCouleur()){
@@ -799,8 +812,6 @@ public class Echiquier {
 		
 		return position;
 	}
-	
-	//TEST DE L'ECHEC POUR LES NOIRS
 	
 	public boolean testEchecNoir(int c, int l){
 		boolean echec = false;
@@ -1096,8 +1107,6 @@ public class Echiquier {
 		return echec;
 	}
 	
-	//TEST DE L'ECHEC POUR LES NOIRS
-	
 	public boolean testEchecBlanc(int c, int l){
 		boolean echec = false;
 		int a = 0; //condition de while
@@ -1390,19 +1399,21 @@ public class Echiquier {
 		return echec;
 	}
 	
-	//TEST DE L'ECHEC ET MAT POUR LES NOIRS
+	// - TEST D'UN ECHEC ET MAT NOIR - //
+	// - LA METHODE EST APPELEE QUAND IL Y A UN ECHEC, POUR TESTER LE MAT ELLE VA ENSUITE PRENDRE CHACUNE DES PIECES NOIRES ET TESTER SI CHACUN D'ENTRE ELLES NE PEUX PAS SE DEPLACER SUR UNE CASE DE L'ECHIQUIER - //
+	// - DANS LE CAS OU UNE SEULE PIECE PEUT SE DEPLACER (SACHANT QU'UN DEPLACEMENT N'EST POSSIBLE QUE S'IL ENLEVE LA SITUATION D'ECHEC) CELA VEUT DONC DIRE QU'IL N'Y A PAS ECHEC ET MAT - //
 	
 	public boolean testMatNoir(){
 		boolean matNoir = true;
 		
 		for (int j = 0; j <= 7; j++){
 			for (int i = 0; i <= 7; i++){
-				if (getBoutonPlateau(j, i).getPiece() != null){
+				if (getBoutonPlateau(j, i).getPiece() != null){ // ON  CHERCHE CHACUNE DES PIECES NOIRES EN PARCOURANT TOUT L'ECHIQUIER
 					
 					if (getBoutonPlateau(j, i).getPiece().getCouleur().equals("Noir")){
-						for (int n = 0; n <= 7; n++){   // vertical en haut
+						for (int n = 0; n <= 7; n++){   
 							for (int k = 0; k <= 7; k++){
-								if (deplacementMat(i, j, k, n)){
+								if (deplacementMat(i, j, k, n)){ // ON TESTE LE DEPLACEMENT SUR CHACUNE DES CASES DE L'ECHIQUIER
 									matNoir = false;
 								}
 							}
@@ -1415,19 +1426,22 @@ public class Echiquier {
 		return matNoir;
 	}
 	
-	//TEST DE L'ECHEC ET MAT POUR LES BLANCS
+	// - TEST D'UN ECHEC ET MAT BLANC - //
+	// - LA METHODE EST APPELEE QUAND IL Y A UN ECHEC, POUR TESTER LE MAT ELLE VA ENSUITE PRENDRE CHACUNE DES PIECES BLANCHES ET TESTER SI CHACUN D'ENTRE ELLES NE PEUX PAS SE DEPLACER SUR UNE CASE DE L'ECHIQUIER - //
+	// - DANS LE CAS OU UNE SEULE PIECE PEUT SE DEPLACER (SACHANT QU'UN DEPLACEMENT N'EST POSSIBLE QUE S'IL ENLEVE LA SITUATION D'ECHEC) CELA VEUT DONC DIRE QU'IL N'Y A PAS ECHEC ET MAT - //
+	
 	
 	public boolean testMatBlanc(){
 		boolean matBlanc = true;
 		
 		for (int j = 0; j <= 7; j++){
 			for (int i = 0; i <= 7; i++){
-				if (getBoutonPlateau(j, i).getPiece() != null){
+				if (getBoutonPlateau(j, i).getPiece() != null){ // ON  CHERCHE CHACUNE DES PIECES BLANCHES EN PARCOURANT TOUT L'ECHIQUIER
 					
 					if (getBoutonPlateau(j, i).getPiece().getCouleur().equals("Blanc")){
-						for (int n = 0; n <= 7; n++){   // vertical en haut
+						for (int n = 0; n <= 7; n++){   
 							for (int k = 0; k <= 7; k++){
-								if (deplacementMat(i, j, k, n)){
+								if (deplacementMat(i, j, k, n)){ // ON TESTE LE DEPLACEMENT SUR CHACUNE DES CASES DE L'ECHIQUIER
 									matBlanc = false;
 								}
 							}
@@ -1481,14 +1495,15 @@ public class Echiquier {
 	}
 	
 	// - CREATION BOUTON BANDEAU BAS HISTORIQUE - //
+	// - A SA CREATION LE BOUTON ENTRE EN MEMOIRE DANS UNE LISTE LES CARACTERISTIQUES DE LA PARTIE A CET INSTANT - //
 	
 	public void creationBoutonHistoriqueBlanc(){
 		
 		MonBoutonHisto b = new MonBoutonHisto(listeHistoriqueString.get(compteurHistorique),compteurHistorique);
 		b.addActionListener(new EcouteurBoutonHisto(this,b.getNumero()));
 		
-		augmentationListeHistoPlateau();
-		augmentationListeHistoTimer();
+		augmentationListeHistoPlateau(); // ENREGISTREMENT PLATEAU
+		augmentationListeHistoTimer(); // ENREGISTREMENT DES TIMERS
 		
 		b.setBackground(couleurB);
 		bandeauBas.add(b);
@@ -1502,8 +1517,8 @@ public class Echiquier {
 		MonBoutonHisto b = new MonBoutonHisto(listeHistoriqueString.get(compteurHistorique),compteurHistorique);
 		b.addActionListener(new EcouteurBoutonHisto(this,b.getNumero()));
 		
-		augmentationListeHistoPlateau();
-		augmentationListeHistoTimer();
+		augmentationListeHistoPlateau(); // ENREGISTREMENT PLATEAU
+		augmentationListeHistoTimer(); // ENREGISTREMENT DES TIMERS
 		
 		b.setBackground(couleurN);
 		bandeauBas.add(b);
@@ -1518,6 +1533,8 @@ public class Echiquier {
 		listeHistoriqueString.add("Tour : "+(compteurHistorique+1));
 	}
 	
+	// - ON PREND LA POSITION DE CHAQUE PIECE DU PLATEAU POUR CONNAITRE LA DISPOSITION DE CELUI-CI - //
+	
 	public void augmentationListeHistoPlateau(){
 		Piece[][] tempPlateau = new Piece[8][8];
 		for(int i=0; i<8;i++){
@@ -1528,6 +1545,8 @@ public class Echiquier {
 		
 		listeHistoriquePlateau.add(tempPlateau);
 	}
+	
+	// - ENREGISTREMENT DE LA POSITION DES TIMERS A L'INSTANT DE LA CREATION DU BOUTON - //
 	
 	public void augmentationListeHistoTimer(){
 
@@ -1540,7 +1559,7 @@ public class Echiquier {
 		listeHistoriqueTimerHeuN.add(heureN);
 	}
 	
-	// - ACTION REVENIR EN ARRIERE DANS HISTORIQUE - //
+	// - ACTION REVENIR EN ARRIERE DANS HISTORIQUE AU TOUR CORRESPOND A "NUMERO" - //
 	
 	public void retourArriereJeu(int numero){
 		Piece[][] tempTab;
@@ -1561,6 +1580,18 @@ public class Echiquier {
 		minuteN = listeHistoriqueTimerMinN.get(numero);
 		secondeN = listeHistoriqueTimerSecN.get(numero);
 		
+		tpsB.setText(heureB+":"+minuteB+":"+secondeB);
+		tpsN.setText(heureN+":"+minuteN+":"+secondeN);
+		
+		if(compteurBoutonJoueur % 2 == 1){
+			timerN.start();
+			timerB.stop();
+						
+	    }else if(compteurBoutonJoueur % 2 == 0){
+			timerB.start();
+			timerN.stop();
+		}			
+		
 		setCouleurComplet();
 		
 	}
@@ -1569,14 +1600,14 @@ public class Echiquier {
 	
 	public void roque(int ligneR, int colonneR, int ligneT, int colonneT){
 		
-		//RECUPERATION DES PIECES PRESENTE AUX POSITIONS EN PARAMETRES
-		
+		// - RECUPERATION DES PIECES PRESENTE AUX POSITIONS EN PARAMETRE - //
+	
 		Piece p1 = plateauBouton[colonneR][ligneR].getPiece();
 		Piece p2 = plateauBouton[colonneT][ligneT].getPiece();
 		
 		boolean couleurValid = false;
 		
-		//TEST POUR SAVOIR A QUELLE COUlEUR EST LE TOUR DE JOUER
+		// - TEST POUR SAVOIR A QUELLE COUlEUR EST LE TOUR DE JOUER - //
 		
 		if(pieceDepart.getCouleur() == "Blanc" && compteurBoutonJoueur % 2 == 0){		
 			couleurValid = true;
@@ -1589,15 +1620,14 @@ public class Echiquier {
             
 		}
 		
-		//TEST DE POSSIBILITE DU ROQUE
-		
-		
-		if(p1.getCouleur()==p2.getCouleur()&& p1.getType()=="Roi" && p2.getType()=="Tour" && couleurValid==true ){ //TEST DE TYPE ET DE LA COULEUR DES PIECES
-				
-				//TEST DU PETIT ROQUE : test la présence d'une pièce entre le roi et la tour droite
+		// - TEST DE POSSIBILITE DU ROQUE - //
+
+		if(p1.getCouleur()==p2.getCouleur()&& p1.getType()=="Roi" && p2.getType()=="Tour" && couleurValid==true ){
+					
+				//TEST DU PETIT ROQUE : test la présence d'une pièce entre le roi et la tour droite	
 					
 				if(departC<arriveeC){
-
+		
 					for(int i=departC+1 ; i<arriveeC; i++){
 						if(((this.getBoutonPlateau(i, departL))).getPiece() != null){
 							roqueValid = false;
@@ -1609,7 +1639,7 @@ public class Echiquier {
 				}
 				
 				//TEST DU GRAND ROQUE : test la présence d'une pièce entre le roi et la tour gauche
-				
+					
 				else if(departC>arriveeC){
 						
 					for(int i=departC-1 ; i>arriveeC; i--){
@@ -1625,9 +1655,7 @@ public class Echiquier {
 				//ROQUE S'IL EST VALIDE ET QUE LE ROI ET A TOUR N'ONT PAS BOUGE
 				
 				if(roqueValid==true && ((Roi) p1).getRoiPositionDepart() == true && ((Tour) p2).getTourPositionDepart()){
-					
-					//PETIT ROQUE : le roi se déplace de 2 case vers la droite et la tour de 2 vers la gauche
-					
+
 					if(Math.abs(departC-arriveeC)==3){
 					    (plateauBouton[arriveeC][arriveeL]).setPiece(null);
 					    (plateauBouton[departC][departL]).setPiece(null);
@@ -1635,9 +1663,7 @@ public class Echiquier {
 						plateauBouton[arriveeC-2][arriveeL].setPiece(pieceArrivee);
 						compteurBoutonJoueur++;
 					}
-					
-					//GRAND ROQUE : le roi se déplace de 2 case vers la gauche et la tour de 3 vers la gauche
-					
+						
 					if(Math.abs(departC-arriveeC)==4){
 						(plateauBouton[arriveeC][arriveeL]).setPiece(null);
 					    (plateauBouton[departC][departL]).setPiece(null);
