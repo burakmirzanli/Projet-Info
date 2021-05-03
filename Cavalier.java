@@ -6,11 +6,15 @@ import javax.swing.border.*;
 
 public class Cavalier extends Piece implements interfaceValidite{
 	
+	//ATTRIBUTS DE LA CLASSE
+	
 	private String couleur;
 	private int ligne;
 	private int colonne;
 	private ImageIcon icon;
 	private Echiquier e1;
+	
+	//CONSTRUCTEUR : associe à la pièce une couleur, une position, un échiquier et une image
 	
 	public Cavalier (String couleur, int ligne, int colonne, Echiquier e1){
 		super ("Cavalier", couleur, ligne, colonne, e1);
@@ -27,18 +31,8 @@ public class Cavalier extends Piece implements interfaceValidite{
 			this.icon = icon;
 		}
 	}
-	public Cavalier (String couleur){
-		super ("Cavalier", couleur);
-		this.couleur = couleur;
-		// - CREATION IMAGE DES PIECES - //
-        if(this.couleur == "Noir"){
-			ImageIcon icon = new ImageIcon(Echiquier.class.getResource("image/CN.png"));
-			this.icon = icon;
-		} else if (this.couleur == "Blanc"){
-			ImageIcon icon = new ImageIcon(Echiquier.class.getResource("image/CB.png"));
-			this.icon = icon;
-		}
-	}
+	
+	//GETTERS ET SETTERS
 	
 	public ImageIcon getIcon(){
 		return this.icon;
@@ -67,10 +61,15 @@ public class Cavalier extends Piece implements interfaceValidite{
 		this.colonne=c;
 	}
 	
+	//AFFICHAGE TOSTRING
+	
 	public String toString (){
 		String s = super.toString();
 		return s;
 	}
+	
+	//METHODE DEFINISSANT LES DEPLACEMENTS POSSIBLES DE LA PIECE
+	
 	public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){		
 		
 		boolean valid = false;

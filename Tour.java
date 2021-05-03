@@ -8,12 +8,16 @@ import javax.swing.border.*;
 
 public class Tour extends Piece implements interfaceValidite{
 	
+	//ATTRIBUTS DE LA CLASSE
+	
 	private String couleur;
 	private int colonne;
 	private int ligne;
 	private ImageIcon icon;
 	private Echiquier e1;
 	private boolean tourPositionDepart = true;
+	
+	//CONSTRUCTEUR : associe à la pièce une couleur, une position, un échiquier et une image
 	
 	public Tour (String couleur, int ligne, int colonne, Echiquier e1){
 		super ("Tour", couleur, ligne, colonne, e1);
@@ -31,10 +35,9 @@ public class Tour extends Piece implements interfaceValidite{
 		}
         
 	}
-	public Tour (String couleur){
-		super ("Tour", couleur);
-		this.couleur = couleur;
-	}
+	
+	//GETTERS ET SETTERS
+	
 	public String getCouleur(){
 		return this.couleur;
 	}
@@ -62,11 +65,6 @@ public class Tour extends Piece implements interfaceValidite{
 		this.colonne=c;
 	}
 	
-	public String toString (){
-		String s = super.toString();
-		return s;
-	}
-	
 	public boolean getTourPositionDepart(){
 		return this.tourPositionDepart;
 	}
@@ -74,6 +72,16 @@ public class Tour extends Piece implements interfaceValidite{
 	public void setTourPositionDepart(boolean res){
 		this.tourPositionDepart=res;
 	}
+	
+	//AFFICHAGE TOSTRING
+		
+	public String toString (){
+		String s = super.toString();
+		return s;
+	}
+	
+	
+	//METHODE DEFINISSANT LES DEPLACEMENTS POSSIBLES DE LA PIECE
 	
 	public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){	
 		boolean valid = false;
