@@ -366,6 +366,8 @@ public class Echiquier {
 	   bandeauBas.removeAll();
        eL.setF(false);
        
+       infoVictoire.setText("            ");
+       
        this.setCouleurComplet();
        
 	    
@@ -540,11 +542,13 @@ public class Echiquier {
 						creationBoutonHistoriqueBlanc();
 						compteurHistorique++;
 						timerB.stop();
+						infoVictoire.setText("            ");
 					}else if(compteurBoutonJoueur % 2 == 0){
 						timerB.start();
 						timerN.stop();
 						creationBoutonHistoriqueNoir();
 						compteurHistorique++;
+						infoVictoire.setText("            ");
 					}			
 			
 					if(pieceDepart.getType() == "Pion" ){
@@ -563,11 +567,13 @@ public class Echiquier {
 						timerB.stop();
 						creationBoutonHistoriqueBlanc();
 						compteurHistorique++;
+						infoVictoire.setText("            ");
 					}else if(compteurBoutonJoueur % 2 == 0){
 						timerB.start();
 						timerN.stop();
 						creationBoutonHistoriqueNoir();
 						compteurHistorique++;
+						infoVictoire.setText("            ");
 					}			
 				
 					if(pieceDepart.getType() == "Pion" ){
@@ -614,11 +620,13 @@ public class Echiquier {
 						timerB.stop();
 						creationBoutonHistoriqueBlanc();
 						compteurHistorique++;
+						infoVictoire.setText("            ");
 					}else if(compteurBoutonJoueur % 2 == 0){
 						timerB.start();
 						timerN.stop();
 						creationBoutonHistoriqueNoir();
 						compteurHistorique++;
+						infoVictoire.setText("            ");
 					}			
 			
 					if(pieceDepart.getType() == "Pion" ){
@@ -638,11 +646,13 @@ public class Echiquier {
 						timerB.stop();
 						creationBoutonHistoriqueBlanc();
 						compteurHistorique++;
+						infoVictoire.setText("            ");
 					}else if(compteurBoutonJoueur % 2 == 0){
 						timerB.start();
 						timerN.stop();
 						creationBoutonHistoriqueNoir();
 						compteurHistorique++;
+						infoVictoire.setText("            ");
 					}			
 				
 					if(pieceDepart.getType() == "Pion" ){
