@@ -7,16 +7,12 @@ import javax.swing.border.*;
 
 public class Roi extends Piece implements interfaceValidite{
 	
-	//ATTRIBUTS DE LA CLASSE
-	
 	private String couleur;
 	private int ligne;
 	private int colonne;
 	private ImageIcon icon;
 	private Echiquier e1;
 	private boolean roiPositionDepart = true;
-	
-	//CONSTRUCTEUR : associe à la pièce une couleur, une position, un échiquier et une image
 	
 	public Roi (String couleur, int ligne, int colonne, Echiquier e1){
 		super ("Roi", couleur, ligne, colonne, e1);
@@ -33,8 +29,18 @@ public class Roi extends Piece implements interfaceValidite{
 			this.icon = icon;
 		}
 	}
-	
-	//GETTERS ET SETTERS
+	public Roi (String couleur){
+		super ("Roi", couleur);
+		this.couleur = couleur;
+		// - CREATION IMAGE DES PIECES - //
+        if(this.couleur == "Noir"){
+			ImageIcon icon = new ImageIcon(Echiquier.class.getResource("image/RN.png"));
+			this.icon = icon;
+		} else if (this.couleur == "Blanc"){
+			ImageIcon icon = new ImageIcon(Echiquier.class.getResource("image/RB.png"));
+			this.icon = icon;
+		}
+	}
 
 	public ImageIcon getIcon(){
 		return this.icon;
@@ -64,6 +70,12 @@ public class Roi extends Piece implements interfaceValidite{
 		this.colonne=c;
 	}
 	
+	public String toString (){
+		String s = super.toString();
+		return s;
+	}
+	
+	
 	public boolean getRoiPositionDepart(){
 		return this.roiPositionDepart;
 	}
@@ -72,14 +84,8 @@ public class Roi extends Piece implements interfaceValidite{
 		this.roiPositionDepart=res;
 	}
 	
-	//AFFICHAGE TOSTRING
-		
-	public String toString (){
-		String s = super.toString();
-		return s;
-	}
 	
-	//METHODE DEFINISSANT LES DEPLACEMENTS POSSIBLES DE LA PIECE
+	
 	
 	public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){		
 			

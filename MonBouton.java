@@ -10,18 +10,15 @@ import javax.swing.border.*;
 import java.lang.*;
 
 
-public class MonBouton extends JButton {
-	  
-	//ATTRIBUTS
-	  
-    int ligne, colonne;
-    private Piece p;
-    private ImageIcon icon;
-    private Border lineBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+public class MonBouton extends JButton /* implements ActionListener */ {
+  
+      int ligne, colonne;
+      private Piece p;
+      private ImageIcon icon;
+      private Border lineBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
       
       
-	// CONSTRUCTEUR 
-	
+  
     public MonBouton(int ligne, int colonne,Piece p) {
         this.ligne = ligne;
         this.colonne = colonne;
@@ -33,8 +30,6 @@ public class MonBouton extends JButton {
 		
 		
 	}
-	
-	//GETTER ET SETTER
 	
 	public int getL(){
 		return this.ligne;

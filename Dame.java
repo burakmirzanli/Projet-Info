@@ -7,15 +7,11 @@ import javax.swing.border.*;
 
 public class Dame extends Piece implements interfaceValidite {
 	
-	//ATTRIBUTS DE LA CLASSE
-	
 	private String couleur;
 	private int ligne;
 	private int colonne;
 	private ImageIcon icon;
 	private Echiquier e1;
-	
-	//CONSTRUCTEUR : associe à la pièce une couleur, une position, un échiquier et une image
 	
 	public Dame (String couleur, int ligne, int colonne, Echiquier e1){
 		super ("Dame", couleur, ligne, colonne, e1);
@@ -33,10 +29,25 @@ public class Dame extends Piece implements interfaceValidite {
 		}
 	}
 	
-	//GETTERS ET SETTERS
+	public Dame (String couleur){
+		super ("Dame", couleur);
+		this.couleur = couleur;
+		// - CREATION IMAGE DES PIECES - //
+        if(this.couleur == "Noir"){
+			ImageIcon icon = new ImageIcon(Echiquier.class.getResource("image/DN.png"));
+			this.icon = icon;
+		} else if (this.couleur == "Blanc"){
+			ImageIcon icon = new ImageIcon(Echiquier.class.getResource("image/DB.png"));
+			this.icon = icon;
+		}
+	}
 	
 	public ImageIcon getIcon(){
 		return this.icon;
+	}
+	
+	public String toString (){
+		return super.toString();
 	}
 	
 	public String getCouleur(){
@@ -61,14 +72,6 @@ public class Dame extends Piece implements interfaceValidite {
 	public void setColonne(int c){
 		this.colonne=c;
 	}
-	
-	//AFFICHAGE TOSTRING
-	
-	public String toString (){
-		return super.toString();
-	}
-	
-	//METHODE DEFINISSANT LES DEPLACEMENTS POSSIBLES DE LA PIECE
 	
 	public boolean deplacementValid(int departL, int departC, int arriveeL, int arriveeC){		
 		
@@ -116,10 +119,8 @@ public class Dame extends Piece implements interfaceValidite {
 		 
         // - TEST DE DEPLACEMENT SUR LA DIAGONALE - //
         
-        if(Math.abs(departC-arriveeC)==Math.abs(departL-arriveeL)){
-			
-			//TEST DIAGONALE EN BAS A DROITE
-			
+                if(Math.abs(departC-arriveeC)==Math.abs(departL-arriveeL)){
+         
 			if (departL-arriveeL<0 && departC-arriveeC<0){
 				
 				
@@ -142,9 +143,6 @@ public class Dame extends Piece implements interfaceValidite {
 				}
 				
 			 }   
-			 
-			 //TEST DIAGONALE EN HAUT A GAUCHE
-			 
 			 else if (departL-arriveeL>0 && departC-arriveeC>0){  
 				int j = departL-1;
 				for(int i=departC-1;i>arriveeC;i--){
@@ -166,8 +164,6 @@ public class Dame extends Piece implements interfaceValidite {
 				}
 
 			}
-			
-			//TEST DIAGONALE EN HAUT A DROITE
 			
 			else if(departL-arriveeL>0 && departC-arriveeC<0){
 				
@@ -192,8 +188,6 @@ public class Dame extends Piece implements interfaceValidite {
 				}
 		
 			}
-			
-			//TEST DIAGONALE EN BAS A GAUCHE
 			
 			else if(departL-arriveeL<0 && departC-arriveeC>0){
 				int j=departC-1;

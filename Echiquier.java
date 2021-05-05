@@ -29,6 +29,8 @@ public class Echiquier {
     private static final JLabel tpsB = new JLabel(heureB+":"+minuteB+":"+secondeB);
 	private static final JLabel tpsN = new JLabel(heureN+":"+minuteN+":"+secondeN);
 	
+	private static JLabel infoVictoire = new JLabel("                    ");
+	
 	private static Color couleurB = new Color(255,206,158);
 	
 	private static Color couleurN = new Color(209,139,71);
@@ -270,6 +272,12 @@ public class Echiquier {
 					bandeauHaut.add(tpsB);
 					bandeauHaut.add(tpsRestN);
 					bandeauHaut.add(tpsN);
+					
+					JLabel infoVictoireTexte = new JLabel("Information sur la partie : ");
+					infoVictoireTexte.setForeground(Color.WHITE);
+					
+					bandeauHaut.add(infoVictoireTexte);
+					bandeauHaut.add(infoVictoire);
 					
 					boutonReset.setBackground(Color.WHITE);
 					boutonLancer.setBackground(Color.WHITE);
@@ -680,18 +688,21 @@ public class Echiquier {
 		
 		if (testEchecNoir(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir"))){
 			getBoutonPlateau(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")).setBackground(new Color(238, 16, 16));
+			infoVictoire.setText("ECHEC DU ROI NOIR");
 			if (testMatNoir()){
 				getBoutonPlateau(positionRoi("colonneRoiNoir"), positionRoi("ligneRoiNoir")).setBackground(new Color(115, 194, 251));
-				System.out.println("MAT");
+				infoVictoire.setText("ECHEC ET MAT DU ROI NOIR, VICTOIRE DES BLANCS");
 			}
 		}
 
 
 		if (testEchecBlanc(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc"))){
 			getBoutonPlateau(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc")).setBackground(new Color(238, 16, 16));
+			infoVictoire.setText("ECHEC DU ROI BLANC");
 			if (testMatBlanc()){
 				getBoutonPlateau(positionRoi("colonneRoiBlanc"), positionRoi("ligneRoiBlanc")).setBackground(new Color(115, 194, 251));
 				System.out.println("MAT");
+				infoVictoire.setText("ECHEC ET MAT DU ROI BLANC, VICTOIRE DES NOIRS");
 			}
 		} 
 		

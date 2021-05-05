@@ -3,19 +3,19 @@ import java.awt.event.*;
 
 public class EcouteurBouton implements ActionListener{
 	
-	//ATTRIBUTS
-	
 	private Echiquier e1;
 	private MonBouton b;
 
-	// CONSTRUCTEUR ECOUTEUR
+	
+
+	
+	
 	
 	public EcouteurBouton(Echiquier e1, MonBouton b){
 		this.e1=e1;
 		this.b=b;
 	}
 		
-	//ACTION FAITE PAR L'ECOUTEUR
 	
     public void actionPerformed(ActionEvent e){
 		EcouteurBoutonLancer eBL = e1.getEcout();

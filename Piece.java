@@ -6,16 +6,12 @@ import javax.swing.border.*;
 
 public class Piece {
 	
-	//ATTRIBUTS DE LA CLASSE
-	
 	private String type;
 	private String couleur;
 	private int ligne;
 	private int colonne;
 	private ImageIcon icon;
 	private Echiquier e1;
-	
-	//CONSTRUCTEUR : associe à chaque pièce un type, une couleur, une position, un échiquier et une image
 	
 	public Piece (String type, String couleur, int ligne, int colonne, Echiquier e1){
 		this.type = type;
@@ -30,8 +26,6 @@ public class Piece {
 		this.type = type;
 		this.couleur = couleur;
 	}
-	
-	//GETTERS ET SETTERS
 	
 	public String getType(){
 		return this.type;
@@ -64,8 +58,6 @@ public class Piece {
 	public void setColonne(int c){
 		this.colonne=c;
 	}
-	
-	//AFFICHAGE TOSTRING
 	
 	public String toString (){
 		String s = type+" "+couleur+" en "+ligne+";"+colonne; //a completer
